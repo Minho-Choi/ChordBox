@@ -11,6 +11,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var chordLabel: UILabel!
     @IBOutlet weak var chordTextFieldOutlet: UITextField!
+    @IBOutlet weak var chordView: GuitarChordView!
     let chordAnalyzer = ChordAnalyzer()
     var chordTones = [Pitch]()
     
@@ -46,8 +47,11 @@ extension ViewController: UITextFieldDelegate {
             for tone in tones {
                 string.append(tone.description + " ")
             }
+            chordView.chord = chordAnalyzer.adjustChordByGuitarShape(chord: tones, closeFret: 0, capo: 0)
+            chordView.openChord = chordAnalyzer.currentTuning
         }
         chordLabel.text = string
+        chordView.setNeedsDisplay()
         return true
     }
 }

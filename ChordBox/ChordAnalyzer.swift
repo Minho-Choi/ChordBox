@@ -63,6 +63,15 @@ struct ChordAnalyzer {
             "m6"    :   [3, 7, 9]
         ]
     
+    var currentTuning = [
+        Pitch(toneName: "E", toneHeight: 2, lineNumber: 6),
+        Pitch(toneName: "A", toneHeight: 2, lineNumber: 5),
+        Pitch(toneName: "D", toneHeight: 3, lineNumber: 4),
+        Pitch(toneName: "G", toneHeight: 3, lineNumber: 3),
+        Pitch(toneName: "B", toneHeight: 3, lineNumber: 2),
+        Pitch(toneName: "E", toneHeight: 4, lineNumber: 1)
+    ]
+    
     func analyze(chordString: String, toneHeight: Int) -> [Pitch]? {
         var chord = [Pitch]()
         var chordSeparatorStartIndex = chordString.index(chordString.startIndex, offsetBy: 1)
@@ -95,7 +104,7 @@ struct ChordAnalyzer {
             chord.append(newBasePitches[index])
             if let intervals = chordStructureDict[identifier] {
                 for interval in intervals {
-                    chord.append(Pitch(toneName: base, toneHeight: toneHeight, distanceFromBase: interval))
+                    chord.append(Pitch(toneName: base, toneHeight: toneHeight, transpose: interval))
                 }
             }
         } else {
@@ -103,11 +112,72 @@ struct ChordAnalyzer {
             chord.append(basePitch)
             if let intervals = chordStructureDict[identifier] {
                 for interval in intervals {
-                    chord.append(Pitch(toneName: base, toneHeight: toneHeight, distanceFromBase: interval))
+                    chord.append(Pitch(toneName: base, toneHeight: toneHeight, transpose: interval))
                 }
             }
         }
         return chord
+    }
+    
+    func adjustChordByGuitarShape(chord: [Pitch], closeFret: Int, capo: Int) -> [Pitch] {
+        var adjustedChord = [Pitch]()
+        var availableTones = [Pitch]()
+        var availableToneDict = [Int:Pitch]()
+        let baseTone = chord[0].toneName
+        availableTones += ((capo == 0) ? applyCapo(openString: currentTuning, capoFret: capo) : currentTuning)
+        for tone in availableTones {
+            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 1 + closeFret-capo))
+            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 2 + closeFret-capo))
+            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 3 + closeFret-capo))
+            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 4 + closeFret-capo))
+        }
+        for pitch in chord {
+            for tone in availableTones {
+                if pitch.toneName == tone.toneName {
+                    adjustedChord.append(tone)
+                }
+            }
+        }
+        adjustedChord.sort()
+//        print(adjustedChord)
+        var chordTest = chord.map { $0.toneName }
+        var baseToneLine: Int? = nil
+        for tone in adjustedChord {
+            if tone.toneName == baseTone, tone.lineNumber! > 3, baseToneLine == nil {
+                var base = Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!)
+                availableToneDict[tone.lineNumber!] = base.makeBase()
+                baseToneLine = tone.lineNumber!
+                chordTest = chordTest.filter { $0 != tone.toneName }
+            } else {
+                if let unwrappedBaseToneLine = baseToneLine, tone.lineNumber! < unwrappedBaseToneLine {
+                    if let containing = availableToneDict[tone.lineNumber!] {
+                        if chordTest.isEmpty, containing > tone {
+                            availableToneDict[tone.lineNumber!] = tone
+                            chordTest = chordTest.filter { $0 != tone.toneName }
+                            chordTest.append(containing.toneName)
+                        }
+                    } else {
+                        availableToneDict[tone.lineNumber!] = tone
+                        chordTest = chordTest.filter { $0 != tone.toneName }
+                    }
+                }
+            }
+//            print(chordTest)
+//            print(availableToneDict)
+        }
+        adjustedChord.removeAll()
+        for tone in availableToneDict.values {
+            adjustedChord.append(tone)
+        }
+        return adjustedChord.sorted()
+    }
+    
+    func applyCapo(openString: [Pitch], capoFret: Int) -> [Pitch] {
+        var adjustedChord = [Pitch]()
+        for tone in openString {
+            adjustedChord.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: capoFret))
+        }
+        return adjustedChord.sorted()
     }
 }
 
@@ -116,10 +186,15 @@ struct Pitch : Comparable, CustomStringConvertible {
     
     var toneName: String
     var toneHeight: Int
-    let distanceFromBase: Int = 0
+    var lineNumber: Int?
     var description: String {
-        return "\(toneName)\(toneHeight)"
+        if lineNumber != nil {
+            return "\(toneName)\(toneHeight) in line \(lineNumber!)\n"
+        } else {
+            return "\(toneName)\(toneHeight)"
+        }
     }
+    var isBase = false
     static let toneHeightDict: [String:Int] = ["C":0, "C#":1, "Db":1, "D":2, "D#":3, "Eb":3, "E":4, "F":5, "F#":6, "Gb":6, "G":7, "G#":8, "Ab":8, "A":9, "A#":10, "Bb":10, "B":11]
     static let heightToneDict: [Int:String] = [0:"C", 1:"C#", 2:"D", 3:"D#", 4:"E", 5:"F", 6:"F#", 7:"G", 8:"G#", 9:"A", 10:"A#", 11:"B"]
     
@@ -128,21 +203,34 @@ struct Pitch : Comparable, CustomStringConvertible {
         self.toneHeight = toneHeight
     }
     
-    init(toneName: String, toneHeight: Int, distanceFromBase: Int) {
+    init(toneName: String, toneHeight: Int, lineNumber: Int) {
+        self.toneName = toneName
+        self.toneHeight = toneHeight
+        self.lineNumber = lineNumber
+    }
+    
+    init(toneName: String, toneHeight: Int, lineNumber: Int, transpose: Int) {
         let nameToNum = Pitch.toneHeightDict[toneName] ?? 0
-        let newToneHeight = toneHeight + (nameToNum + distanceFromBase)/12
-        let newToneName = Pitch.heightToneDict[(nameToNum + distanceFromBase)%12] ?? "C"
+        let newToneHeight = toneHeight + (nameToNum + transpose)/12
+        let newToneName = Pitch.heightToneDict[(nameToNum + transpose)%12]!
+        self.toneName = newToneName
+        self.toneHeight = newToneHeight
+        self.lineNumber = lineNumber
+    }
+    
+    init(toneName: String, toneHeight: Int, transpose: Int) {
+        let nameToNum = Pitch.toneHeightDict[toneName] ?? 0
+        let newToneHeight = toneHeight + (nameToNum + transpose)/12
+        let newToneName = Pitch.heightToneDict[(nameToNum + transpose)%12]!
         self.toneName = newToneName
         self.toneHeight = newToneHeight
     }
     
     static func < (lhs: Pitch, rhs: Pitch) -> Bool {
-        if lhs.toneHeight < rhs.toneHeight {
-            return true
-        } else if lhs.toneHeight > rhs.toneHeight {
-            return false
-        } else {
+        if lhs.toneHeight == rhs.toneHeight {
             return toneHeightDict[lhs.toneName]! < toneHeightDict[rhs.toneName]!
+        } else{
+            return lhs.toneHeight < rhs.toneHeight
         }
     }
     
@@ -153,6 +241,11 @@ struct Pitch : Comparable, CustomStringConvertible {
         } else {
             return abs((self.toneHeight - compare.toneHeight)*12 + difference)
         }
+    }
+    
+    mutating func makeBase() -> Pitch {
+        self.isBase = true
+        return self
     }
 }
 
