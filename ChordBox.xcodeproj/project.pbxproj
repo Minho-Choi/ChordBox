@@ -13,6 +13,8 @@
 		B46F67BA25CAA0F60097CFA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B46F67B825CAA0F60097CFA2 /* Main.storyboard */; };
 		B46F67BC25CAA0F90097CFA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B46F67BB25CAA0F90097CFA2 /* Assets.xcassets */; };
 		B46F67BF25CAA0F90097CFA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B46F67BD25CAA0F90097CFA2 /* LaunchScreen.storyboard */; };
+		B46F67C825CAA22F0097CFA2 /* ChordAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */; };
+		B46F67CC25CADC390097CFA2 /* GuitarChordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		B46F67BB25CAA0F90097CFA2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B46F67BE25CAA0F90097CFA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B46F67C025CAA0F90097CFA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChordAnalyzer.swift; sourceTree = "<group>"; };
+		B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuitarChordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 				B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */,
 				B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */,
 				B46F67B625CAA0F60097CFA2 /* ViewController.swift */,
+				B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */,
+				B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */,
 				B46F67B825CAA0F60097CFA2 /* Main.storyboard */,
 				B46F67BB25CAA0F90097CFA2 /* Assets.xcassets */,
 				B46F67BD25CAA0F90097CFA2 /* LaunchScreen.storyboard */,
@@ -137,6 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B46F67CC25CADC390097CFA2 /* GuitarChordView.swift in Sources */,
+				B46F67C825CAA22F0097CFA2 /* ChordAnalyzer.swift in Sources */,
 				B46F67B725CAA0F60097CFA2 /* ViewController.swift in Sources */,
 				B46F67B325CAA0F60097CFA2 /* AppDelegate.swift in Sources */,
 				B46F67B525CAA0F60097CFA2 /* SceneDelegate.swift in Sources */,
