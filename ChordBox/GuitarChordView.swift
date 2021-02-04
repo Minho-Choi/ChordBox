@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+@IBDesignable
 class GuitarChordView: UIView {
     
     var openChord: [Pitch] = []
@@ -50,6 +50,7 @@ class GuitarChordView: UIView {
         path.lineWidth = chordWidth * GuitarChordViewConstants.thinThicknessProportion
         path.stroke()
         
+        var openChordCounter = openChord.map { $0.lineNumber }
         for tone in chord {
             let line = tone.lineNumber!-1
             let fret = tone.distance(from: openChord[5-line])-1
@@ -57,11 +58,15 @@ class GuitarChordView: UIView {
                 path.append(createDot(CGRect(x: dotStartPoint.x + CGFloat(fret) * fretWidth, y: dotStartPoint.y + CGFloat(line)*stringWidth, width: dotRadius*2, height: dotRadius*2),
                                       isBase: tone.isBase))
             } else {
-                path.append(createCircle(CGRect(x: smallDotStartPoint.x - fretWidth, y: smallDotStartPoint.y + CGFloat(line)*stringWidth, width: smallDotRadius*2, height: smallDotRadius*2),
+                path.append(createCircle(CGRect(x: smallDotStartPoint.x - fretWidth*0.8, y: smallDotStartPoint.y + CGFloat(line)*stringWidth, width: smallDotRadius*2, height: smallDotRadius*2),
                                       isBase: tone.isBase))
             }
+            openChordCounter = openChordCounter.filter { $0 != tone.lineNumber }
         }
-//        path.append(createDot(CGRect(x: dotStartPoint.x, y: dotStartPoint.y, width: dotRadius*2, height: dotRadius*2), isBase: true))
+        for muted in openChordCounter {
+            let line = muted! - 1
+            path.append(createX(CGRect(x: smallDotStartPoint.x - fretWidth*0.8, y: smallDotStartPoint.y + CGFloat(line)*stringWidth, width: smallDotRadius*2, height: smallDotRadius*2)))
+        }
     }
     
     func createDot(_ rect: CGRect, isBase: Bool) -> UIBezierPath {
@@ -83,6 +88,19 @@ class GuitarChordView: UIView {
         }
         path.lineWidth = GuitarChordViewConstants.smallDotLineWidthProportion * rect.width
         path.addArc(withCenter: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width/2, startAngle: CGFloat.zero, endAngle: CGFloat.pi*2, clockwise: false)
+        path.stroke()
+        return path
+    }
+    
+    func createX(_ rect: CGRect) -> UIBezierPath {
+        let path = UIBezierPath()
+        #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).setStroke()
+        path.lineWidth = GuitarChordViewConstants.smallDotLineWidthProportion * rect.width
+        path.lineCapStyle = .butt
+        path.move(to: rect.origin)
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.move(to: CGPoint(x: rect.maxX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
         path.stroke()
         return path
     }

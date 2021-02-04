@@ -88,7 +88,7 @@ struct ChordAnalyzer {
                 chordSeparatorStartIndex = chordString.index(chordString.startIndex, offsetBy: 2)
             }
         }
-        let basePitch = Pitch(toneName: base, toneHeight: toneHeight)
+        let basePitch = Pitch(toneName: base, toneHeight: toneHeight, transpose: 0)
         if let slashChordIdx = chordString.firstIndex(of: "/") {
             let identifier = String(chordString[chordSeparatorStartIndex..<slashChordIdx])
             let newBase = String(chordString[chordString.index(slashChordIdx, offsetBy: 1)..<chordString.endIndex])
@@ -122,14 +122,14 @@ struct ChordAnalyzer {
     func adjustChordByGuitarShape(chord: [Pitch], closeFret: Int, capo: Int) -> [Pitch] {
         var adjustedChord = [Pitch]()
         var availableTones = [Pitch]()
-        var availableToneDict = [Int:Pitch]()
+        var availableToneDict = [Int:Set<Pitch>]()
         let baseTone = chord[0].toneName
         availableTones += ((capo == 0) ? applyCapo(openString: currentTuning, capoFret: capo) : currentTuning)
         for tone in availableTones {
-            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 1 + closeFret-capo))
-            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 2 + closeFret-capo))
-            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 3 + closeFret-capo))
-            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 4 + closeFret-capo))
+            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 1 + closeFret))
+            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 2 + closeFret))
+            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 3 + closeFret))
+            availableTones.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: 4 + closeFret))
         }
         for pitch in chord {
             for tone in availableTones {
@@ -145,31 +145,33 @@ struct ChordAnalyzer {
         for tone in adjustedChord {
             if tone.toneName == baseTone, tone.lineNumber! > 3, baseToneLine == nil {
                 var base = Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!)
-                availableToneDict[tone.lineNumber!] = base.makeBase()
+                if availableToneDict[tone.lineNumber!] != nil {
+                    availableToneDict[tone.lineNumber!]!.insert(base.makeBase())
+                } else {
+                    availableToneDict[tone.lineNumber!] = [base.makeBase()]
+                }
                 baseToneLine = tone.lineNumber!
-                chordTest = chordTest.filter { $0 != tone.toneName }
+                chordTest.remove(at: chordTest.firstIndex(matching: tone.toneName)!)
             } else {
-                if let unwrappedBaseToneLine = baseToneLine, tone.lineNumber! < unwrappedBaseToneLine {
-                    if let containing = availableToneDict[tone.lineNumber!] {
-                        if chordTest.isEmpty, containing > tone {
-                            availableToneDict[tone.lineNumber!] = tone
-                            chordTest = chordTest.filter { $0 != tone.toneName }
-                            chordTest.append(containing.toneName)
-                        }
+                if tone.lineNumber! < baseToneLine ?? 5 {
+                    if availableToneDict[tone.lineNumber!] != nil {
+                        availableToneDict[tone.lineNumber!]!.insert(tone)
                     } else {
-                        availableToneDict[tone.lineNumber!] = tone
-                        chordTest = chordTest.filter { $0 != tone.toneName }
+                        availableToneDict[tone.lineNumber!] = [tone]
                     }
                 }
             }
 //            print(chordTest)
 //            print(availableToneDict)
         }
+        
         adjustedChord.removeAll()
-        for tone in availableToneDict.values {
-            adjustedChord.append(tone)
-        }
-        return adjustedChord.sorted()
+        return selectTones(availableToneDict, chordElementsNames: chord.map { $0.toneName })
+//        for tone in availableToneDict.values {
+//            adjustedChord.append(contentsOf: tone)
+//        }
+//        print(adjustedChord.sorted())
+//        return adjustedChord.sorted()
     }
     
     func applyCapo(openString: [Pitch], capoFret: Int) -> [Pitch] {
@@ -177,12 +179,121 @@ struct ChordAnalyzer {
         for tone in openString {
             adjustedChord.append(Pitch(toneName: tone.toneName, toneHeight: tone.toneHeight, lineNumber: tone.lineNumber!, transpose: capoFret))
         }
-        return adjustedChord.sorted()
+        return adjustedChord
+    }
+    
+    func selectTones(_ toneDict: [Int:Set<Pitch>], chordElementsNames: [String]) -> [Pitch] {
+        print(toneDict)
+        var chordToneFilter = chordElementsNames
+        var usedLines = [Int]()
+        var fretCounter = [0, 0, 0, 0, 0]
+        var selected = [Pitch]()
+        var suspended = [Pitch]()
+        print(chordToneFilter)
+        // 줄에 1개 있는 음은 바로 넣어버림
+        for line in toneDict {
+            if line.value.count == 1 {
+                selected.append(contentsOf: line.value)
+                chordToneFilter = chordToneFilter.filter { $0 != line.value.first!.toneName }
+                fretCounter[line.value.first!.distance(from: currentTuning[6-line.key])] += 1
+                usedLines.append(line.value.first!.lineNumber!)
+            } else if line.value.count > 1 {
+                suspended.append(contentsOf: line.value)
+            }
+        }
+//        suspended.sort(by: {$0 > $1})
+//        print("selected: ", selected)
+//        print("suspended: ", suspended)
+//        print("used lines: ", usedLines)
+//        print("fretCount: ", fretCounter)
+        
+        
+        // 겹치는 음 중 필수 코드 구성음일 경우 넣어버림
+//        for pitch in suspended {
+//            for name in chordToneFilter {
+//                if pitch.toneName == name {
+//                    selected.append(pitch)
+//                    chordToneFilter = chordToneFilter.filter { $0 != pitch.toneName }
+//                    fretCounter[pitch.distance(from: currentTuning[6-pitch.lineNumber!])] += 1
+//                    usedLines.append(pitch.lineNumber!)
+//                }
+//            }
+//        }
+//        suspended = suspended.filter { !usedLines.contains($0.lineNumber!) }
+//
+//
+//        print(suspended)
+//        print("fretCount: ", fretCounter)
+        
+        // 그 외 겹치는 음은 조건에 따라 선택
+        print(fretCounter)
+        print(chordToneFilter)
+        var pointTable = [(Int, Pitch)]()
+        var maxFingersNum = 0
+        var maxFret = 0
+        for (idx, fingerNumber) in fretCounter.enumerated() {
+            if fingerNumber > maxFingersNum{
+                maxFret = idx
+                maxFingersNum = fingerNumber
+            }
+        }
+        if maxFingersNum >= 2 {
+            var array = [Int]()
+            for element in selected {
+                if element.distance(from: currentTuning[6-element.lineNumber!]) == maxFret {
+                    array.append(element.lineNumber!)
+                }
+            }
+            array.sort()
+            if abs(array.first! - array.last!) <= 2 {
+                maxFret = 0
+            } else {
+                var beforeHighFinger = 0
+                for index in 0..<maxFret {
+                    beforeHighFinger += fretCounter[index]
+                }
+                if beforeHighFinger > 0 {
+                    maxFret = 0
+                }
+            }
+        } else if maxFingersNum == 1 {
+            maxFret = 0
+        }
+        print(maxFret)
+        for tone in suspended {
+            let distance = tone.distance(from: currentTuning[6-tone.lineNumber!])
+            var point = fretCounter[distance]*10 - distance // 주위에 있는 음 수 - 개방현으로부터 거리
+            if chordToneFilter.contains(tone.toneName), suspended.map({ $0.toneName }).howManyItContains(matching: tone.toneName) == 1 {
+                point += 1000
+            }
+            if distance < maxFret { // 바레 뒤에 있는 음
+                point -= 600
+            }
+            point -= 500 * abs(distance - maxFret)
+            if distance == 0 {
+                point += 5
+            }
+            if fretCounter[distance] != 0 {
+                point += 500
+            }
+            
+
+            pointTable.append((point, tone))
+        }
+        print(pointTable)
+        pointTable.sort(by: {$0.0 > $1.0})
+        for element in pointTable {
+            if !usedLines.contains(element.1.lineNumber!) {
+                selected.append(element.1)
+                usedLines.append(element.1.lineNumber!)
+            }
+        }
+        return selected
     }
 }
 
 
-struct Pitch : Comparable, CustomStringConvertible {
+struct Pitch : Comparable, CustomStringConvertible, Hashable {
     
     var toneName: String
     var toneHeight: Int
@@ -211,8 +322,12 @@ struct Pitch : Comparable, CustomStringConvertible {
     
     init(toneName: String, toneHeight: Int, lineNumber: Int, transpose: Int) {
         let nameToNum = Pitch.toneHeightDict[toneName] ?? 0
-        let newToneHeight = toneHeight + (nameToNum + transpose)/12
-        let newToneName = Pitch.heightToneDict[(nameToNum + transpose)%12]!
+        var dividend = (nameToNum + transpose)
+        while dividend < 0 {
+            dividend += 12
+        }
+        let newToneHeight = toneHeight + dividend/12
+        let newToneName = Pitch.heightToneDict[dividend%12]!
         self.toneName = newToneName
         self.toneHeight = newToneHeight
         self.lineNumber = lineNumber
@@ -228,10 +343,19 @@ struct Pitch : Comparable, CustomStringConvertible {
     
     static func < (lhs: Pitch, rhs: Pitch) -> Bool {
         if lhs.toneHeight == rhs.toneHeight {
-            return toneHeightDict[lhs.toneName]! < toneHeightDict[rhs.toneName]!
+            if lhs.toneName == rhs.toneName {
+                return lhs.lineNumber! > rhs.lineNumber!
+            }
+            else {
+                return toneHeightDict[lhs.toneName]! < toneHeightDict[rhs.toneName]!
+            }
         } else{
             return lhs.toneHeight < rhs.toneHeight
         }
+    }
+    
+    static func == (lhs: Pitch, rhs: Pitch) -> Bool {
+        return lhs.toneName == rhs.toneName && lhs.toneHeight == rhs.toneHeight && lhs.lineNumber == rhs.lineNumber
     }
     
     func distance(from compare: Pitch) -> Int {
@@ -258,5 +382,25 @@ extension String {
             }
         }
         return nil
+    }
+}
+
+extension Array {
+    func firstIndex(matching: Element) -> Int? where Element: Equatable{
+        for (idx, elem) in self.enumerated() {
+            if elem == matching {
+                return idx
+            }
+        }
+        return nil
+    }
+    func howManyItContains(matching: Element) -> Int where Element: Equatable {
+        var count = 0
+        for elem in self {
+            if elem == matching {
+                count += 1
+            }
+        }
+        return count
     }
 }
