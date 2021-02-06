@@ -183,7 +183,7 @@ struct ChordAnalyzer {
     }
     
     func selectTones(_ toneDict: [Int:Set<Pitch>], chordElementsNames: [String]) -> [Pitch] {
-        print(toneDict)
+//        print(toneDict)
         var chordToneFilter = chordElementsNames
         var usedLines = [Int]()
         var fretCounter = [0, 0, 0, 0, 0]
@@ -226,8 +226,8 @@ struct ChordAnalyzer {
 //        print("fretCount: ", fretCounter)
         
         // 그 외 겹치는 음은 조건에 따라 선택
-        print(fretCounter)
-        print(chordToneFilter)
+//        print(fretCounter)
+//        print(chordToneFilter)
         var pointTable = [(Int, Pitch)]()
         var maxFingersNum = 0
         var maxFret = 0
@@ -259,7 +259,7 @@ struct ChordAnalyzer {
         } else if maxFingersNum == 1 {
             maxFret = 0
         }
-        print(maxFret)
+//        print(maxFret)
         for tone in suspended {
             let distance = tone.distance(from: currentTuning[6-tone.lineNumber!])
             var point = fretCounter[distance]*10 - distance // 주위에 있는 음 수 - 개방현으로부터 거리
@@ -278,7 +278,7 @@ struct ChordAnalyzer {
             }
             pointTable.append((point, tone))
         }
-        print(pointTable)
+//        print(pointTable)
         pointTable.sort(by: {$0.0 > $1.0})
         for element in pointTable {
             if chordToneFilter.contains(element.1.toneName), !usedLines.contains(element.1.lineNumber!) {
@@ -290,7 +290,7 @@ struct ChordAnalyzer {
                 usedLines.append(element.1.lineNumber!)
             }
         }
-        return selected
+        return selected.sorted()
     }
 }
 

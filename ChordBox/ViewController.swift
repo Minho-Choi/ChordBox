@@ -31,7 +31,6 @@ class ViewController: UIViewController {
     var bpm: Int = 120
     let bank = AKPWMOscillatorBank()
     var isPlaying = false
-    
     var interval : TimeInterval {
         return TimeInterval(60/Float(bpm))
     }
@@ -40,16 +39,18 @@ class ViewController: UIViewController {
     let highTickURL = Bundle.main.url(forResource: "high tick", withExtension: "mp3")
     let lowTickURL = Bundle.main.url(forResource: "low tick", withExtension: "mp3")
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        
         chordTextFieldOutlet.delegate = self
         playButton.sizeToFit()
         bpmLabel.text = "\(bpm)"
         bpmSlider.minimumValue = 20
         bpmSlider.maximumValue = 240
         bpmSlider.value = Float(bpm)
-        
+
         if let highTickurl = highTickURL, let lowTickurl = lowTickURL {
             do {
                 highSound = try AVAudioPlayer(contentsOf: highTickurl)
@@ -62,16 +63,14 @@ class ViewController: UIViewController {
         }
     
 
-        bank.pulseWidth = 0.9
+        bank.pulseWidth = 0.8
         
         bank.attackDuration = 0
         bank.decayDuration = 0.5
         bank.sustainLevel = 0
         bank.releaseDuration = 0.1
         
-        let reverb = AKReverb(bank)
-        reverb.loadFactoryPreset(.largeHall2)
-        reverb.dryWetMix = 0.5
+        let reverb = AKChowningReverb(bank)
         AKManager.output = reverb
         
         do {
@@ -79,33 +78,35 @@ class ViewController: UIViewController {
         } catch {
             print("AKManager starting error occured")
         }
-        // Do any additional setup after loading the view.
+
+        
     }
     @IBAction func isChordPlayButtonPressed(_ sender: Any) {
-        playChord(chordInfo: chordTones)
+        for tone in chordTones {
+            self.playTone(tone: tone)
+        }
     }
     
-    func playChord(chordInfo: [Pitch]) {
-        for tone in chordInfo {
-            let midinoteNumber = (tone.toneHeight+1) * 12 + chordAnalyzer.toneHeightDict[tone.toneName]!
-            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.1) {
-                self.bank.play(noteNumber: MIDINoteNumber(midinoteNumber), velocity: 127)
-            }
-            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
-                self.bank.stop(noteNumber: MIDINoteNumber(midinoteNumber))
-            }
+    func playTone(tone: Pitch) {
+        let midinoteNumber = (tone.toneHeight+1) * 12 + self.chordAnalyzer.toneHeightDict[tone.toneName]!
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.bank.play(noteNumber: MIDINoteNumber(midinoteNumber), velocity: 127)
         }
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
+            self.bank.stop(noteNumber: MIDINoteNumber(midinoteNumber))
+        }
+
     }
     
     @IBAction func isPlayButtonTapped(_ sender: Any) {
-        if isMetronomeOn {  // 켜진 상태 -> 일시정지 버튼 모양 나와야 함
+        if isMetronomeOn {
             isMetronomeOn = false
-            playButton.tintColor = .gray
             onTimerEnd()
+            playButton.tintColor = .gray
         }
-        else {          // 꺼진 상태 -> 재생 버튼 모양 나와야 함
-            isMetronomeOn = true
+        else {
             playButton.tintColor = .green
+            isMetronomeOn = true
             onTimerStart()
         }
     }
@@ -150,15 +151,19 @@ class ViewController: UIViewController {
                 timer.invalidate()
             }
         }
-        
         counter = 0
-//        txtTime.text = String(counter)
     }
     
     @objc func timerCallback(){
         playTick(isHighTick: counter%4 == 0 ? true : false)
         counter += 1
-//        txtTime.text = String(counter)
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: self.interval/4, delay: 0, options: [.autoreverse, .curveEaseInOut], animations: {
+                self.playButton.tintColor = .gray
+            }, completion: { _ in
+                self.playButton.tintColor = .green
+            })
+        }
     }
 
 }
