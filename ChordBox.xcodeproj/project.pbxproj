@@ -3,12 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B4427E9825CE67820056BAE9 /* high tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9625CE67820056BAE9 /* high tick.mp3 */; };
-		B4427E9925CE67820056BAE9 /* low tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9725CE67820056BAE9 /* low tick.mp3 */; };
+		B4427E9F25CE91AC0056BAE9 /* low tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9D25CE91AC0056BAE9 /* low tick.mp3 */; };
+		B4427EA025CE91AC0056BAE9 /* high tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */; };
 		B46F67B325CAA0F60097CFA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */; };
 		B46F67B525CAA0F60097CFA2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */; };
 		B46F67B725CAA0F60097CFA2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67B625CAA0F60097CFA2 /* ViewController.swift */; };
@@ -20,8 +20,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B4427E9625CE67820056BAE9 /* high tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "high tick.mp3"; sourceTree = "<group>"; };
-		B4427E9725CE67820056BAE9 /* low tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "low tick.mp3"; sourceTree = "<group>"; };
+		078931C5579E515FE721C537 /* Pods-ChordBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.release.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.release.xcconfig"; sourceTree = "<group>"; };
+		1FE6A9C6D27C8014B45BEC2D /* Pods-ChordBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.debug.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.debug.xcconfig"; sourceTree = "<group>"; };
+		6164CE75E8E44375A81CB18C /* Pods_ChordBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChordBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4427E9D25CE91AC0056BAE9 /* low tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "low tick.mp3"; path = "../../../Desktop/low tick.mp3"; sourceTree = "<group>"; };
+		B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "high tick.mp3"; path = "../../../Desktop/high tick.mp3"; sourceTree = "<group>"; };
 		B46F67AF25CAA0F60097CFA2 /* ChordBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChordBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,11 +48,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		54F4050B602AD5A563231814 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1FE6A9C6D27C8014B45BEC2D /* Pods-ChordBox.debug.xcconfig */,
+				078931C5579E515FE721C537 /* Pods-ChordBox.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		B46F67A625CAA0F60097CFA2 = {
 			isa = PBXGroup;
 			children = (
 				B46F67B125CAA0F60097CFA2 /* ChordBox */,
 				B46F67B025CAA0F60097CFA2 /* Products */,
+				54F4050B602AD5A563231814 /* Pods */,
+				DD1E89286C0F778F58ADC3EF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,16 +81,24 @@
 				B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */,
 				B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */,
 				B46F67B625CAA0F60097CFA2 /* ViewController.swift */,
-				B4427E9625CE67820056BAE9 /* high tick.mp3 */,
-				B4427E9725CE67820056BAE9 /* low tick.mp3 */,
 				B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */,
 				B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */,
+				B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */,
+				B4427E9D25CE91AC0056BAE9 /* low tick.mp3 */,
 				B46F67B825CAA0F60097CFA2 /* Main.storyboard */,
 				B46F67BB25CAA0F90097CFA2 /* Assets.xcassets */,
 				B46F67BD25CAA0F90097CFA2 /* LaunchScreen.storyboard */,
 				B46F67C025CAA0F90097CFA2 /* Info.plist */,
 			);
 			path = ChordBox;
+			sourceTree = "<group>";
+		};
+		DD1E89286C0F778F58ADC3EF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6164CE75E8E44375A81CB18C /* Pods_ChordBox.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,9 +108,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B46F67C325CAA0F90097CFA2 /* Build configuration list for PBXNativeTarget "ChordBox" */;
 			buildPhases = (
+				E2F56AAE26DAEABAEBC04379 /* [CP] Check Pods Manifest.lock */,
+				C763BE12984FE5A12C1260A3 /* [CP] Prepare Artifacts */,
 				B46F67AB25CAA0F60097CFA2 /* Sources */,
 				B46F67AC25CAA0F60097CFA2 /* Frameworks */,
 				B46F67AD25CAA0F60097CFA2 /* Resources */,
+				9A2CA7283F7E9E7A632F52F9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -137,14 +162,73 @@
 			buildActionMask = 2147483647;
 			files = (
 				B46F67BF25CAA0F90097CFA2 /* LaunchScreen.storyboard in Resources */,
-				B4427E9925CE67820056BAE9 /* low tick.mp3 in Resources */,
 				B46F67BC25CAA0F90097CFA2 /* Assets.xcassets in Resources */,
-				B4427E9825CE67820056BAE9 /* high tick.mp3 in Resources */,
+				B4427EA025CE91AC0056BAE9 /* high tick.mp3 in Resources */,
 				B46F67BA25CAA0F60097CFA2 /* Main.storyboard in Resources */,
+				B4427E9F25CE91AC0056BAE9 /* low tick.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9A2CA7283F7E9E7A632F52F9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C763BE12984FE5A12C1260A3 /* [CP] Prepare Artifacts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-artifacts-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Prepare Artifacts";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-artifacts-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-artifacts.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E2F56AAE26DAEABAEBC04379 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ChordBox-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B46F67AB25CAA0F60097CFA2 /* Sources */ = {
@@ -299,6 +383,7 @@
 		};
 		B46F67C425CAA0F90097CFA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FE6A9C6D27C8014B45BEC2D /* Pods-ChordBox.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -319,6 +404,7 @@
 		};
 		B46F67C525CAA0F90097CFA2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 078931C5579E515FE721C537 /* Pods-ChordBox.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

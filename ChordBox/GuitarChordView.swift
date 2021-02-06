@@ -6,7 +6,7 @@
 //
 
 import UIKit
-@IBDesignable
+
 class GuitarChordView: UIView {
     
     var openChord: [Pitch] = []
@@ -23,7 +23,7 @@ class GuitarChordView: UIView {
         let dotStartPoint = CGPoint(x: startPoint.x + fretWidth/2-dotRadius, y: startPoint.y - dotRadius)
         let smallDotStartPoint = CGPoint(x: startPoint.x + fretWidth/2-smallDotRadius, y: startPoint.y - smallDotRadius)
         let path = UIBezierPath()
-        #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).setStroke()
+        UIColor.label.setStroke()
         path.move(to: startPoint)
         path.addLine(to: CGPoint(x: startPoint.x, y: startPoint.y + chordHeight))
         path.lineWidth = chordWidth * GuitarChordViewConstants.thickThicknessProportion
@@ -71,7 +71,7 @@ class GuitarChordView: UIView {
     
     func createDot(_ rect: CGRect, isBase: Bool) -> UIBezierPath {
         let path = UIBezierPath()
-        #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).setFill()
+        UIColor.label.setFill()
         if isBase {
             #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1).setFill()
         }
@@ -82,7 +82,7 @@ class GuitarChordView: UIView {
     
     func createCircle(_ rect: CGRect, isBase: Bool) -> UIBezierPath {
         let path = UIBezierPath()
-        #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).setStroke()
+        UIColor.label.setStroke()
         if isBase {
             #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1).setStroke()
         }
@@ -94,7 +94,7 @@ class GuitarChordView: UIView {
     
     func createX(_ rect: CGRect) -> UIBezierPath {
         let path = UIBezierPath()
-        #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).setStroke()
+        UIColor.label.setStroke()
         path.lineWidth = GuitarChordViewConstants.smallDotLineWidthProportion * rect.width
         path.lineCapStyle = .butt
         path.move(to: rect.origin)
