@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B4427E9825CE67820056BAE9 /* high tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9625CE67820056BAE9 /* high tick.mp3 */; };
+		B4427E9925CE67820056BAE9 /* low tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9725CE67820056BAE9 /* low tick.mp3 */; };
 		B46F67B325CAA0F60097CFA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */; };
 		B46F67B525CAA0F60097CFA2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */; };
 		B46F67B725CAA0F60097CFA2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67B625CAA0F60097CFA2 /* ViewController.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B4427E9625CE67820056BAE9 /* high tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "high tick.mp3"; sourceTree = "<group>"; };
+		B4427E9725CE67820056BAE9 /* low tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "low tick.mp3"; sourceTree = "<group>"; };
 		B46F67AF25CAA0F60097CFA2 /* ChordBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChordBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 				B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */,
 				B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */,
 				B46F67B625CAA0F60097CFA2 /* ViewController.swift */,
+				B4427E9625CE67820056BAE9 /* high tick.mp3 */,
+				B4427E9725CE67820056BAE9 /* low tick.mp3 */,
 				B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */,
 				B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */,
 				B46F67B825CAA0F60097CFA2 /* Main.storyboard */,
@@ -131,7 +137,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B46F67BF25CAA0F90097CFA2 /* LaunchScreen.storyboard in Resources */,
+				B4427E9925CE67820056BAE9 /* low tick.mp3 in Resources */,
 				B46F67BC25CAA0F90097CFA2 /* Assets.xcassets in Resources */,
+				B4427E9825CE67820056BAE9 /* high tick.mp3 in Resources */,
 				B46F67BA25CAA0F60097CFA2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

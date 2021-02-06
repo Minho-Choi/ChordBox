@@ -276,14 +276,16 @@ struct ChordAnalyzer {
             if fretCounter[distance] != 0 {
                 point += 500
             }
-            
-
             pointTable.append((point, tone))
         }
         print(pointTable)
         pointTable.sort(by: {$0.0 > $1.0})
         for element in pointTable {
-            if !usedLines.contains(element.1.lineNumber!) {
+            if chordToneFilter.contains(element.1.toneName), !usedLines.contains(element.1.lineNumber!) {
+                selected.append(element.1)
+                usedLines.append(element.1.lineNumber!)
+            }
+            else if !usedLines.contains(element.1.lineNumber!) {
                 selected.append(element.1)
                 usedLines.append(element.1.lineNumber!)
             }
