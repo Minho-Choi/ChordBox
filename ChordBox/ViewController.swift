@@ -50,7 +50,8 @@ class ViewController: UIViewController {
         bpmSlider.minimumValue = 20
         bpmSlider.maximumValue = 240
         bpmSlider.value = Float(bpm)
-
+        chordTextFieldOutlet.autocorrectionType = .no
+        
         if let highTickurl = highTickURL, let lowTickurl = lowTickURL {
             do {
                 highSound = try AVAudioPlayer(contentsOf: highTickurl)
@@ -62,13 +63,11 @@ class ViewController: UIViewController {
             }
         }
     
-
         bank.pulseWidth = 0.8
-        
         bank.attackDuration = 0
-        bank.decayDuration = 0.5
-        bank.sustainLevel = 0
-        bank.releaseDuration = 0.1
+        bank.decayDuration = 0
+        bank.sustainLevel = 1
+        bank.releaseDuration = 0.5
         
         let reverb = AKChowningReverb(bank)
         AKManager.output = reverb
@@ -82,20 +81,19 @@ class ViewController: UIViewController {
         
     }
     @IBAction func isChordPlayButtonPressed(_ sender: Any) {
-        for tone in chordTones {
-            self.playTone(tone: tone)
+        for (idx, tone) in chordTones.enumerated() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1*idx) {
+                self.playTone(tone: tone)
+            }
         }
     }
     
     func playTone(tone: Pitch) {
         let midinoteNumber = (tone.toneHeight+1) * 12 + self.chordAnalyzer.toneHeightDict[tone.toneName]!
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.bank.play(noteNumber: MIDINoteNumber(midinoteNumber), velocity: 127)
-        }
-        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
+        self.bank.play(noteNumber: MIDINoteNumber(midinoteNumber), velocity: 127)
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.1) {
             self.bank.stop(noteNumber: MIDINoteNumber(midinoteNumber))
         }
-
     }
     
     @IBAction func isPlayButtonTapped(_ sender: Any) {
@@ -105,9 +103,9 @@ class ViewController: UIViewController {
             playButton.tintColor = .gray
         }
         else {
-            playButton.tintColor = .green
             isMetronomeOn = true
             onTimerStart()
+            playButton.tintColor = .green
         }
     }
     
@@ -157,13 +155,11 @@ class ViewController: UIViewController {
     @objc func timerCallback(){
         playTick(isHighTick: counter%4 == 0 ? true : false)
         counter += 1
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: self.interval/4, delay: 0, options: [.autoreverse, .curveEaseInOut], animations: {
-                self.playButton.tintColor = .gray
-            }, completion: { _ in
-                self.playButton.tintColor = .green
-            })
-        }
+        UIView.animate(withDuration: self.interval/4, delay: 0, options: [.autoreverse, .curveEaseInOut], animations: {
+            self.playButton.tintColor = .gray
+        }, completion: { _ in
+            self.playButton.tintColor = .green
+        })
     }
 
 }

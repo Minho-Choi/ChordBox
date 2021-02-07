@@ -38,7 +38,7 @@
                                                     <imageReference key="image" image="metronome" catalog="system" symbolScale="large"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="isPlayButtonTapped:" destination="BYZ-38-t0r" eventType="touchDown" id="bQV-Hb-Pcr"/>
+                                                    <action selector="isPlayButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oyr-i3-I90"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="amv-Pe-cTF">
