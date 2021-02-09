@@ -19,38 +19,45 @@ class ViewController: UIViewController {
     @IBOutlet weak var bpmSlider: UISlider!
     @IBOutlet weak var bpmLabel: UILabel!
     
-    // ETC
-    let chordAnalyzer = ChordAnalyzer()
-    var chordTones = [Pitch]()
-    var metronome: AVAudioPlayer?
-    var mTimer : Timer?
-    var highSound = AVAudioPlayer()
-    var lowSound = AVAudioPlayer()
-    var counter: Int = 0
-    var isMetronomeOn = false
-    var bpm: Int = 120
-    let bank = AKPWMOscillatorBank()
-    var isPlaying = false
-    var interval : TimeInterval {
+    // Chord Data
+    private var chordAnalyzer = ChordAnalyzer()
+    private var chordTones = [Pitch]()
+    
+    // Metronome vars
+    private var metronome: AVAudioPlayer?
+    private var mTimer : Timer?
+    private var highSound = AVAudioPlayer()
+    private var lowSound = AVAudioPlayer()
+    private var counter: Int = 0
+    private var isMetronomeOn = false
+    private var bpm: Int = 120
+    private var interval : TimeInterval {
         return TimeInterval(60/Float(bpm))
     }
     
-    // File URLs
-    let highTickURL = Bundle.main.url(forResource: "high tick", withExtension: "mp3")
-    let lowTickURL = Bundle.main.url(forResource: "low tick", withExtension: "mp3")
+    // Chord player vars
+    private let bank = AKPWMOscillatorBank()
+
+    
+    // Metronome File URLs
+    private let highTickURL = Bundle.main.url(forResource: "high tick", withExtension: "mp3")
+    private let lowTickURL = Bundle.main.url(forResource: "low tick", withExtension: "mp3")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         
+        // Textfield setup
         chordTextFieldOutlet.delegate = self
+        chordTextFieldOutlet.autocorrectionType = .no
+        
+        // Metronome setup
         playButton.sizeToFit()
         bpmLabel.text = "\(bpm)"
         bpmSlider.minimumValue = 20
         bpmSlider.maximumValue = 240
         bpmSlider.value = Float(bpm)
-        chordTextFieldOutlet.autocorrectionType = .no
         
         if let highTickurl = highTickURL, let lowTickurl = lowTickURL {
             do {
@@ -63,23 +70,21 @@ class ViewController: UIViewController {
             }
         }
     
+        // Chord player setup
         bank.pulseWidth = 0.8
         bank.attackDuration = 0
         bank.decayDuration = 0
         bank.sustainLevel = 1
         bank.releaseDuration = 0.5
-        
         let reverb = AKChowningReverb(bank)
         AKManager.output = reverb
-        
         do {
             try AKManager.start()
         } catch {
             print("AKManager starting error occured")
         }
-
-        
     }
+    
     @IBAction func isChordPlayButtonPressed(_ sender: Any) {
         for (idx, tone) in chordTones.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1*idx) {
@@ -88,7 +93,8 @@ class ViewController: UIViewController {
         }
     }
     
-    func playTone(tone: Pitch) {
+    // MARK: - Playing certain pitch
+    private func playTone(tone: Pitch) {
         let midinoteNumber = (tone.toneHeight+1) * 12 + self.chordAnalyzer.toneHeightDict[tone.toneName]!
         self.bank.play(noteNumber: MIDINoteNumber(midinoteNumber), velocity: 127)
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.1) {
@@ -109,15 +115,8 @@ class ViewController: UIViewController {
         }
     }
     
-    private func playTick(isHighTick : Bool) {
-        DispatchQueue.global(qos: .userInteractive).async {
-            if isHighTick {
-                self.highSound.play()
-            } else {
-                self.lowSound.play()
-            }
-        }
-    }
+    // MARK: - BPM Slider work
+    
     @IBAction func bpmSliderSlided(_ sender: UISlider) {
         bpm = Int(bpmSlider.value)
         bpmLabel.text = "\(bpm)"
@@ -127,7 +126,8 @@ class ViewController: UIViewController {
         }
     }
     
-    func onTimerStart() {
+    // MARK: - Timer initialization
+    private func onTimerStart() {
         if let timer = mTimer {
             //timer 객체가 nil 이 아닌경우에는 invalid 상태에만 시작한다
             if !timer.isValid {
@@ -142,8 +142,9 @@ class ViewController: UIViewController {
             mTimer?.tolerance = 0.0001
         }
     }
-
-    func onTimerEnd() {
+    
+    // MARK: - Timer invalidation
+    private func onTimerEnd() {
         if let timer = mTimer {
             if(timer.isValid){
                 timer.invalidate()
@@ -152,7 +153,8 @@ class ViewController: UIViewController {
         counter = 0
     }
     
-    @objc func timerCallback(){
+    // MARK: - Callback function of timer initializer
+    @objc private func timerCallback(){
         playTick(isHighTick: counter%4 == 0 ? true : false)
         counter += 1
         UIView.animate(withDuration: self.interval/4, delay: 0, options: [.autoreverse, .curveEaseInOut], animations: {
@@ -161,19 +163,32 @@ class ViewController: UIViewController {
             self.playButton.tintColor = .green
         })
     }
+    
+    private func playTick(isHighTick : Bool) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            if isHighTick {
+                self.highSound.play()
+            } else {
+                self.lowSound.play()
+            }
+        }
+    }
 
 }
 
+
+
+
+// MARK: - When textfield is entered
 extension ViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         var string = ""
         if let tones = chordAnalyzer.analyze(chordString: chordTextFieldOutlet.text ?? "", toneHeight: 3) {
-            chordTones = tones
-            for tone in tones {
-                string.append(tone.description + " ")
+            chordTones = tones.pitches
+            for tone in tones.pitches {
+                string.append(tone.toneName + " ")
             }
-            chordTones = chordAnalyzer.adjustChordByGuitarShape(chord: tones, closeFret: 0, capo: 0)
             self.chordView.chord = chordTones
             self.chordView.openChord = chordAnalyzer.currentTuning
         }

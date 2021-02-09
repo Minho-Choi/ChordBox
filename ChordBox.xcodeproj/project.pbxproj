@@ -17,6 +17,12 @@
 		B46F67BF25CAA0F90097CFA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B46F67BD25CAA0F90097CFA2 /* LaunchScreen.storyboard */; };
 		B46F67C825CAA22F0097CFA2 /* ChordAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */; };
 		B46F67CC25CADC390097CFA2 /* GuitarChordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */; };
+		B47D8DCC25D163E7009FB15C /* ChordForm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DCA25D163E7009FB15C /* ChordForm.xcdatamodeld */; };
+		B47D8DD025D22D38009FB15C /* ChordForm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DCE25D22D38009FB15C /* ChordForm+CoreDataClass.swift */; };
+		B47D8DD125D22D38009FB15C /* ChordForm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DCF25D22D38009FB15C /* ChordForm+CoreDataProperties.swift */; };
+		B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DD425D235B6009FB15C /* CoreDataManager.swift */; };
+		B47D8DDC25D23C9B009FB15C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */; };
+		B47D8DEA25D28C75009FB15C /* chord_fingers.json in Resources */ = {isa = PBXBuildFile; fileRef = B47D8DE925D28C75009FB15C /* chord_fingers.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +41,12 @@
 		B46F67C025CAA0F90097CFA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChordAnalyzer.swift; sourceTree = "<group>"; };
 		B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuitarChordView.swift; sourceTree = "<group>"; };
+		B47D8DCB25D163E7009FB15C /* ChordData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChordData.xcdatamodel; sourceTree = "<group>"; };
+		B47D8DCE25D22D38009FB15C /* ChordForm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChordForm+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B47D8DCF25D22D38009FB15C /* ChordForm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChordForm+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B47D8DD425D235B6009FB15C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		B47D8DE925D28C75009FB15C /* chord_fingers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chord_fingers.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +93,13 @@
 				B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */,
 				B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */,
 				B46F67B625CAA0F60097CFA2 /* ViewController.swift */,
+				B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */,
+				B47D8DD425D235B6009FB15C /* CoreDataManager.swift */,
+				B47D8DCA25D163E7009FB15C /* ChordForm.xcdatamodeld */,
+				B47D8DCE25D22D38009FB15C /* ChordForm+CoreDataClass.swift */,
+				B47D8DCF25D22D38009FB15C /* ChordForm+CoreDataProperties.swift */,
 				B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */,
+				B47D8DE925D28C75009FB15C /* chord_fingers.json */,
 				B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */,
 				B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */,
 				B4427E9D25CE91AC0056BAE9 /* low tick.mp3 */,
@@ -166,6 +184,7 @@
 				B4427EA025CE91AC0056BAE9 /* high tick.mp3 in Resources */,
 				B46F67BA25CAA0F60097CFA2 /* Main.storyboard in Resources */,
 				B4427E9F25CE91AC0056BAE9 /* low tick.mp3 in Resources */,
+				B47D8DEA25D28C75009FB15C /* chord_fingers.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +258,11 @@
 				B46F67C825CAA22F0097CFA2 /* ChordAnalyzer.swift in Sources */,
 				B46F67B725CAA0F60097CFA2 /* ViewController.swift in Sources */,
 				B46F67B325CAA0F60097CFA2 /* AppDelegate.swift in Sources */,
+				B47D8DD125D22D38009FB15C /* ChordForm+CoreDataProperties.swift in Sources */,
+				B47D8DDC25D23C9B009FB15C /* IntroViewController.swift in Sources */,
+				B47D8DCC25D163E7009FB15C /* ChordForm.xcdatamodeld in Sources */,
+				B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */,
+				B47D8DD025D22D38009FB15C /* ChordForm+CoreDataClass.swift in Sources */,
 				B46F67B525CAA0F60097CFA2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,6 +469,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B47D8DCA25D163E7009FB15C /* ChordForm.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B47D8DCB25D163E7009FB15C /* ChordData.xcdatamodel */,
+			);
+			currentVersion = B47D8DCB25D163E7009FB15C /* ChordData.xcdatamodel */;
+			path = ChordForm.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B46F67A725CAA0F60097CFA2 /* Project object */;
 }
