@@ -8,9 +8,10 @@
 import Foundation
 
 struct ChordAnalyzer {
-    var chordRecommendationPreference: ChordRecommendPreferenceOption = .adjacent
-    let toneHeightDict: [String:Int] =
+    var chordRecommendationPreference: ChordRecommendPreferenceOption = .open
+    static let toneHeightDict: [String:Int] =
         ["C":0, "C#":1, "Db":1, "D":2, "D#":3, "Eb":3, "E":4, "F":5, "F#":6, "Gb":6, "G":7, "G#":8, "Ab":8, "A":9, "A#":10, "Bb":10, "B":11]
+    static let heightToneDict: [Int:String] = [0:"C", 1:"C#", 2:"D", 3:"D#", 4:"E", 5:"F", 6:"F#", 7:"G", 8:"G#", 9:"A", 10:"A#", 11:"B"]
     
     var currentTuning = [
         Pitch(toneName: "E", lineNumber: 6, fingerNumber: 0, fretNumber: 0),
@@ -25,12 +26,15 @@ struct ChordAnalyzer {
     
     mutating func analyze(chordString: String, toneHeight: Int) -> Chord? {
         var availableChords = [Chord]()
+        if chordString.isEmpty {
+            return nil
+        }
         var chordSeparatorStartIndex = chordString.index(chordString.startIndex, offsetBy: 1)
         var base = String(chordString[chordString.startIndex])
         var newBase : String? = nil
         var identifier = "maj"
         
-        if toneHeightDict[base] == nil {
+        if ChordAnalyzer.toneHeightDict[base] == nil {
             print("Wrong Chord Name!")
             return nil
         }
@@ -74,6 +78,10 @@ struct ChordAnalyzer {
             availableChords.append(chord)
         }
         var chordToReturn: Chord
+        if availableChords.isEmpty {
+            return nil
+        }
+        availableChords = availableChords.filter { $0.maxFret - $0.nonZeroMinFret <= 3 }
         switch chordRecommendationPreference {
         case .open: do {
             chordToReturn = availableChords.sorted(by: { $0.minFret < $1.minFret}).first!
@@ -104,23 +112,35 @@ struct ChordAnalyzer {
                 chordToReturn.pitches.insert(baseToAppend, at: index)
             }
         } else {
-            chordToReturn.pitches[chordToReturn.baseIndex].isBase = true
+            if chordToReturn.baseIndex > 0 {
+                chordToReturn.pitches[chordToReturn.baseIndex].isBase = true
+            }
         }
         return chordToReturn
     }
     
     func calculateFretNumber(lineNumber: Int, toneName: String) -> Int {
         var openTone = currentTuning[6-lineNumber]
-        while openTone.toneName != toneName {
+        let toneName2 = ChordAnalyzer.heightToneDict[analyzeToneName(toneName: toneName)]
+        while openTone.toneName != toneName && openTone.toneName != toneName2{
             openTone = openTone.detune(by: 1)
             if openTone.fretNumber > 24 {
                 print("fret number calculation error in \(toneName)")
                 break
             }
         }
-        return openTone.fretNumber - 1
+        return openTone.fretNumber
     }
     
+    func analyzeToneName(toneName: String) -> Int {
+        if toneName.contains("bb") {
+            return (ChordAnalyzer.toneHeightDict[String(toneName.dropLast())]! - 1)%12
+        } else if toneName.contains("##") {
+            return (ChordAnalyzer.toneHeightDict[String(toneName.dropLast())]! + 1)%12
+        } else {
+            return ChordAnalyzer.toneHeightDict[toneName]!
+        }
+    }
     func findNewBase(finger: Int, minFret: Int, newTone: String, availableStrings: [Int]) -> Pitch? {
         var candidate = [Pitch]()
         for string in availableStrings {
@@ -249,7 +269,13 @@ struct Chord {
         pitches.count
     }
     var minFret: Int {
-        pitches.min(by: { $0.fretNumber < $1.fretNumber})!.fretNumber
+        pitches.min(by: { $0.fretNumber < $1.fretNumber })!.fretNumber
+    }
+    var nonZeroMinFret: Int {
+        pitches.filter{ $0.fretNumber != 0 }.min(by: { $0.fretNumber < $1.fretNumber })?.fretNumber ?? 1
+    }
+    var maxFret: Int {
+        pitches.max(by: { $0.fretNumber < $1.fretNumber })?.fretNumber ?? 1
     }
     var baseIndex: Int {
         for (idx, pitch) in pitches.enumerated() {

@@ -95,7 +95,7 @@ class ViewController: UIViewController {
     
     // MARK: - Playing certain pitch
     private func playTone(tone: Pitch) {
-        let midinoteNumber = (tone.toneHeight+1) * 12 + self.chordAnalyzer.toneHeightDict[tone.toneName]!
+        let midinoteNumber = (tone.toneHeight+1) * 12 + chordAnalyzer.analyzeToneName(toneName: tone.toneName)
         self.bank.play(noteNumber: MIDINoteNumber(midinoteNumber), velocity: 127)
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.1) {
             self.bank.stop(noteNumber: MIDINoteNumber(midinoteNumber))
@@ -189,7 +189,7 @@ extension ViewController: UITextFieldDelegate {
             for tone in tones.pitches {
                 string.append(tone.toneName + " ")
             }
-            self.chordView.chord = chordTones
+            self.chordView.chord = tones
             self.chordView.openChord = chordAnalyzer.currentTuning
         }
         self.chordLabel.text = string

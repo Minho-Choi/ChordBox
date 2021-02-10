@@ -10,7 +10,7 @@ import UIKit
 class GuitarChordView: UIView {
     
     var openChord: [Pitch] = []
-    var chord: [Pitch] = []
+    var chord: Chord = Chord(pitches: [], structure: "", chordRoot: "", chordType: "")
     
     override func draw(_ rect: CGRect) {
         let chordWidth = rect.width * GuitarChordViewConstants.widthPropotion
@@ -44,7 +44,7 @@ class GuitarChordView: UIView {
         path.addLine(to: CGPoint(x: startPoint.x + chordWidth, y: startPoint.y))
         path.close()
         
-        
+        // inner line
         for idx in 1..<4 {
             let linePositionX = startPoint.x + fretWidth*CGFloat(idx)
             path.move(to: CGPoint(x: linePositionX, y: startPoint.y))
@@ -59,18 +59,24 @@ class GuitarChordView: UIView {
         path.lineWidth = chordWidth * GuitarChordViewConstants.thinThicknessProportion
         path.stroke()
         
+        // finger positions and numbers
         var openChordCounter = openChord.map { $0.lineNumber }
-        for tone in chord {
+        for tone in chord.pitches {
             let line = tone.lineNumber-1
-            let fret = tone.fretNumber
-            if fret > -1 {
-                path.append(createDot(CGRect(x: dotStartPoint.x + CGFloat(fret) * fretWidth, y: dotStartPoint.y + CGFloat(line)*stringWidth, width: dotRadius*2, height: dotRadius*2),
+            print(chord.nonZeroMinFret, chord.minFret)
+            var fret = tone.fretNumber
+            if chord.maxFret > 4 {
+                fret -= (chord.nonZeroMinFret - 1)
+            }
+            print(fret)
+            if fret >= 1 {
+                path.append(createDot(CGRect(x: dotStartPoint.x + CGFloat(fret-1) * fretWidth, y: dotStartPoint.y + CGFloat(line)*stringWidth, width: dotRadius*2, height: dotRadius*2),
                                       isBase: tone.isBase))
                 let string = "\(tone.fingerNumber)"
                 let stringToDraw = NSMutableAttributedString(string: string)
                 stringToDraw.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 30), range: (string as NSString).range(of: string))
                 stringToDraw.addAttribute(.foregroundColor, value: UIColor.systemBackground, range: (string as NSString).range(of: string))
-                let rectToDraw = CGRect(x: dotStartPoint.x + CGFloat(fret) * fretWidth + fretWidth * 0.15, y: dotStartPoint.y + CGFloat(line)*stringWidth + stringWidth * 0.05, width: dotRadius*2, height: dotRadius*2)
+                let rectToDraw = CGRect(x: dotStartPoint.x + CGFloat(fret-1) * fretWidth + fretWidth * 0.15, y: dotStartPoint.y + CGFloat(line)*stringWidth + stringWidth * 0.05, width: dotRadius*2, height: dotRadius*2)
                 stringToDraw.draw(in: rectToDraw)
             } else {
                 path.append(createCircle(CGRect(x: smallDotStartPoint.x - fretWidth*0.8, y: smallDotStartPoint.y + CGFloat(line)*stringWidth, width: smallDotRadius*2, height: smallDotRadius*2),
@@ -81,6 +87,16 @@ class GuitarChordView: UIView {
         for muted in openChordCounter {
             let line = muted - 1
             path.append(createX(CGRect(x: smallDotStartPoint.x - fretWidth*0.8, y: smallDotStartPoint.y + CGFloat(line)*stringWidth, width: smallDotRadius*2, height: smallDotRadius*2)))
+        }
+        print(chord.maxFret)
+        // fret number
+        if chord.maxFret > 4 {
+            let fretNum = "\(chord.nonZeroMinFret)"
+            let attributedFretNum = NSMutableAttributedString(string: fretNum)
+            attributedFretNum.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 30), range: (fretNum as NSString).range(of: fretNum))
+            attributedFretNum.addAttribute(.foregroundColor, value: UIColor.label, range: (fretNum as NSString).range(of: fretNum))
+            let rectToDraw = CGRect(x: startPoint.x + fretWidth/3, y: startPoint.y - stringWidth, width: fretWidth, height: stringWidth)
+            attributedFretNum.draw(in: rectToDraw)
         }
     }
     
