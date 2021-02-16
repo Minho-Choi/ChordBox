@@ -26,6 +26,8 @@ class ChordDictViewController: UIViewController {
             chordName.text = chordKey + chordIdentifier
         }
     }
+    var chordArrayIndex = 0
+    var searchedChordCount = 0
     
     // chord sound player
     private let bank = AKPWMOscillatorBank()
@@ -78,7 +80,13 @@ class ChordDictViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let chordSoundPlay = UITapGestureRecognizer(target: self, action: #selector(chordTouched))
+        let chordChangeBack = UISwipeGestureRecognizer(target: self, action: #selector(chordSwipedLeft))
+        chordChangeBack.direction = .left
+        let chordChangeForward = UISwipeGestureRecognizer(target: self, action: #selector(chordSwipedRight))
+        chordChangeForward.direction = .right
         chordView.addGestureRecognizer(chordSoundPlay)
+        chordView.addGestureRecognizer(chordChangeBack)
+        chordView.addGestureRecognizer(chordChangeForward)
         buttonView.makeBtn(frame: buttonView.bounds)
         // bounds를 참조해야 함(frame은 global property이므로)
         for btn in buttonView.btnArr {
@@ -91,13 +99,16 @@ class ChordDictViewController: UIViewController {
     
     func searchChord() {
         print("search chord \(chordName.text!)")
-        var string = ""
+        chordArrayIndex = 0
+//        var string = ""
         if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
-            chordTones = tones.pitches
-            for tone in tones.pitches {
-                string.append(tone.toneName + " ")
-            }
-            self.chordView.chord = tones
+            chordTones = tones[chordArrayIndex].pitches
+//            for tone in tones.pitches {
+//                string.append(tone.toneName + " ")
+//            }
+            searchedChordCount = tones.count
+            print("found: \(searchedChordCount) chords")
+            self.chordView.chord = tones[chordArrayIndex]
             self.chordView.openChord = chordAnalyzer.currentTuning
         }
 //        self.chordLabel.text = string
@@ -118,6 +129,38 @@ extension ChordDictViewController {
         }
     }
     
+    @objc func chordSwipedLeft() {
+        print("swipe left")
+        if self.chordArrayIndex == 0 {
+            chordArrayIndex = searchedChordCount-1
+        } else {
+            chordArrayIndex -= 1
+        }
+        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
+            self.chordView.chord = tones[chordArrayIndex]
+            self.chordTones = tones[chordArrayIndex].pitches
+        }
+        DispatchQueue.main.async {
+            self.chordView.setNeedsDisplay()
+        }
+    }
+    
+    @objc func chordSwipedRight() {
+        print("swipe right")
+        if self.chordArrayIndex == searchedChordCount - 1 {
+            chordArrayIndex = 0
+        } else {
+            chordArrayIndex += 1
+        }
+        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
+            self.chordView.chord = tones[chordArrayIndex]
+            self.chordTones = tones[chordArrayIndex].pitches
+        }
+        DispatchQueue.main.async {
+            self.chordView.setNeedsDisplay()
+        }
+    }
+    
     @objc func buttonTouched(_ sender: UIButton) {
         print(sender.titleLabel?.text ?? "nil")
         if sender.tag == 0 {
@@ -132,7 +175,7 @@ extension ChordDictViewController {
 extension ChordDictViewController {
     
     private func playTone(tone: Pitch) {
-        let midinoteNumber = (tone.toneHeight+1) * 12 + chordAnalyzer.analyzeToneName(toneName: tone.toneName)
+        let midinoteNumber = (tone.toneHeight+1) * 12 + ChordAnalyzer.analyzeToneName(toneName: tone.toneName)
         self.bank.play(noteNumber: MIDINoteNumber(midinoteNumber), velocity: 127)
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.1) {
             self.bank.stop(noteNumber: MIDINoteNumber(midinoteNumber))

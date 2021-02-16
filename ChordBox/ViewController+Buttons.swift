@@ -82,7 +82,7 @@ extension ViewController {
             chordKey = sender.titleLabel?.text ?? ""
         } else {
             chordIdentifier = sender.titleLabel?.text ?? ""
-            searchChord()
+//            searchChord()
         }
 //        sender.isEnabled = true
 //        sender.layer.borderColor = UIColor.CustomPalette.pointColor.cgColor

@@ -74,12 +74,12 @@ class GuitarChordView: UIView {
         var openChordCounter = openChord.map { $0.lineNumber }
         for tone in chord.pitches {
             let line = tone.lineNumber-1
-            print(chord.nonZeroMinFret, chord.minFret)
+//            print(chord.nonZeroMinFret, chord.minFret)
             var fret = tone.fretNumber
             if chord.maxFret > 4 {
                 fret -= (chord.nonZeroMinFret - 1)
             }
-            print(fret)
+//            print(fret)
             if fret >= 1 {
                 path.append(createDot(CGRect(x: dotStartPoint.x + CGFloat(fret-1) * fretWidth, y: dotStartPoint.y + CGFloat(line)*stringWidth, width: dotRadius*2, height: dotRadius*2),
                                       isBase: tone.isBase))
@@ -99,7 +99,7 @@ class GuitarChordView: UIView {
             let line = muted - 1
             path.append(createX(CGRect(x: smallDotStartPoint.x - fretWidth*0.8, y: smallDotStartPoint.y + CGFloat(line)*stringWidth, width: smallDotRadius*2, height: smallDotRadius*2)))
         }
-        print(chord.maxFret)
+//        print(chord.maxFret)
         // fret number
         if chord.maxFret > 4 {
             let fretNum = "\(chord.nonZeroMinFret)"

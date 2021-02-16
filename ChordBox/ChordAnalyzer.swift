@@ -24,7 +24,7 @@ struct ChordAnalyzer {
     
     var previousChordFret: Int = 0
     
-    mutating func analyze(chordString: String, toneHeight: Int) -> Chord? {
+    mutating func analyze(chordString: String, toneHeight: Int) -> [Chord]? {
         var availableChords = [Chord]()
         if chordString.isEmpty {
             return nil
@@ -56,6 +56,7 @@ struct ChordAnalyzer {
 
         }
         let chordData = CoreDataManager.shared.getChords(base: base, type: identifier, ascending: true)
+        
         for chordInfo in chordData {
             var chord = Chord(pitches: [], structure: chordInfo.structure!, chordRoot: chordInfo.root!, chordType: chordInfo.type!)
             if let fingerPositions = chordInfo.fingerPositions?.split(separator: ","),
@@ -77,7 +78,7 @@ struct ChordAnalyzer {
             }
             availableChords.append(chord)
         }
-        var chordToReturn: Chord
+        var chordsToReturn: [Chord]
         if availableChords.isEmpty {
             return nil
         }
@@ -87,45 +88,47 @@ struct ChordAnalyzer {
         }
         switch chordRecommendationPreference {
         case .open: do {
-            chordToReturn = availableChords.sorted(by: { $0.nonZeroMinFret < $1.nonZeroMinFret }).first!
-            previousChordFret = chordToReturn.minFret
+            chordsToReturn = availableChords.sorted(by: { $0.nonZeroMinFret < $1.nonZeroMinFret })
+            previousChordFret = chordsToReturn.first?.minFret ?? 0
             break
         }
         case .adjacent: do {
-            chordToReturn = availableChords.sorted(by: { abs($0.nonZeroMinFret-previousChordFret) < abs($1.nonZeroMinFret-previousChordFret)}).first!
-            previousChordFret = chordToReturn.nonZeroMinFret
+            chordsToReturn = availableChords.sorted(by: { abs($0.nonZeroMinFret-previousChordFret) < abs($1.nonZeroMinFret-previousChordFret)})
+            previousChordFret = chordsToReturn.first?.nonZeroMinFret ?? 0
             
             break
         }
         case .wide: do {
-            chordToReturn = availableChords.sorted(by: { $0.wideness > $1.wideness}).first!
-            previousChordFret = chordToReturn.nonZeroMinFret
+            chordsToReturn = availableChords.sorted(by: { $0.wideness > $1.wideness})
+            previousChordFret = chordsToReturn.first?.nonZeroMinFret ?? 0
             break
         }
         }
-        if newBase != nil {
-            let index = chordToReturn.baseIndex
-            let baseToRemove = chordToReturn.pitches[index]
-            chordToReturn.pitches.remove(at: index)
-            if let baseToAppend = findNewBase(
-                finger: baseToRemove.fingerNumber,
-                minFret: chordToReturn.minFret,
-                newTone: newBase!,
-                availableStrings: chordToReturn.unusedStrings
-            ) {
-                chordToReturn.pitches.insert(baseToAppend, at: index)
-            }
-        } else {
-            if chordToReturn.baseIndex > 0 {
-                chordToReturn.pitches[chordToReturn.baseIndex].isBase = true
+        for (idx, chordToReturn) in chordsToReturn.enumerated() {
+            if newBase != nil {
+                let index = chordToReturn.baseIndex
+                let baseToRemove = chordToReturn.pitches[index]
+                chordsToReturn[idx].pitches.remove(at: index)
+                if let baseToAppend = findNewBase(
+                    finger: baseToRemove.fingerNumber,
+                    minFret: chordToReturn.minFret,
+                    newTone: newBase!,
+                    availableStrings: chordToReturn.unusedStrings
+                ) {
+                    chordsToReturn[idx].pitches.insert(baseToAppend, at: index)
+                }
+            } else {
+                if chordToReturn.baseIndex >= 0 {
+                    chordsToReturn[idx].pitches[chordToReturn.baseIndex].isBase = true
+                }
             }
         }
-        return chordToReturn
+        return chordsToReturn
     }
     
     func calculateFretNumber(lineNumber: Int, toneName: String) -> Int {
         var openTone = currentTuning[6-lineNumber]
-        let toneName2 = ChordAnalyzer.heightToneDict[analyzeToneName(toneName: toneName)]
+        let toneName2 = ChordAnalyzer.heightToneDict[ChordAnalyzer.analyzeToneName(toneName: toneName)]
         while openTone.toneName != toneName && openTone.toneName != toneName2{
             openTone = openTone.detune(by: 1)
             if openTone.fretNumber > 24 {
@@ -136,7 +139,7 @@ struct ChordAnalyzer {
         return openTone.fretNumber
     }
     
-    func analyzeToneName(toneName: String) -> Int {
+    static func analyzeToneName(toneName: String) -> Int {
         if toneName.contains("bb") {
             return (ChordAnalyzer.toneHeightDict[String(toneName.dropLast())]! - 1)%12
         } else if toneName.contains("##") {
@@ -283,7 +286,8 @@ struct Chord {
     }
     var baseIndex: Int {
         for (idx, pitch) in pitches.enumerated() {
-            if pitch.toneName == self.chordRoot {
+//            print(pitch.toneName, self.chordRoot)
+            if isEqualToneName(lhs: pitch.toneName, rhs: self.chordRoot) {
                 return idx
             }
         }
@@ -296,6 +300,13 @@ struct Chord {
             strings.remove(at: strings.firstIndex(matching: pitch.lineNumber)!)
         }
         return strings.sorted(by: >)
+    }
+    
+    func isEqualToneName(lhs: String, rhs: String) -> Bool {
+        let lhsNum = ChordAnalyzer.analyzeToneName(toneName: lhs)
+        let rhsNum = ChordAnalyzer.analyzeToneName(toneName: rhs)
+//        print(lhs, rhs, lhsNum, rhsNum)
+        return lhsNum == rhsNum
     }
 }
 

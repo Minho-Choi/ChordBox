@@ -11,7 +11,7 @@ class IntroViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        fetchChordsFromJSON()
+        fetchChordsFromJSON()
 //        getChords()
         // Do any additional setup after loading the view.
     }

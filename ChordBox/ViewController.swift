@@ -125,7 +125,7 @@ class ViewController: UIViewController {
     
     // MARK: - Playing certain pitch
     private func playTone(tone: Pitch) {
-        let midinoteNumber = (tone.toneHeight+1) * 12 + chordAnalyzer.analyzeToneName(toneName: tone.toneName)
+        let midinoteNumber = (tone.toneHeight+1) * 12 + ChordAnalyzer.analyzeToneName(toneName: tone.toneName)
         self.bank.play(noteNumber: MIDINoteNumber(midinoteNumber), velocity: 127)
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.1) {
             self.bank.stop(noteNumber: MIDINoteNumber(midinoteNumber))
@@ -212,21 +212,21 @@ class ViewController: UIViewController {
       _ = try? audioSession.setActive(true)
     }
     
-    func searchChord() {
-        print("search chord")
-        var string = ""
-        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
-            chordTones = tones.pitches
-            for tone in tones.pitches {
-                string.append(tone.toneName + " ")
-            }
-            self.chordView.chord = tones
-            self.chordView.openChord = chordAnalyzer.currentTuning
-        }
-        self.chordLabel.text = string
-        DispatchQueue.main.async {
-            self.chordView.setNeedsDisplay()
-        }
-    }
+//    func searchChord() {
+//        print("search chord")
+//        var string = ""
+//        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
+//            chordTones = tones.pitches
+//            for tone in tones.pitches {
+//                string.append(tone.toneName + " ")
+//            }
+//            self.chordView.chord = tones
+//            self.chordView.openChord = chordAnalyzer.currentTuning
+//        }
+//        self.chordLabel.text = string
+//        DispatchQueue.main.async {
+//            self.chordView.setNeedsDisplay()
+//        }
+//    }
 
 }
