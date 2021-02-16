@@ -95,6 +95,40 @@ class ChordDictViewController: UIViewController {
         buttonView.setNeedsDisplay()
     }
     
+    func addIndexView() {
+        if chordView.subviews.isEmpty || chordView.subviews.count != searchedChordCount {
+            for childView in chordView.subviews {
+                childView.removeFromSuperview()
+            }
+            let imageWidth = chordView.bounds.width/15
+            for index in 0..<searchedChordCount {
+                let image = UIImage(systemName: "circle.fill")
+                let indexer = UIImageView(image: image)
+                if index == chordArrayIndex {
+                    indexer.tintColor = UIColor.CustomPalette.pointColor
+                } else {
+                    indexer.tintColor = UIColor.CustomPalette.shadeColor2
+                }
+                indexer.tag = index
+                indexer.frame = CGRect(
+                    x: chordView.bounds.maxX - imageWidth*CGFloat(index + 1),
+                    y: chordView.bounds.maxY - chordView.bounds.height/15,
+                    width: chordView.bounds.height/15,
+                    height: chordView.bounds.height/15
+                )
+                chordView.addSubview(indexer)
+            }
+            
+        } else {
+            for view in chordView.subviews {
+                view.tintColor = UIColor.CustomPalette.shadeColor2
+                if view.tag == chordArrayIndex {
+                    view.tintColor = UIColor.CustomPalette.pointColor
+                }
+            }
+        }
+        chordView.setNeedsDisplay()
+    }
     
     
     func searchChord() {
@@ -111,6 +145,7 @@ class ChordDictViewController: UIViewController {
             self.chordView.chord = tones[chordArrayIndex]
             self.chordView.openChord = chordAnalyzer.currentTuning
         }
+        addIndexView()
 //        self.chordLabel.text = string
         DispatchQueue.main.async {
             self.chordView.setNeedsDisplay()
@@ -140,6 +175,7 @@ extension ChordDictViewController {
             self.chordView.chord = tones[chordArrayIndex]
             self.chordTones = tones[chordArrayIndex].pitches
         }
+        addIndexView()
         DispatchQueue.main.async {
             self.chordView.setNeedsDisplay()
         }
@@ -156,6 +192,7 @@ extension ChordDictViewController {
             self.chordView.chord = tones[chordArrayIndex]
             self.chordTones = tones[chordArrayIndex].pitches
         }
+        addIndexView()
         DispatchQueue.main.async {
             self.chordView.setNeedsDisplay()
         }
