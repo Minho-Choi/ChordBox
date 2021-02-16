@@ -3,10 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B44107A325D40C2A004FF208 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B44107A625D40CCE004FF208 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B44107AA25D41077004FF208 /* AudioKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44107A925D41077004FF208 /* AudioKit.xcframework */; };
+		B44107AB25D41077004FF208 /* AudioKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B44107A925D41077004FF208 /* AudioKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B44107AD25D41093004FF208 /* AudioKitUI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44107AC25D41093004FF208 /* AudioKitUI.xcframework */; };
+		B44107AE25D41093004FF208 /* AudioKitUI.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B44107AC25D41093004FF208 /* AudioKitUI.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B44107B125D5388D004FF208 /* EnterSongNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B025D5388D004FF208 /* EnterSongNameViewController.swift */; };
+		B44107B325DB4A36004FF208 /* ViewController+Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B225DB4A36004FF208 /* ViewController+Buttons.swift */; };
+		B44107B525DB6C67004FF208 /* UIColor+CustomPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */; };
+		B44107B725DBDB8A004FF208 /* ChordDictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B625DBDB8A004FF208 /* ChordDictViewController.swift */; };
+		B44107B925DBEF9C004FF208 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B825DBEF9C004FF208 /* ButtonView.swift */; };
 		B4427E9F25CE91AC0056BAE9 /* low tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9D25CE91AC0056BAE9 /* low tick.mp3 */; };
 		B4427EA025CE91AC0056BAE9 /* high tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */; };
 		B46F67B325CAA0F60097CFA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */; };
@@ -23,12 +34,38 @@
 		B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DD425D235B6009FB15C /* CoreDataManager.swift */; };
 		B47D8DDC25D23C9B009FB15C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */; };
 		B47D8DEA25D28C75009FB15C /* chord_fingers.json in Resources */ = {isa = PBXBuildFile; fileRef = B47D8DE925D28C75009FB15C /* chord_fingers.json */; };
+		B47D8DF225D3B88C009FB15C /* ScanButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DF125D3B88C009FB15C /* ScanButton.swift */; };
+		B47D8DF525D3B91A009FB15C /* ScanImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DF425D3B91A009FB15C /* ScanImageView.swift */; };
+		B47D8DF925D3BA37009FB15C /* OCRTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DF825D3BA37009FB15C /* OCRTextView.swift */; };
+		B47D8DFD25D3BAE1009FB15C /* TextRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DFC25D3BAE1009FB15C /* TextRecognitionViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B44107A425D40C2A004FF208 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B44107AE25D41093004FF208 /* AudioKitUI.xcframework in Embed Frameworks */,
+				B44107AB25D41077004FF208 /* AudioKit.xcframework in Embed Frameworks */,
+				B44107A325D40C2A004FF208 /* (null) in Embed Frameworks */,
+				B44107A625D40CCE004FF208 /* (null) in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		078931C5579E515FE721C537 /* Pods-ChordBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.release.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.release.xcconfig"; sourceTree = "<group>"; };
-		1FE6A9C6D27C8014B45BEC2D /* Pods-ChordBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.debug.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.debug.xcconfig"; sourceTree = "<group>"; };
-		6164CE75E8E44375A81CB18C /* Pods_ChordBox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChordBox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B44107A925D41077004FF208 /* AudioKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AudioKit.xcframework; path = Pods/AudioKit/AudioKit.xcframework; sourceTree = "<group>"; };
+		B44107AC25D41093004FF208 /* AudioKitUI.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AudioKitUI.xcframework; path = Pods/AudioKit/AudioKitUI.xcframework; sourceTree = "<group>"; };
+		B44107AF25D410BF004FF208 /* Pods-ChordBox */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Pods-ChordBox"; path = "Pods/Target Support Files/Pods-ChordBox"; sourceTree = "<group>"; };
+		B44107B025D5388D004FF208 /* EnterSongNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterSongNameViewController.swift; sourceTree = "<group>"; };
+		B44107B225DB4A36004FF208 /* ViewController+Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Buttons.swift"; sourceTree = "<group>"; };
+		B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CustomPalette.swift"; sourceTree = "<group>"; };
+		B44107B625DBDB8A004FF208 /* ChordDictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChordDictViewController.swift; sourceTree = "<group>"; };
+		B44107B825DBEF9C004FF208 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		B4427E9D25CE91AC0056BAE9 /* low tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "low tick.mp3"; path = "../../../Desktop/low tick.mp3"; sourceTree = "<group>"; };
 		B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "high tick.mp3"; path = "../../../Desktop/high tick.mp3"; sourceTree = "<group>"; };
 		B46F67AF25CAA0F60097CFA2 /* ChordBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChordBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +84,12 @@
 		B47D8DD425D235B6009FB15C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		B47D8DE925D28C75009FB15C /* chord_fingers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chord_fingers.json; sourceTree = "<group>"; };
+		B47D8DF125D3B88C009FB15C /* ScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanButton.swift; sourceTree = "<group>"; };
+		B47D8DF425D3B91A009FB15C /* ScanImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanImageView.swift; sourceTree = "<group>"; };
+		B47D8DF825D3BA37009FB15C /* OCRTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTextView.swift; sourceTree = "<group>"; };
+		B47D8DFC25D3BAE1009FB15C /* TextRecognitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionViewController.swift; sourceTree = "<group>"; };
+		B8722843E352B923F8FA6B82 /* Pods-ChordBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.debug.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.debug.xcconfig"; sourceTree = "<group>"; };
+		EB8B2A202AD259CC772930A6 /* Pods-ChordBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.release.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,17 +97,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B44107AD25D41093004FF208 /* AudioKitUI.xcframework in Frameworks */,
+				B44107AA25D41077004FF208 /* AudioKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		54F4050B602AD5A563231814 /* Pods */ = {
+		4DE3E0F75F4C475BC6641ED2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1FE6A9C6D27C8014B45BEC2D /* Pods-ChordBox.debug.xcconfig */,
-				078931C5579E515FE721C537 /* Pods-ChordBox.release.xcconfig */,
+				B8722843E352B923F8FA6B82 /* Pods-ChordBox.debug.xcconfig */,
+				EB8B2A202AD259CC772930A6 /* Pods-ChordBox.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -74,8 +119,8 @@
 			children = (
 				B46F67B125CAA0F60097CFA2 /* ChordBox */,
 				B46F67B025CAA0F60097CFA2 /* Products */,
-				54F4050B602AD5A563231814 /* Pods */,
-				DD1E89286C0F778F58ADC3EF /* Frameworks */,
+				4DE3E0F75F4C475BC6641ED2 /* Pods */,
+				DD04AA4CC713FAEB80E41946 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -93,7 +138,14 @@
 				B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */,
 				B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */,
 				B46F67B625CAA0F60097CFA2 /* ViewController.swift */,
+				B44107B225DB4A36004FF208 /* ViewController+Buttons.swift */,
+				B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */,
+				B44107B025D5388D004FF208 /* EnterSongNameViewController.swift */,
 				B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */,
+				B47D8DFC25D3BAE1009FB15C /* TextRecognitionViewController.swift */,
+				B44107B625DBDB8A004FF208 /* ChordDictViewController.swift */,
+				B44107B825DBEF9C004FF208 /* ButtonView.swift */,
+				B47D8DF725D3BA20009FB15C /* TextRecognitionElements */,
 				B47D8DD425D235B6009FB15C /* CoreDataManager.swift */,
 				B47D8DCA25D163E7009FB15C /* ChordForm.xcdatamodeld */,
 				B47D8DCE25D22D38009FB15C /* ChordForm+CoreDataClass.swift */,
@@ -111,10 +163,22 @@
 			path = ChordBox;
 			sourceTree = "<group>";
 		};
-		DD1E89286C0F778F58ADC3EF /* Frameworks */ = {
+		B47D8DF725D3BA20009FB15C /* TextRecognitionElements */ = {
 			isa = PBXGroup;
 			children = (
-				6164CE75E8E44375A81CB18C /* Pods_ChordBox.framework */,
+				B47D8DF125D3B88C009FB15C /* ScanButton.swift */,
+				B47D8DF425D3B91A009FB15C /* ScanImageView.swift */,
+				B47D8DF825D3BA37009FB15C /* OCRTextView.swift */,
+			);
+			path = TextRecognitionElements;
+			sourceTree = "<group>";
+		};
+		DD04AA4CC713FAEB80E41946 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B44107AF25D410BF004FF208 /* Pods-ChordBox */,
+				B44107AC25D41093004FF208 /* AudioKitUI.xcframework */,
+				B44107A925D41077004FF208 /* AudioKit.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -126,12 +190,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B46F67C325CAA0F90097CFA2 /* Build configuration list for PBXNativeTarget "ChordBox" */;
 			buildPhases = (
-				E2F56AAE26DAEABAEBC04379 /* [CP] Check Pods Manifest.lock */,
-				C763BE12984FE5A12C1260A3 /* [CP] Prepare Artifacts */,
+				045C286EF496B6DD034723C0 /* [CP] Check Pods Manifest.lock */,
 				B46F67AB25CAA0F60097CFA2 /* Sources */,
 				B46F67AC25CAA0F60097CFA2 /* Frameworks */,
 				B46F67AD25CAA0F60097CFA2 /* Resources */,
-				9A2CA7283F7E9E7A632F52F9 /* [CP] Embed Pods Frameworks */,
+				B44107A425D40C2A004FF208 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -191,41 +254,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9A2CA7283F7E9E7A632F52F9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C763BE12984FE5A12C1260A3 /* [CP] Prepare Artifacts */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-artifacts-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Prepare Artifacts";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-artifacts-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChordBox/Pods-ChordBox-artifacts.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E2F56AAE26DAEABAEBC04379 /* [CP] Check Pods Manifest.lock */ = {
+		045C286EF496B6DD034723C0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -254,15 +283,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B44107B325DB4A36004FF208 /* ViewController+Buttons.swift in Sources */,
+				B44107B125D5388D004FF208 /* EnterSongNameViewController.swift in Sources */,
 				B46F67CC25CADC390097CFA2 /* GuitarChordView.swift in Sources */,
 				B46F67C825CAA22F0097CFA2 /* ChordAnalyzer.swift in Sources */,
 				B46F67B725CAA0F60097CFA2 /* ViewController.swift in Sources */,
 				B46F67B325CAA0F60097CFA2 /* AppDelegate.swift in Sources */,
 				B47D8DD125D22D38009FB15C /* ChordForm+CoreDataProperties.swift in Sources */,
+				B47D8DF525D3B91A009FB15C /* ScanImageView.swift in Sources */,
 				B47D8DDC25D23C9B009FB15C /* IntroViewController.swift in Sources */,
+				B47D8DFD25D3BAE1009FB15C /* TextRecognitionViewController.swift in Sources */,
+				B47D8DF925D3BA37009FB15C /* OCRTextView.swift in Sources */,
 				B47D8DCC25D163E7009FB15C /* ChordForm.xcdatamodeld in Sources */,
+				B47D8DF225D3B88C009FB15C /* ScanButton.swift in Sources */,
+				B44107B525DB6C67004FF208 /* UIColor+CustomPalette.swift in Sources */,
 				B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */,
 				B47D8DD025D22D38009FB15C /* ChordForm+CoreDataClass.swift in Sources */,
+				B44107B925DBEF9C004FF208 /* ButtonView.swift in Sources */,
+				B44107B725DBDB8A004FF208 /* ChordDictViewController.swift in Sources */,
 				B46F67B525CAA0F60097CFA2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,7 +445,7 @@
 		};
 		B46F67C425CAA0F90097CFA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FE6A9C6D27C8014B45BEC2D /* Pods-ChordBox.debug.xcconfig */;
+			baseConfigurationReference = B8722843E352B923F8FA6B82 /* Pods-ChordBox.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -419,6 +457,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minhoChoi.snu.ac.kr.ChordBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -428,7 +467,7 @@
 		};
 		B46F67C525CAA0F90097CFA2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 078931C5579E515FE721C537 /* Pods-ChordBox.release.xcconfig */;
+			baseConfigurationReference = EB8B2A202AD259CC772930A6 /* Pods-ChordBox.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -440,6 +479,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.minhoChoi.snu.ac.kr.ChordBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

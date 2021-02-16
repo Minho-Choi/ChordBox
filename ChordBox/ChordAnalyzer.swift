@@ -8,9 +8,9 @@
 import Foundation
 
 struct ChordAnalyzer {
-    var chordRecommendationPreference: ChordRecommendPreferenceOption = .open
+    var chordRecommendationPreference: ChordRecommendPreferenceOption = .adjacent
     static let toneHeightDict: [String:Int] =
-        ["C":0, "C#":1, "Db":1, "D":2, "D#":3, "Eb":3, "E":4, "F":5, "F#":6, "Gb":6, "G":7, "G#":8, "Ab":8, "A":9, "A#":10, "Bb":10, "B":11]
+        ["B#": 0, "C":0, "C#":1, "Db":1, "D":2, "D#":3, "Eb":3, "E":4, "Fb":4, "E#":5, "F":5, "F#":6, "Gb":6, "G":7, "G#":8, "Ab":8, "A":9, "A#":10, "Bb":10, "B":11, "Cb":11]
     static let heightToneDict: [Int:String] = [0:"C", 1:"C#", 2:"D", 3:"D#", 4:"E", 5:"F", 6:"F#", 7:"G", 8:"G#", 9:"A", 10:"A#", 11:"B"]
     
     var currentTuning = [
@@ -82,20 +82,24 @@ struct ChordAnalyzer {
             return nil
         }
         availableChords = availableChords.filter { $0.maxFret - $0.nonZeroMinFret <= 3 }
+        if identifier != "5" {
+            availableChords = availableChords.filter { $0.pitches.count >= 4}
+        }
         switch chordRecommendationPreference {
         case .open: do {
-            chordToReturn = availableChords.sorted(by: { $0.minFret < $1.minFret}).first!
+            chordToReturn = availableChords.sorted(by: { $0.nonZeroMinFret < $1.nonZeroMinFret }).first!
             previousChordFret = chordToReturn.minFret
             break
         }
         case .adjacent: do {
-            chordToReturn = availableChords.sorted(by: { abs($0.minFret-previousChordFret) < abs($1.minFret-previousChordFret)}).first!
-            previousChordFret = chordToReturn.minFret
+            chordToReturn = availableChords.sorted(by: { abs($0.nonZeroMinFret-previousChordFret) < abs($1.nonZeroMinFret-previousChordFret)}).first!
+            previousChordFret = chordToReturn.nonZeroMinFret
+            
             break
         }
         case .wide: do {
             chordToReturn = availableChords.sorted(by: { $0.wideness > $1.wideness}).first!
-            previousChordFret = chordToReturn.minFret
+            previousChordFret = chordToReturn.nonZeroMinFret
             break
         }
         }
@@ -149,7 +153,7 @@ struct ChordAnalyzer {
                 Pitch(
                     toneName: newTone,
                     lineNumber: string,
-                    fingerNumber: fretNumber == 0 ? 0 : finger,
+                    fingerNumber: 0,
                     fretNumber: fretNumber,
                     isBase: true
             ))

@@ -13,15 +13,31 @@ class ViewController: UIViewController {
 
     // UI
     @IBOutlet weak var chordLabel: UILabel!
-    @IBOutlet weak var chordTextFieldOutlet: UITextField!
-    @IBOutlet weak var chordView: GuitarChordView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var bpmSlider: UISlider!
     @IBOutlet weak var bpmLabel: UILabel!
+    @IBOutlet weak var chordName: UILabel!
+    @IBOutlet weak var containerView: UIView!
+    
+    var chordView = GuitarChordView(frame: .zero)
+    var buttonView = UIView(frame: .zero)
+    
+    // Button Array
+    var btnArr: [UIButton] = []
     
     // Chord Data
     private var chordAnalyzer = ChordAnalyzer()
     private var chordTones = [Pitch]()
+    var chordKey: String = "" {
+        didSet {
+            chordName.text = chordKey
+        }
+    }
+    var chordIdentifier: String = "" {
+        didSet {
+            chordName.text = chordKey + chordIdentifier
+        }
+    }
     
     // Metronome vars
     private var metronome: AVAudioPlayer?
@@ -46,11 +62,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        containerView.addSubview(chordView)
+        containerView.addSubview(buttonView)
         // Do any additional setup after loading the view.
-        
-        // Textfield setup
-        chordTextFieldOutlet.delegate = self
-        chordTextFieldOutlet.autocorrectionType = .no
+        let padding: CGFloat = 16
+        NSLayoutConstraint.activate([
+            buttonView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
+            buttonView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -padding),
+            buttonView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
+            buttonView.heightAnchor.constraint(equalToConstant: 200),
+            chordView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
+            chordView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: padding),
+            chordView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
+            chordView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -padding)
+        ])
+        // set up audio
+        setupAudio()
         
         // Metronome setup
         playButton.sizeToFit()
@@ -71,7 +98,7 @@ class ViewController: UIViewController {
         }
     
         // Chord player setup
-        bank.pulseWidth = 0.8
+        bank.pulseWidth = 0.4
         bank.attackDuration = 0
         bank.decayDuration = 0
         bank.sustainLevel = 1
@@ -83,11 +110,14 @@ class ViewController: UIViewController {
         } catch {
             print("AKManager starting error occured")
         }
+        
+        makeBtn()
+        
     }
     
     @IBAction func isChordPlayButtonPressed(_ sender: Any) {
         for (idx, tone) in chordTones.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1*idx) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1*Double(idx)) {
                 self.playTone(tone: tone)
             }
         }
@@ -106,12 +136,12 @@ class ViewController: UIViewController {
         if isMetronomeOn {
             isMetronomeOn = false
             onTimerEnd()
-            playButton.tintColor = .gray
+            playButton.tintColor = UIColor.CustomPalette.shadeColor2
         }
         else {
             isMetronomeOn = true
             onTimerStart()
-            playButton.tintColor = .green
+//            playButton.tintColor = .green
         }
     }
     
@@ -157,11 +187,13 @@ class ViewController: UIViewController {
     @objc private func timerCallback(){
         playTick(isHighTick: counter%4 == 0 ? true : false)
         counter += 1
-        UIView.animate(withDuration: self.interval/4, delay: 0, options: [.autoreverse, .curveEaseInOut], animations: {
-            self.playButton.tintColor = .gray
-        }, completion: { _ in
-            self.playButton.tintColor = .green
-        })
+        UIView.animate(withDuration: self.interval/4, delay: 0, options: [.allowUserInteraction, .transitionCrossDissolve], animations: {
+            self.playButton.tintColor = UIColor.CustomPalette.pointColor
+        }, completion:
+            { complete in
+                self.playButton.tintColor = UIColor.CustomPalette.shadeColor2
+            }
+        )
     }
     
     private func playTick(isHighTick : Bool) {
@@ -173,18 +205,17 @@ class ViewController: UIViewController {
             }
         }
     }
-
-}
-
-
-
-
-// MARK: - When textfield is entered
-extension ViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    private func setupAudio() {
+      let audioSession = AVAudioSession.sharedInstance()
+        _ = try? audioSession.setCategory(AVAudioSession.Category.playback, options: .duckOthers)
+      _ = try? audioSession.setActive(true)
+    }
+    
+    func searchChord() {
+        print("search chord")
         var string = ""
-        if let tones = chordAnalyzer.analyze(chordString: chordTextFieldOutlet.text ?? "", toneHeight: 3) {
+        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
             chordTones = tones.pitches
             for tone in tones.pitches {
                 string.append(tone.toneName + " ")
@@ -196,6 +227,6 @@ extension ViewController: UITextFieldDelegate {
         DispatchQueue.main.async {
             self.chordView.setNeedsDisplay()
         }
-        return true
     }
+
 }

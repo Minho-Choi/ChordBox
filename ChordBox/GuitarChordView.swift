@@ -8,6 +8,17 @@
 import UIKit
 
 class GuitarChordView: UIView {
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = UIColor.CustomPalette.backgroundColor
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+//        fatalError("init(coder:) has not been implemented")
+    }
     
     var openChord: [Pitch] = []
     var chord: Chord = Chord(pitches: [], structure: "", chordRoot: "", chordType: "")
@@ -23,16 +34,16 @@ class GuitarChordView: UIView {
         let dotStartPoint = CGPoint(x: startPoint.x + fretWidth/2-dotRadius, y: startPoint.y - dotRadius)
         let smallDotStartPoint = CGPoint(x: startPoint.x + fretWidth/2-smallDotRadius, y: startPoint.y - smallDotRadius)
         let path = UIBezierPath()
-        UIColor.label.setStroke()
-        //  border line
-        path.addLine(to: CGPoint(x: startPoint.x, y: startPoint.y + chordHeight))
-        path.lineWidth = chordWidth * GuitarChordViewConstants.thickThicknessProportion
-        path.move(to: .zero)
-        path.addLine(to: CGPoint(x: rect.maxX, y: .zero))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: .zero, y: rect.maxY))
-        path.close()
-        //
+        UIColor.CustomPalette.chordColor.setStroke()
+//        //  border line
+//        path.addLine(to: CGPoint(x: startPoint.x, y: startPoint.y + chordHeight))
+//        path.lineWidth = chordWidth * GuitarChordViewConstants.thickThicknessProportion
+//        path.move(to: .zero)
+//        path.addLine(to: CGPoint(x: rect.maxX, y: .zero))
+//        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+//        path.addLine(to: CGPoint(x: .zero, y: rect.maxY))
+//        path.close()
+//        //
         path.move(to: startPoint)
         path.addLine(to: CGPoint(x: startPoint.x, y: startPoint.y + chordHeight))
         path.lineWidth = chordWidth * GuitarChordViewConstants.thickThicknessProportion
@@ -74,8 +85,8 @@ class GuitarChordView: UIView {
                                       isBase: tone.isBase))
                 let string = "\(tone.fingerNumber)"
                 let stringToDraw = NSMutableAttributedString(string: string)
-                stringToDraw.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 30), range: (string as NSString).range(of: string))
-                stringToDraw.addAttribute(.foregroundColor, value: UIColor.systemBackground, range: (string as NSString).range(of: string))
+                stringToDraw.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 24), range: (string as NSString).range(of: string))
+                stringToDraw.addAttribute(.foregroundColor, value: UIColor.CustomPalette.backgroundColor, range: (string as NSString).range(of: string))
                 let rectToDraw = CGRect(x: dotStartPoint.x + CGFloat(fret-1) * fretWidth + fretWidth * 0.15, y: dotStartPoint.y + CGFloat(line)*stringWidth + stringWidth * 0.05, width: dotRadius*2, height: dotRadius*2)
                 stringToDraw.draw(in: rectToDraw)
             } else {
@@ -93,18 +104,18 @@ class GuitarChordView: UIView {
         if chord.maxFret > 4 {
             let fretNum = "\(chord.nonZeroMinFret)"
             let attributedFretNum = NSMutableAttributedString(string: fretNum)
-            attributedFretNum.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 30), range: (fretNum as NSString).range(of: fretNum))
-            attributedFretNum.addAttribute(.foregroundColor, value: UIColor.label, range: (fretNum as NSString).range(of: fretNum))
-            let rectToDraw = CGRect(x: startPoint.x + fretWidth/3, y: startPoint.y - stringWidth, width: fretWidth, height: stringWidth)
+            attributedFretNum.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 24), range: (fretNum as NSString).range(of: fretNum))
+            attributedFretNum.addAttribute(.foregroundColor, value: UIColor.CustomPalette.textColor, range: (fretNum as NSString).range(of: fretNum))
+            let rectToDraw = CGRect(x: startPoint.x + fretWidth/3, y: startPoint.y + 6*stringWidth, width: fretWidth, height: stringWidth)
             attributedFretNum.draw(in: rectToDraw)
         }
     }
     
     private func createDot(_ rect: CGRect, isBase: Bool) -> UIBezierPath {
         let path = UIBezierPath()
-        UIColor.label.setFill()
+        UIColor.CustomPalette.chordColor.setFill()
         if isBase {
-            #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1).setFill()
+            UIColor.CustomPalette.pointColor.setFill()
         }
         path.addArc(withCenter: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width/2, startAngle: CGFloat.zero, endAngle: CGFloat.pi*2, clockwise: false)
         path.fill()
@@ -113,9 +124,9 @@ class GuitarChordView: UIView {
     
     private func createCircle(_ rect: CGRect, isBase: Bool) -> UIBezierPath {
         let path = UIBezierPath()
-        UIColor.label.setStroke()
+        UIColor.CustomPalette.chordColor.setStroke()
         if isBase {
-            #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1).setStroke()
+            UIColor.CustomPalette.pointColor.setStroke()
         }
         path.lineWidth = GuitarChordViewConstants.smallDotLineWidthProportion * rect.width
         path.addArc(withCenter: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width/2, startAngle: CGFloat.zero, endAngle: CGFloat.pi*2, clockwise: false)
@@ -125,7 +136,7 @@ class GuitarChordView: UIView {
     
     private func createX(_ rect: CGRect) -> UIBezierPath {
         let path = UIBezierPath()
-        UIColor.label.setStroke()
+        UIColor.CustomPalette.chordColor.setStroke()
         path.lineWidth = GuitarChordViewConstants.smallDotLineWidthProportion * rect.width
         path.lineCapStyle = .butt
         path.move(to: rect.origin)
@@ -148,9 +159,9 @@ extension GuitarChordView {
         
         static let thinThicknessProportion: CGFloat = 0.005
         
-        static let dotRadiusProportion: CGFloat = 0.3
+        static let dotRadiusProportion: CGFloat = 0.2
         
-        static let smallDotRadiusProportion: CGFloat = 0.2
+        static let smallDotRadiusProportion: CGFloat = 0.15
         
         static let smallDotLineWidthProportion: CGFloat = 0.1
     }

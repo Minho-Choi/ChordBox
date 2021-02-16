@@ -11,10 +11,8 @@ class IntroViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        DispatchQueue.global(qos: .background).async {
-//            self.fetchChordsFromJSON()
-//        }
-        getChords()
+//        fetchChordsFromJSON()
+//        getChords()
         // Do any additional setup after loading the view.
     }
     
