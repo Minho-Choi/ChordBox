@@ -9,17 +9,59 @@ import UIKit
 
 class IntroViewController: UIViewController {
     
+    var spinner = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchChordsFromJSON()
-//        getChords()
+        let spinnerSize = view.frame.width/4
+        
+        view.addSubview(spinner)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.color = UIColor.CustomPalette.pointColor
+        spinner.layer.cornerRadius = 10
+        spinner.layer.backgroundColor = UIColor.CustomPalette.shadeColor1.cgColor
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            spinner.widthAnchor.constraint(equalToConstant: spinnerSize),
+            spinner.heightAnchor.constraint(equalToConstant: spinnerSize)
+        ])
+        spinner.hidesWhenStopped = true
+        spinner.style = .large
+        spinner.setNeedsDisplay()
         // Do any additional setup after loading the view.
     }
     
-    fileprivate func getChords() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.async {
+            self.spinner.startAnimating()
+            let clk = clock()
+            if !self.getChords() {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.fetchChordsFromJSON()
+                    print(clock() - clk)
+                    DispatchQueue.main.async {
+                        self.spinner.stopAnimating()
+                    }
+                }
+            } else {
+                print(clock() - clk)
+                DispatchQueue.main.async {
+                    self.spinner.stopAnimating()
+                }
+            }
+        }
+    }
+    
+    fileprivate func getChords() -> Bool {
         let chords: [ChordForm] = CoreDataManager.shared.getChords(base: "A", type: "7", ascending: true)
         let chordNames: [String] = chords.map({$0.root! + $0.type!})
         print("allChords = \(chordNames)")
+        if chords.isEmpty {
+            return false
+        }
+        return true
     }
     
     // 새로운 유저 등록

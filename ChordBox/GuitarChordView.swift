@@ -85,7 +85,7 @@ class GuitarChordView: UIView {
                                       isBase: tone.isBase))
                 let string = "\(tone.fingerNumber)"
                 let stringToDraw = NSMutableAttributedString(string: string)
-                stringToDraw.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 24), range: (string as NSString).range(of: string))
+                stringToDraw.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: GuitarChordViewConstants.fontSizeProportion * frame.height), range: (string as NSString).range(of: string))
                 stringToDraw.addAttribute(.foregroundColor, value: UIColor.CustomPalette.backgroundColor, range: (string as NSString).range(of: string))
                 let rectToDraw = CGRect(x: dotStartPoint.x + CGFloat(fret-1) * fretWidth + fretWidth * 0.15, y: dotStartPoint.y + CGFloat(line)*stringWidth + stringWidth * 0.05, width: dotRadius*2, height: dotRadius*2)
                 stringToDraw.draw(in: rectToDraw)
@@ -104,9 +104,9 @@ class GuitarChordView: UIView {
         if chord.maxFret > 4 {
             let fretNum = "\(chord.nonZeroMinFret)"
             let attributedFretNum = NSMutableAttributedString(string: fretNum)
-            attributedFretNum.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 24), range: (fretNum as NSString).range(of: fretNum))
+            attributedFretNum.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: GuitarChordViewConstants.fontSizeProportion * frame.height), range: (fretNum as NSString).range(of: fretNum))
             attributedFretNum.addAttribute(.foregroundColor, value: UIColor.CustomPalette.textColor, range: (fretNum as NSString).range(of: fretNum))
-            let rectToDraw = CGRect(x: startPoint.x + fretWidth/3, y: startPoint.y + 6*stringWidth, width: fretWidth, height: stringWidth)
+            let rectToDraw = CGRect(x: startPoint.x + fretWidth/3, y: startPoint.y + 5.5*stringWidth, width: fretWidth, height: stringWidth)
             attributedFretNum.draw(in: rectToDraw)
         }
     }
@@ -164,5 +164,7 @@ extension GuitarChordView {
         static let smallDotRadiusProportion: CGFloat = 0.15
         
         static let smallDotLineWidthProportion: CGFloat = 0.1
+        
+        static let fontSizeProportion: CGFloat = 0.07
     }
 }

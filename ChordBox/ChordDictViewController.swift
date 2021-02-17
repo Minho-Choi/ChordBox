@@ -52,18 +52,16 @@ class ChordDictViewController: UIViewController {
             buttonView.safeAreaLayoutGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             buttonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
             buttonView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
-//            buttonView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding)
             buttonView.heightAnchor.constraint(equalToConstant: 300),
-//
+
             chordView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
             chordView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
             chordView.topAnchor.constraint(equalTo: chordName.bottomAnchor, constant: padding),
             chordView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -padding)
-//            chordView.heightAnchor.constraint(equalToConstant: 300)
         ])
         // Do any additional setup after loading the view.
 
-        bank.pulseWidth = 0.4
+        bank.pulseWidth = 0.2
         bank.attackDuration = 0
         bank.decayDuration = 0
         bank.sustainLevel = 1
@@ -103,13 +101,15 @@ class ChordDictViewController: UIViewController {
             let imageWidth = chordView.bounds.width/15
             for index in 0..<searchedChordCount {
                 let image = UIImage(systemName: "circle.fill")
-                let indexer = UIImageView(image: image)
+                let indexer = UIButton()
+                indexer.setImage(image, for: .normal)
                 if index == chordArrayIndex {
                     indexer.tintColor = UIColor.CustomPalette.pointColor
                 } else {
                     indexer.tintColor = UIColor.CustomPalette.shadeColor2
                 }
                 indexer.tag = index
+                indexer.addTarget(self, action: #selector(ChordDictViewController.setIndexer), for: .touchUpInside)
                 indexer.frame = CGRect(
                     x: chordView.bounds.maxX - imageWidth*CGFloat(index + 1),
                     y: chordView.bounds.maxY - chordView.bounds.height/15,
@@ -127,7 +127,18 @@ class ChordDictViewController: UIViewController {
                 }
             }
         }
-        chordView.setNeedsDisplay()
+        DispatchQueue.main.async {
+            self.chordView.setNeedsDisplay()
+        }
+    }
+    
+    @objc func setIndexer(_ sender: UIButton) {
+        chordArrayIndex = sender.tag
+        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
+            self.chordView.chord = tones[chordArrayIndex]
+            self.chordTones = tones[chordArrayIndex].pitches
+        }
+        addIndexView()
     }
     
     
@@ -147,9 +158,6 @@ class ChordDictViewController: UIViewController {
         }
         addIndexView()
 //        self.chordLabel.text = string
-        DispatchQueue.main.async {
-            self.chordView.setNeedsDisplay()
-        }
     }
 
 }
@@ -176,9 +184,6 @@ extension ChordDictViewController {
             self.chordTones = tones[chordArrayIndex].pitches
         }
         addIndexView()
-        DispatchQueue.main.async {
-            self.chordView.setNeedsDisplay()
-        }
     }
     
     @objc func chordSwipedRight() {
@@ -193,9 +198,6 @@ extension ChordDictViewController {
             self.chordTones = tones[chordArrayIndex].pitches
         }
         addIndexView()
-        DispatchQueue.main.async {
-            self.chordView.setNeedsDisplay()
-        }
     }
     
     @objc func buttonTouched(_ sender: UIButton) {

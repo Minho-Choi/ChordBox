@@ -82,7 +82,9 @@ struct ChordAnalyzer {
         if availableChords.isEmpty {
             return nil
         }
-        availableChords = availableChords.filter { $0.maxFret - $0.nonZeroMinFret <= 3 }
+        if availableChords.count > 5 {
+            availableChords = availableChords.filter { $0.maxFret - $0.nonZeroMinFret <= 3 }
+        }
         if identifier != "5" {
             availableChords = availableChords.filter { $0.pitches.count >= 4}
         }
