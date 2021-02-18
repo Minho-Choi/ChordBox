@@ -9,46 +9,58 @@ import UIKit
 
 class IntroViewController: UIViewController {
     
-    var spinner = UIActivityIndicatorView()
-    
+//    var loading = UIActivityIndicatorView()
+    var loadingView = LoadingView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        let spinnerSize = view.frame.width/4
         
-        view.addSubview(spinner)
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.color = UIColor.CustomPalette.pointColor
-        spinner.layer.cornerRadius = 10
-        spinner.layer.backgroundColor = UIColor.CustomPalette.shadeColor1.cgColor
-        NSLayoutConstraint.activate([
-            spinner.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-            spinner.widthAnchor.constraint(equalToConstant: spinnerSize),
-            spinner.heightAnchor.constraint(equalToConstant: spinnerSize)
-        ])
-        spinner.hidesWhenStopped = true
-        spinner.style = .large
-        spinner.setNeedsDisplay()
+        view.layer.backgroundColor = UIColor.black.cgColor
+//        let spinnerSize = view.frame.width/4
+        
+//        view.addSubview(spinner)
+//        spinner.translatesAutoresizingMaskIntoConstraints = false
+//        spinner.color = UIColor.CustomPalette.pointColor
+//        spinner.layer.cornerRadius = 10
+//        spinner.layer.backgroundColor = UIColor.CustomPalette.shadeColor1.cgColor
+//        NSLayoutConstraint.activate([
+//            spinner.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+//            spinner.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+//            spinner.widthAnchor.constraint(equalToConstant: spinnerSize),
+//            spinner.heightAnchor.constraint(equalToConstant: spinnerSize)
+//        ])
+//        spinner.hidesWhenStopped = true
+//        spinner.style = .large
+//        spinner.setNeedsDisplay()
         // Do any additional setup after loading the view.
+        view.addSubview(loadingView)
+        NSLayoutConstraint.activate([
+            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+        loadingView.addViews(frame: view.bounds, title: "Updating Database")
+        loadingView.spinner.startAnimating()
+        loadingView.setNeedsDisplay()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         DispatchQueue.main.async {
-            self.spinner.startAnimating()
             let clk = clock()
             if !self.getChords() {
                 DispatchQueue.global(qos: .userInitiated).async {
                     self.fetchChordsFromJSON()
                     print(clock() - clk)
-                    DispatchQueue.main.async {
-                        self.spinner.stopAnimating()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self.loadingView.stopAnimating()
                     }
                 }
             } else {
                 print(clock() - clk)
-                DispatchQueue.main.async {
-                    self.spinner.stopAnimating()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.loadingView.stopAnimating()
                 }
             }
         }

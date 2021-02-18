@@ -38,6 +38,7 @@
 		B47D8DF525D3B91A009FB15C /* ScanImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DF425D3B91A009FB15C /* ScanImageView.swift */; };
 		B47D8DF925D3BA37009FB15C /* OCRTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DF825D3BA37009FB15C /* OCRTextView.swift */; };
 		B47D8DFD25D3BAE1009FB15C /* TextRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DFC25D3BAE1009FB15C /* TextRecognitionViewController.swift */; };
+		B4955E8E25DE3E7D00F9E4D9 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -88,6 +89,7 @@
 		B47D8DF425D3B91A009FB15C /* ScanImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanImageView.swift; sourceTree = "<group>"; };
 		B47D8DF825D3BA37009FB15C /* OCRTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTextView.swift; sourceTree = "<group>"; };
 		B47D8DFC25D3BAE1009FB15C /* TextRecognitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionViewController.swift; sourceTree = "<group>"; };
+		B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		B8722843E352B923F8FA6B82 /* Pods-ChordBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.debug.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.debug.xcconfig"; sourceTree = "<group>"; };
 		EB8B2A202AD259CC772930A6 /* Pods-ChordBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.release.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,6 +144,7 @@
 				B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */,
 				B44107B025D5388D004FF208 /* EnterSongNameViewController.swift */,
 				B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */,
+				B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */,
 				B47D8DFC25D3BAE1009FB15C /* TextRecognitionViewController.swift */,
 				B44107B625DBDB8A004FF208 /* ChordDictViewController.swift */,
 				B44107B825DBEF9C004FF208 /* ButtonView.swift */,
@@ -296,6 +299,7 @@
 				B47D8DF925D3BA37009FB15C /* OCRTextView.swift in Sources */,
 				B47D8DCC25D163E7009FB15C /* ChordForm.xcdatamodeld in Sources */,
 				B47D8DF225D3B88C009FB15C /* ScanButton.swift in Sources */,
+				B4955E8E25DE3E7D00F9E4D9 /* LoadingView.swift in Sources */,
 				B44107B525DB6C67004FF208 /* UIColor+CustomPalette.swift in Sources */,
 				B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */,
 				B47D8DD025D22D38009FB15C /* ChordForm+CoreDataClass.swift in Sources */,

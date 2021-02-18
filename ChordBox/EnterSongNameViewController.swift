@@ -20,7 +20,7 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
     }
     
-    func fetchLyricsDataFromAPI(title: String, artist: String) {
+    func fetchLyricsDataFromFreeAPI(title: String, artist: String) {
         let url = URL(string: "https://api.lyrics.ovh/v1/\(artist)/\(title)")
         let session = URLSession.shared
         DispatchQueue.global(qos: .userInitiated).async {
@@ -53,7 +53,7 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
     @IBAction func nextButtonPressed(_ sender: UIButton) {
         print("button pressed")
         if let title = songTitleOutlet.text, let artist = artistNameOutlet.text {
-            fetchLyricsDataFromAPI(title: title.replacingOccurrences(of: " ", with: "%20"), artist: artist)
+            fetchLyricsDataFromFreeAPI(title: title.replacingOccurrences(of: " ", with: "%20"), artist: artist)
         }
     }
 }
