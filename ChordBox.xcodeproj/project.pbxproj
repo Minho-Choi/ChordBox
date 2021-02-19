@@ -17,7 +17,7 @@
 		B44107B325DB4A36004FF208 /* ViewController+Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B225DB4A36004FF208 /* ViewController+Buttons.swift */; };
 		B44107B525DB6C67004FF208 /* UIColor+CustomPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */; };
 		B44107B725DBDB8A004FF208 /* ChordDictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B625DBDB8A004FF208 /* ChordDictViewController.swift */; };
-		B44107B925DBEF9C004FF208 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B825DBEF9C004FF208 /* ButtonView.swift */; };
+		B44107B925DBEF9C004FF208 /* ChordButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B825DBEF9C004FF208 /* ChordButtonsView.swift */; };
 		B4427E9F25CE91AC0056BAE9 /* low tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9D25CE91AC0056BAE9 /* low tick.mp3 */; };
 		B4427EA025CE91AC0056BAE9 /* high tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */; };
 		B46F67B325CAA0F60097CFA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */; };
@@ -34,11 +34,11 @@
 		B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DD425D235B6009FB15C /* CoreDataManager.swift */; };
 		B47D8DDC25D23C9B009FB15C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */; };
 		B47D8DEA25D28C75009FB15C /* chord_fingers.json in Resources */ = {isa = PBXBuildFile; fileRef = B47D8DE925D28C75009FB15C /* chord_fingers.json */; };
-		B47D8DF225D3B88C009FB15C /* ScanButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DF125D3B88C009FB15C /* ScanButton.swift */; };
-		B47D8DF525D3B91A009FB15C /* ScanImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DF425D3B91A009FB15C /* ScanImageView.swift */; };
-		B47D8DF925D3BA37009FB15C /* OCRTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DF825D3BA37009FB15C /* OCRTextView.swift */; };
-		B47D8DFD25D3BAE1009FB15C /* TextRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DFC25D3BAE1009FB15C /* TextRecognitionViewController.swift */; };
 		B4955E8E25DE3E7D00F9E4D9 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */; };
+		B4955E9025DE621A00F9E4D9 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4955E8F25DE621A00F9E4D9 /* LaunchScreenViewController.swift */; };
+		B4CB97B925DF7A33007F4B36 /* UIButton+CustomButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97B825DF7A33007F4B36 /* UIButton+CustomButtonShape.swift */; };
+		B4CB97BB25DF9D32007F4B36 /* CustomRightSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */; };
+		B4CB97BD25DFC8FE007F4B36 /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97BC25DFC8FE007F4B36 /* CustomBackButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -66,7 +66,7 @@
 		B44107B225DB4A36004FF208 /* ViewController+Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Buttons.swift"; sourceTree = "<group>"; };
 		B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CustomPalette.swift"; sourceTree = "<group>"; };
 		B44107B625DBDB8A004FF208 /* ChordDictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChordDictViewController.swift; sourceTree = "<group>"; };
-		B44107B825DBEF9C004FF208 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
+		B44107B825DBEF9C004FF208 /* ChordButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChordButtonsView.swift; sourceTree = "<group>"; };
 		B4427E9D25CE91AC0056BAE9 /* low tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "low tick.mp3"; path = "../../../Desktop/low tick.mp3"; sourceTree = "<group>"; };
 		B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "high tick.mp3"; path = "../../../Desktop/high tick.mp3"; sourceTree = "<group>"; };
 		B46F67AF25CAA0F60097CFA2 /* ChordBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChordBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,11 +85,11 @@
 		B47D8DD425D235B6009FB15C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		B47D8DE925D28C75009FB15C /* chord_fingers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chord_fingers.json; sourceTree = "<group>"; };
-		B47D8DF125D3B88C009FB15C /* ScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanButton.swift; sourceTree = "<group>"; };
-		B47D8DF425D3B91A009FB15C /* ScanImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanImageView.swift; sourceTree = "<group>"; };
-		B47D8DF825D3BA37009FB15C /* OCRTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTextView.swift; sourceTree = "<group>"; };
-		B47D8DFC25D3BAE1009FB15C /* TextRecognitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionViewController.swift; sourceTree = "<group>"; };
 		B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		B4955E8F25DE621A00F9E4D9 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		B4CB97B825DF7A33007F4B36 /* UIButton+CustomButtonShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+CustomButtonShape.swift"; sourceTree = "<group>"; };
+		B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRightSegue.swift; sourceTree = "<group>"; };
+		B4CB97BC25DFC8FE007F4B36 /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
 		B8722843E352B923F8FA6B82 /* Pods-ChordBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.debug.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.debug.xcconfig"; sourceTree = "<group>"; };
 		EB8B2A202AD259CC772930A6 /* Pods-ChordBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.release.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,39 +141,31 @@
 				B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */,
 				B46F67B625CAA0F60097CFA2 /* ViewController.swift */,
 				B44107B225DB4A36004FF208 /* ViewController+Buttons.swift */,
-				B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */,
-				B44107B025D5388D004FF208 /* EnterSongNameViewController.swift */,
 				B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */,
-				B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */,
-				B47D8DFC25D3BAE1009FB15C /* TextRecognitionViewController.swift */,
+				B44107B025D5388D004FF208 /* EnterSongNameViewController.swift */,
 				B44107B625DBDB8A004FF208 /* ChordDictViewController.swift */,
-				B44107B825DBEF9C004FF208 /* ButtonView.swift */,
-				B47D8DF725D3BA20009FB15C /* TextRecognitionElements */,
+				B4955E8F25DE621A00F9E4D9 /* LaunchScreenViewController.swift */,
 				B47D8DD425D235B6009FB15C /* CoreDataManager.swift */,
+				B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */,
+				B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */,
+				B44107B825DBEF9C004FF208 /* ChordButtonsView.swift */,
+				B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */,
+				B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */,
+				B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */,
+				B4CB97B825DF7A33007F4B36 /* UIButton+CustomButtonShape.swift */,
 				B47D8DCA25D163E7009FB15C /* ChordForm.xcdatamodeld */,
 				B47D8DCE25D22D38009FB15C /* ChordForm+CoreDataClass.swift */,
 				B47D8DCF25D22D38009FB15C /* ChordForm+CoreDataProperties.swift */,
-				B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */,
-				B47D8DE925D28C75009FB15C /* chord_fingers.json */,
-				B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */,
 				B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */,
 				B4427E9D25CE91AC0056BAE9 /* low tick.mp3 */,
+				B47D8DE925D28C75009FB15C /* chord_fingers.json */,
 				B46F67B825CAA0F60097CFA2 /* Main.storyboard */,
-				B46F67BB25CAA0F90097CFA2 /* Assets.xcassets */,
+				B4CB97BC25DFC8FE007F4B36 /* CustomBackButton.swift */,
 				B46F67BD25CAA0F90097CFA2 /* LaunchScreen.storyboard */,
+				B46F67BB25CAA0F90097CFA2 /* Assets.xcassets */,
 				B46F67C025CAA0F90097CFA2 /* Info.plist */,
 			);
 			path = ChordBox;
-			sourceTree = "<group>";
-		};
-		B47D8DF725D3BA20009FB15C /* TextRecognitionElements */ = {
-			isa = PBXGroup;
-			children = (
-				B47D8DF125D3B88C009FB15C /* ScanButton.swift */,
-				B47D8DF425D3B91A009FB15C /* ScanImageView.swift */,
-				B47D8DF825D3BA37009FB15C /* OCRTextView.swift */,
-			);
-			path = TextRecognitionElements;
 			sourceTree = "<group>";
 		};
 		DD04AA4CC713FAEB80E41946 /* Frameworks */ = {
@@ -287,23 +279,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				B44107B325DB4A36004FF208 /* ViewController+Buttons.swift in Sources */,
+				B4CB97BD25DFC8FE007F4B36 /* CustomBackButton.swift in Sources */,
 				B44107B125D5388D004FF208 /* EnterSongNameViewController.swift in Sources */,
 				B46F67CC25CADC390097CFA2 /* GuitarChordView.swift in Sources */,
 				B46F67C825CAA22F0097CFA2 /* ChordAnalyzer.swift in Sources */,
+				B4CB97B925DF7A33007F4B36 /* UIButton+CustomButtonShape.swift in Sources */,
+				B4955E9025DE621A00F9E4D9 /* LaunchScreenViewController.swift in Sources */,
 				B46F67B725CAA0F60097CFA2 /* ViewController.swift in Sources */,
 				B46F67B325CAA0F60097CFA2 /* AppDelegate.swift in Sources */,
 				B47D8DD125D22D38009FB15C /* ChordForm+CoreDataProperties.swift in Sources */,
-				B47D8DF525D3B91A009FB15C /* ScanImageView.swift in Sources */,
 				B47D8DDC25D23C9B009FB15C /* IntroViewController.swift in Sources */,
-				B47D8DFD25D3BAE1009FB15C /* TextRecognitionViewController.swift in Sources */,
-				B47D8DF925D3BA37009FB15C /* OCRTextView.swift in Sources */,
 				B47D8DCC25D163E7009FB15C /* ChordForm.xcdatamodeld in Sources */,
-				B47D8DF225D3B88C009FB15C /* ScanButton.swift in Sources */,
 				B4955E8E25DE3E7D00F9E4D9 /* LoadingView.swift in Sources */,
 				B44107B525DB6C67004FF208 /* UIColor+CustomPalette.swift in Sources */,
 				B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */,
 				B47D8DD025D22D38009FB15C /* ChordForm+CoreDataClass.swift in Sources */,
-				B44107B925DBEF9C004FF208 /* ButtonView.swift in Sources */,
+				B44107B925DBEF9C004FF208 /* ChordButtonsView.swift in Sources */,
+				B4CB97BB25DF9D32007F4B36 /* CustomRightSegue.swift in Sources */,
 				B44107B725DBDB8A004FF208 /* ChordDictViewController.swift in Sources */,
 				B46F67B525CAA0F60097CFA2 /* SceneDelegate.swift in Sources */,
 			);

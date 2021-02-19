@@ -9,28 +9,16 @@ import UIKit
 
 class IntroViewController: UIViewController {
     
-//    var loading = UIActivityIndicatorView()
+    @IBOutlet weak var ChordDictButtonOutlet: UIButton!
+    @IBOutlet weak var AddingSongButtonOutlet: UIButton!
+    
     var loadingView = LoadingView()
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.layer.backgroundColor = UIColor.black.cgColor
-//        let spinnerSize = view.frame.width/4
-        
-//        view.addSubview(spinner)
-//        spinner.translatesAutoresizingMaskIntoConstraints = false
-//        spinner.color = UIColor.CustomPalette.pointColor
-//        spinner.layer.cornerRadius = 10
-//        spinner.layer.backgroundColor = UIColor.CustomPalette.shadeColor1.cgColor
-//        NSLayoutConstraint.activate([
-//            spinner.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-//            spinner.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-//            spinner.widthAnchor.constraint(equalToConstant: spinnerSize),
-//            spinner.heightAnchor.constraint(equalToConstant: spinnerSize)
-//        ])
-//        spinner.hidesWhenStopped = true
-//        spinner.style = .large
-//        spinner.setNeedsDisplay()
+        ChordDictButtonOutlet.customizeMyButton(title: "Chord Dictionary")
+        AddingSongButtonOutlet.customizeMyButton(title: "Add Song")
+
         // Do any additional setup after loading the view.
         view.addSubview(loadingView)
         NSLayoutConstraint.activate([
@@ -44,6 +32,11 @@ class IntroViewController: UIViewController {
         loadingView.setNeedsDisplay()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -53,7 +46,7 @@ class IntroViewController: UIViewController {
                 DispatchQueue.global(qos: .userInitiated).async {
                     self.fetchChordsFromJSON()
                     print(clock() - clk)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    DispatchQueue.main.async {
                         self.loadingView.stopAnimating()
                     }
                 }
@@ -64,6 +57,11 @@ class IntroViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     fileprivate func getChords() -> Bool {

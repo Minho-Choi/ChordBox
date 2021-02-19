@@ -11,7 +11,7 @@ import AudioKit
 class ChordDictViewController: UIViewController {
     
     var chordView = GuitarChordView(frame: .zero)
-    var buttonView = ButtonView(frame: .zero)
+    var buttonView = ChordButtonsView(frame: .zero)
     var chordName = UILabel(frame: .zero)
     
     private var chordAnalyzer = ChordAnalyzer()

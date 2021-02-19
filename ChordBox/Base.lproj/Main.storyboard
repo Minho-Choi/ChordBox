@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vJc-Qa-2yv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="62P-PB-Pzq">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -38,6 +38,7 @@
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="nextButtonPressed:" destination="S11-i6-tsf" eventType="touchUpInside" id="LNx-9w-Rpa"/>
+                                    <segue destination="rVz-hK-jN2" kind="show" id="fZs-57-f5I"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -52,7 +53,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="44Z-mf-jU5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2105" y="794"/>
+            <point key="canvasLocation" x="-146.15384615384616" y="-22.037914691943126"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="QKz-AV-LAW">
@@ -67,7 +68,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W3V-wh-pBc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1075.3623188405797" y="1281.521739130435"/>
+            <point key="canvasLocation" x="-263" y="657"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="N1D-yI-K3M">
@@ -93,10 +94,11 @@
                         <viewLayoutGuide key="safeArea" id="Eg7-KU-b42"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="VwC-TO-zZh"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nqj-th-rak" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1075" y="588"/>
+            <point key="canvasLocation" x="666.15384615384608" y="-22.037914691943126"/>
         </scene>
         <!--Intro View Controller-->
         <scene sceneID="izu-Hu-wwB">
@@ -110,14 +112,14 @@
                                 <rect key="frame" x="137" y="407" width="116" height="30"/>
                                 <state key="normal" title="Chord Dictionary"/>
                                 <connections>
-                                    <segue destination="NPA-B9-LeQ" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="zN7-aB-7vP"/>
+                                    <segue destination="NPA-B9-LeQ" kind="show" id="egF-Te-Ghv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jfU-PF-EI0">
                                 <rect key="frame" x="161.66666666666666" y="445" width="67" height="30"/>
                                 <state key="normal" title="Add Song"/>
                                 <connections>
-                                    <segue destination="S11-i6-tsf" kind="presentation" modalPresentationStyle="fullScreen" id="Sbe-Sq-4Mp"/>
+                                    <segue destination="S11-i6-tsf" kind="show" id="hGv-Vf-KRh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -130,10 +132,15 @@
                             <constraint firstItem="jfU-PF-EI0" firstAttribute="centerX" secondItem="N0I-Bq-8JD" secondAttribute="centerX" id="nzf-BY-taI"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="63s-fR-cSy"/>
+                    <connections>
+                        <outlet property="AddingSongButtonOutlet" destination="jfU-PF-EI0" id="6wO-8o-yG9"/>
+                        <outlet property="ChordDictButtonOutlet" destination="wn0-a5-t1Y" id="Nsg-Bl-jv4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NZP-Uc-dBj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1858" y="-142"/>
+            <point key="canvasLocation" x="-929.23076923076917" y="-142.18009478672985"/>
         </scene>
         <!--Chord Dict View Controller-->
         <scene sceneID="kg2-CS-Acl">
@@ -149,7 +156,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FPM-IS-yvx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1075" y="-142"/>
+            <point key="canvasLocation" x="-146.15384615384616" y="-671.0900473933649"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -271,8 +278,29 @@
             </objects>
             <point key="canvasLocation" x="-1075" y="-1346"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="oJO-Q0-qdM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="62P-PB-Pzq" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="XTW-8P-pfV">
+                        <rect key="frame" x="0.0" y="44" width="390" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <imageReference key="backIndicatorImage" image="chevron.backward.2" catalog="system" symbolScale="medium"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vJc-Qa-2yv" kind="relationship" relationship="rootViewController" id="Lr0-ed-UW7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kWf-fc-T2q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1858.4615384615383" y="-142.18009478672985"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="chevron.backward.2" catalog="system" width="128" height="105"/>
         <image name="metronome" catalog="system" width="128" height="121"/>
         <image name="music.note.list" catalog="system" width="128" height="115"/>
         <namedColor name="AccentColor">

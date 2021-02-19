@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ButtonView: UIView {
+class ChordButtonsView: UIView {
     
     var btnArr: [UIButton] = []
     

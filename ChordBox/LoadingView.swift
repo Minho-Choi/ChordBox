@@ -52,7 +52,7 @@ class LoadingView: UIView {
         let infoTextLabel = UILabel()
         infoTextLabel.translatesAutoresizingMaskIntoConstraints = false
         infoTextLabel.text = title
-        infoTextLabel.textColor = UIColor.CustomPalette.backgroundColor
+        infoTextLabel.textColor = UIColor.CustomPalette.textColor
 //        infoTextLabel.tintColor = UIColor.CustomPalette.backgroundColor
 //        infoTextLabel.backgroundColor = UIColor.CustomPalette.shadeColor1
         infoTextLabel.font = .preferredFont(forTextStyle: .headline)

@@ -13,14 +13,24 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var songTitleOutlet: UITextField!
     @IBOutlet weak var artistNameOutlet: UITextField!
     var lyrics: String = ""
+    let loadingView = LoadingView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
     func fetchLyricsDataFromFreeAPI(title: String, artist: String) {
+        self.view.addSubview(loadingView)
+        NSLayoutConstraint.activate([
+            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+        loadingView.addViews(frame: view.frame, title: "Searching Lyrics")
+        loadingView.spinner.startAnimating()
         let url = URL(string: "https://api.lyrics.ovh/v1/\(artist)/\(title)")
         let session = URLSession.shared
         DispatchQueue.global(qos: .userInitiated).async {
@@ -38,6 +48,9 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
                         let lyricsJSON = try JSONDecoder().decode(LyricsJSON.self, from: data)
                         self.lyrics = lyricsJSON.lyrics
                         print("lyrics: \(self.lyrics)")
+                        DispatchQueue.main.async {
+                            self.loadingView.stopAnimating()
+                        }
                     } catch {
                         print("JSON Parsing Error")
                         print(error.localizedDescription)
