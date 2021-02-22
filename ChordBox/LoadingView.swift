@@ -17,6 +17,7 @@ class LoadingView: UIView {
     }
     */
     var spinner = UIActivityIndicatorView()
+    let infoTextLabel = UILabel()
     let outerVisualEffectView = UIVisualEffectView()
     
     override init(frame: CGRect) {
@@ -49,9 +50,11 @@ class LoadingView: UIView {
 //
 //        innerVisualEffectView.contentView.addSubview(spinner)
         
-        let infoTextLabel = UILabel()
+        
         infoTextLabel.translatesAutoresizingMaskIntoConstraints = false
         infoTextLabel.text = title
+        infoTextLabel.textAlignment = .center
+        infoTextLabel.numberOfLines = 2
         infoTextLabel.textColor = UIColor.CustomPalette.textColor
 //        infoTextLabel.tintColor = UIColor.CustomPalette.backgroundColor
 //        infoTextLabel.backgroundColor = UIColor.CustomPalette.shadeColor1
@@ -70,9 +73,15 @@ class LoadingView: UIView {
             
             infoTextLabel.bottomAnchor.constraint(equalTo: spinner.topAnchor),
             infoTextLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-            infoTextLabel.heightAnchor.constraint(equalToConstant: 40)
+            infoTextLabel.heightAnchor.constraint(equalToConstant: 80)
         ])
         // view를 addSubView 한 뒤 constraint를 설정해야 함(view hierarchy 때문)
+    }
+    
+    func startAnimating() {
+        spinner.startAnimating()
+        self.alpha = 1
+        self.isHidden = false
     }
     
     func stopAnimating() {
@@ -80,8 +89,8 @@ class LoadingView: UIView {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
             self.alpha = 0
         }, completion: {_ in
-            self.outerVisualEffectView.effect = .none
-            self.removeFromSuperview()
+            self.isHidden = true
         })
+        infoTextLabel.removeFromSuperview()
     }
 }

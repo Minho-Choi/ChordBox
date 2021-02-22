@@ -9,15 +9,14 @@ import UIKit
 
 class IntroViewController: UIViewController {
     
-    @IBOutlet weak var ChordDictButtonOutlet: UIButton!
-    @IBOutlet weak var AddingSongButtonOutlet: UIButton!
-    
     var loadingView = LoadingView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        ChordDictButtonOutlet.customizeMyButton(title: "Chord Dictionary")
-        AddingSongButtonOutlet.customizeMyButton(title: "Add Song")
+//
+//        self.navigationController?.navigationItem.backBarButtonItem = backbarButtonItem
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationController?.navigationBar.backIndicatorImage = UIImage(systemName: "square.grid.2x2")
+        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(systemName: "square.grid.2x2")
 
         // Do any additional setup after loading the view.
         view.addSubview(loadingView)
@@ -35,10 +34,6 @@ class IntroViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
         DispatchQueue.main.async {
             let clk = clock()
@@ -54,9 +49,15 @@ class IntroViewController: UIViewController {
                 print(clock() - clk)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     self.loadingView.stopAnimating()
+                    self.performSegue(withIdentifier: "LoadingEndedSegue", sender: nil)
                 }
             }
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -34,9 +34,12 @@ class ChordDictViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         chordName.font = .systemFont(ofSize: 32)
         chordName.textAlignment = .center
         chordName.translatesAutoresizingMaskIntoConstraints = false
+        
+
         view.addSubview(chordName)
         view.addSubview(chordView)
         view.addSubview(buttonView)
@@ -59,6 +62,8 @@ class ChordDictViewController: UIViewController {
             chordView.topAnchor.constraint(equalTo: chordName.bottomAnchor, constant: padding),
             chordView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -padding)
         ])
+        
+
         // Do any additional setup after loading the view.
 
         bank.pulseWidth = 0.2
@@ -72,7 +77,15 @@ class ChordDictViewController: UIViewController {
             try AKManager.start()
         } catch {
             print("AKManager starting error occured")
+            print(error.localizedDescription)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.layoutSubviews()
+        buttonView.makeBtn(frame: buttonView.bounds)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -85,12 +98,23 @@ class ChordDictViewController: UIViewController {
         chordView.addGestureRecognizer(chordSoundPlay)
         chordView.addGestureRecognizer(chordChangeBack)
         chordView.addGestureRecognizer(chordChangeForward)
-        buttonView.makeBtn(frame: buttonView.bounds)
+        
         // bounds를 참조해야 함(frame은 global property이므로)
         for btn in buttonView.btnArr {
             btn.addTarget(self, action: #selector(ChordDictViewController.buttonTouched), for: .touchUpInside)
         }
-        buttonView.setNeedsDisplay()
+//        buttonView.setNeedsDisplay()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        do {
+            try AKManager.stop()
+        } catch {
+            print("AKManager Stopping Error Occured")
+            print(error.localizedDescription)
+        }
     }
     
     func addIndexView() {

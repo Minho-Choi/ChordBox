@@ -17,11 +17,12 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        songTitleOutlet.autocorrectionType = .no
+        artistNameOutlet.autocorrectionType = .no
         // Do any additional setup after loading the view.
     }
     
-    func fetchLyricsDataFromFreeAPI(title: String, artist: String) {
+    func fetchLyricsDataFromFreeAPI(title: String, artist: String, identifier: String, sender: UIButton) {
         self.view.addSubview(loadingView)
         NSLayoutConstraint.activate([
             loadingView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -29,8 +30,9 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
             loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
-        loadingView.addViews(frame: view.frame, title: "Searching Lyrics")
-        loadingView.spinner.startAnimating()
+        loadingView.addViews(frame: view.frame, title: "Searching Lyrics\r\n\(title.removingPercentEncoding!) by \(artist.removingPercentEncoding!)")
+        loadingView.startAnimating()
+        
         let url = URL(string: "https://api.lyrics.ovh/v1/\(artist)/\(title)")
         let session = URLSession.shared
         DispatchQueue.global(qos: .userInitiated).async {
@@ -50,7 +52,9 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
                         print("lyrics: \(self.lyrics)")
                         DispatchQueue.main.async {
                             self.loadingView.stopAnimating()
+                            self.performSegue(withIdentifier: identifier, sender: sender)
                         }
+                        
                     } catch {
                         print("JSON Parsing Error")
                         print(error.localizedDescription)
@@ -65,8 +69,17 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
         
     @IBAction func nextButtonPressed(_ sender: UIButton) {
         print("button pressed")
-        if let title = songTitleOutlet.text, let artist = artistNameOutlet.text {
-            fetchLyricsDataFromFreeAPI(title: title.replacingOccurrences(of: " ", with: "%20"), artist: artist)
+        if let title = songTitleOutlet.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+           let artist = artistNameOutlet.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+            fetchLyricsDataFromFreeAPI(title: title, artist: artist, identifier: "FoundLyricsSegue", sender: sender)
+        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "FoundLyricsSegue" {
+            let vc = segue.destination as! ShowLyricsViewController
+            vc.lyrics = self.lyrics
         }
     }
 }
