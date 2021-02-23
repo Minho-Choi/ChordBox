@@ -170,7 +170,7 @@ class ChordDictViewController: UIViewController {
         print("search chord \(chordName.text!)")
         chordArrayIndex = 0
 //        var string = ""
-        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
+        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3), tones.isNotEmpty {
             chordTones = tones[chordArrayIndex].pitches
 //            for tone in tones.pitches {
 //                string.append(tone.toneName + " ")

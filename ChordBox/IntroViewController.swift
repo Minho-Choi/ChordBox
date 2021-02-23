@@ -12,8 +12,7 @@ class IntroViewController: UIViewController {
     var loadingView = LoadingView()
     override func viewDidLoad() {
         super.viewDidLoad()
-//
-//        self.navigationController?.navigationItem.backBarButtonItem = backbarButtonItem
+
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.backIndicatorImage = UIImage(systemName: "square.grid.2x2")
         self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(systemName: "square.grid.2x2")
@@ -27,7 +26,7 @@ class IntroViewController: UIViewController {
             loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
         loadingView.addViews(frame: view.bounds, title: "Updating Database")
-        loadingView.spinner.startAnimating()
+        loadingView.startAnimating()
         loadingView.setNeedsDisplay()
     }
     
@@ -35,24 +34,23 @@ class IntroViewController: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         
-        DispatchQueue.main.async {
-            let clk = clock()
-            if !self.getChords() {
-                DispatchQueue.global(qos: .userInitiated).async {
-                    self.fetchChordsFromJSON()
-                    print(clock() - clk)
-                    DispatchQueue.main.async {
-                        self.loadingView.stopAnimating()
-                    }
-                }
-            } else {
-                print(clock() - clk)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.loadingView.stopAnimating()
-                    self.performSegue(withIdentifier: "LoadingEndedSegue", sender: nil)
-                }
+//        DispatchQueue.global(qos: .userInitiated).async {
+        let clk = clock()
+        if !self.getChords() {
+            self.fetchChordsFromJSON()
+            print(clock() - clk)
+            DispatchQueue.main.async {
+                self.loadingView.stopAnimating()
+                self.performSegue(withIdentifier: "LoadingEndedSegue", sender: nil)
+            }
+        } else {
+            print(clock() - clk)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.loadingView.stopAnimating()
+                self.performSegue(withIdentifier: "LoadingEndedSegue", sender: nil)
             }
         }
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -115,14 +113,6 @@ class IntroViewController: UIViewController {
         }
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
+
