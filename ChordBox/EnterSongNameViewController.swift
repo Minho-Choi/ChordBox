@@ -79,7 +79,7 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FoundLyricsSegue" {
             let vc = segue.destination as! ShowLyricsViewController
-            vc.lyrics = self.lyrics
+            vc.lyrics = self.lyrics.replacingOccurrences(of: "\r\n", with: "\n").replacingOccurrences(of: "\n\n", with: "\n")
         }
     }
 }

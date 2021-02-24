@@ -23,6 +23,8 @@ class LoadingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        infoTextLabel.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {
@@ -32,7 +34,7 @@ class LoadingView: UIView {
     
     func addViews(frame: CGRect, title: String) {
         let spinnerSize = frame.width/4
-        spinner.translatesAutoresizingMaskIntoConstraints = false
+        
         spinner.style = .large
         spinner.color = UIColor.CustomPalette.pointColor
 
@@ -50,8 +52,6 @@ class LoadingView: UIView {
 //
 //        innerVisualEffectView.contentView.addSubview(spinner)
         
-        
-        infoTextLabel.translatesAutoresizingMaskIntoConstraints = false
         infoTextLabel.text = title
         infoTextLabel.textAlignment = .center
         infoTextLabel.numberOfLines = 2

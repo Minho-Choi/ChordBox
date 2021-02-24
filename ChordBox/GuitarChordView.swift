@@ -35,15 +35,7 @@ class GuitarChordView: UIView {
         let smallDotStartPoint = CGPoint(x: startPoint.x + fretWidth/2-smallDotRadius, y: startPoint.y - smallDotRadius)
         let path = UIBezierPath()
         UIColor.CustomPalette.chordColor.setStroke()
-//        //  border line
-//        path.addLine(to: CGPoint(x: startPoint.x, y: startPoint.y + chordHeight))
-//        path.lineWidth = chordWidth * GuitarChordViewConstants.thickThicknessProportion
-//        path.move(to: .zero)
-//        path.addLine(to: CGPoint(x: rect.maxX, y: .zero))
-//        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-//        path.addLine(to: CGPoint(x: .zero, y: rect.maxY))
-//        path.close()
-//        //
+
         path.move(to: startPoint)
         path.addLine(to: CGPoint(x: startPoint.x, y: startPoint.y + chordHeight))
         path.lineWidth = chordWidth * GuitarChordViewConstants.thickThicknessProportion
@@ -153,7 +145,7 @@ extension GuitarChordView {
         
         static let widthPropotion: CGFloat = 0.8
         
-        static let heightProportion: CGFloat = 0.6
+        static let heightProportion: CGFloat = 0.8
         
         static let thickThicknessProportion: CGFloat = 0.02
         

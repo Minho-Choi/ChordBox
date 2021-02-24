@@ -39,32 +39,12 @@ class ChordDictViewController: UIViewController {
         chordName.textAlignment = .center
         chordName.translatesAutoresizingMaskIntoConstraints = false
         
-
+        
         view.addSubview(chordName)
         view.addSubview(chordView)
         view.addSubview(buttonView)
-        // Do any additional setup after loading the view.
-        let padding: CGFloat = 8
-        NSLayoutConstraint.activate([
-            chordName.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
-            chordName.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-            chordName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
-            chordName.bottomAnchor.constraint(equalTo: chordView.topAnchor, constant: -padding),
-            chordName.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: 70),
-            
-            buttonView.safeAreaLayoutGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-            buttonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-            buttonView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
-            buttonView.heightAnchor.constraint(equalToConstant: 300),
-
-            chordView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
-            chordView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-            chordView.topAnchor.constraint(equalTo: chordName.bottomAnchor, constant: padding),
-            chordView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -padding)
-        ])
         
-
-        // Do any additional setup after loading the view.
+        viewWillLayoutSubviews()
 
         bank.pulseWidth = 0.2
         bank.attackDuration = 0
@@ -85,7 +65,6 @@ class ChordDictViewController: UIViewController {
         super.viewWillAppear(animated)
         view.layoutSubviews()
         buttonView.makeBtn(frame: buttonView.bounds)
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -100,10 +79,42 @@ class ChordDictViewController: UIViewController {
         chordView.addGestureRecognizer(chordChangeForward)
         
         // bounds를 참조해야 함(frame은 global property이므로)
-        for btn in buttonView.btnArr {
-            btn.addTarget(self, action: #selector(ChordDictViewController.buttonTouched), for: .touchUpInside)
+        for btnRow in buttonView.btnArr {
+            for btn in btnRow {
+                btn.addTarget(self, action: #selector(ChordDictViewController.buttonTouched), for: .touchUpInside)
+
+            }
         }
 //        buttonView.setNeedsDisplay()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        let padding: CGFloat = 8
+        NSLayoutConstraint.activate([
+            chordName.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
+            chordName.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
+            chordName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
+            chordName.bottomAnchor.constraint(equalTo: chordView.topAnchor, constant: -padding),
+            chordName.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: 70),
+            
+            buttonView.safeAreaLayoutGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            buttonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
+            buttonView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
+            buttonView.heightAnchor.constraint(equalToConstant: 300),
+
+            chordView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
+            chordView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
+            chordView.topAnchor.constraint(equalTo: chordName.bottomAnchor, constant: padding),
+            chordView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -padding)
+        ])
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        buttonView.updateButtonLayout()
+        addIndexView()
+        chordView.setNeedsDisplay()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -144,11 +155,18 @@ class ChordDictViewController: UIViewController {
             }
             
         } else {
-            for view in chordView.subviews {
+            for (index, view) in chordView.subviews.enumerated() {
                 view.tintColor = UIColor.CustomPalette.shadeColor2
                 if view.tag == chordArrayIndex {
                     view.tintColor = UIColor.CustomPalette.pointColor
                 }
+                let imageWidth = chordView.bounds.width/15
+                view.frame = CGRect(
+                    x: chordView.bounds.maxX - imageWidth*CGFloat(index + 1),
+                    y: chordView.bounds.maxY - chordView.bounds.height/15,
+                    width: chordView.bounds.height/15,
+                    height: chordView.bounds.height/15
+                )
             }
         }
         DispatchQueue.main.async {
@@ -226,7 +244,7 @@ extension ChordDictViewController {
     
     @objc func buttonTouched(_ sender: UIButton) {
         print(sender.titleLabel?.text ?? "nil")
-        if sender.tag == 0 {
+        if sender.tag == 0 || sender.tag == 1 {
             chordKey = sender.titleLabel?.text ?? ""
         } else {
             chordIdentifier = sender.titleLabel?.text ?? ""
