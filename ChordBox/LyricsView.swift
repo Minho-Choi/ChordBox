@@ -12,13 +12,13 @@ private let reuseIdentifer = "Cell"
 class LyricsView : UIView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var collectionView : UICollectionView?
-    var lyrics = [[String]]()
+    var lyrics = [NSMutableArray(array: [String]())]
+    var isMultiSelectEnabled = false
+    var editMode = EditMode(rawValue: 0)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        collectionView?.dragInteractionEnabled = true
-//        self.layer.borderWidth = 2
     }
 
     required init?(coder: NSCoder) {
@@ -28,12 +28,12 @@ class LyricsView : UIView, UICollectionViewDelegate, UICollectionViewDataSource 
     func setLayout(lyrics: String) {
         let lyricsChunks = lyrics.split(separator: "\n")
         for chunk in lyricsChunks {
-            let arr = chunk.map { String($0) }
+            let arr = NSMutableArray(array: chunk.map { String($0) })
             self.lyrics.append(arr)
         }
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.dragDelegate = self
@@ -43,10 +43,11 @@ class LyricsView : UIView, UICollectionViewDelegate, UICollectionViewDataSource 
         if let collectionView = collectionView {
             addSubview(collectionView)
         }
+        collectionView?.dragInteractionEnabled = true
     }
     
     func updateLayout() {
-        collectionView?.frame = frame
+        collectionView?.frame = bounds
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -60,7 +61,7 @@ class LyricsView : UIView, UICollectionViewDelegate, UICollectionViewDataSource 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifer, for: indexPath) as! MyCell
-        let word = lyrics[indexPath.section][indexPath.item]
+        let word = lyrics[indexPath.section][indexPath.item] as! String
         if word.starts(with: "^") {
             let fixedChordString = word.replacingOccurrences(of: "^", with: "")
             cell.myCharacter.text = "\(fixedChordString)\n"
@@ -76,15 +77,38 @@ class LyricsView : UIView, UICollectionViewDelegate, UICollectionViewDataSource 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if lyrics[indexPath.section][indexPath.item].count != 1{
+        if (lyrics[indexPath.section][indexPath.item] as! String).count != 1, editMode == .delete {
+            let saveItem = lyrics[indexPath.section][indexPath.item]
             collectionView.performBatchUpdates({
-
                 collectionView.deleteItems(at: [indexPath])
-                lyrics[indexPath.section].remove(at: indexPath.item)
+                lyrics[indexPath.section].removeObject(at: indexPath.item)
+            })
+            undoManager?.registerUndo(withTarget: lyrics[indexPath.section] , handler: {
+                $0.insert(saveItem, at: indexPath.item)
             })
         }
     }
+//
+//    func undoEditing(chords: [String]) {
+//
+//        undoManager?.registerUndo(withTarget: lyrics) {
+//            $0.append(chords)
+//        }
+//    }
     
+    func undo() {
+        undoManager?.undo()
+        collectionView?.reloadData()
+    }
+    
+    func redo() {
+        undoManager?.redo()
+        collectionView?.reloadData()
+    }
+    
+    func updateEditMode(mode: Int) {
+        self.editMode = EditMode(rawValue: mode)
+    }
 }
 
 // MARK: - Layout Delegate
@@ -94,13 +118,13 @@ extension LyricsView : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width : CGFloat
         let height : CGFloat
-        let text = lyrics[indexPath.section][indexPath.item]
+        let text = lyrics[indexPath.section][indexPath.item] as! String
         if text.count == 1 {
             if let ascii = text.first?.asciiValue, ascii <= 127 {
-                width = 15
+                width = CGFloat.fontWidth
                 height = 60
             } else {
-                width = 30
+                width = CGFloat.fontWidth*2
                 height = 60
             }
         } else {
@@ -118,6 +142,31 @@ extension LyricsView : UICollectionViewDelegateFlowLayout {
         return 0
     }
     
+}
+
+// MARK: - Multi Selection Delegate
+
+extension LyricsView {
+    func collectionView(_ collectionView: UICollectionView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
+        return isMultiSelectEnabled
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath), (lyrics[indexPath.section][indexPath.item] as! String).starts(with: "^") {
+            if cell.isSelected {
+                cell.layer.backgroundColor = UIColor.systemTeal.cgColor
+            } else {
+                cell.layer.backgroundColor = UIColor.clear.cgColor
+            }
+            
+        }
+    }
+    
+    func collectionViewDidEndMultipleSelectionInteraction(_ collectionView: UICollectionView) {
+        collectionView.indexPathsForSelectedItems?.forEach { itemIndex in
+            
+        }
+    }
 }
 
 // MARK: - Drop Delegate
@@ -141,6 +190,7 @@ extension LyricsView : UICollectionViewDropDelegate {
     
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
+        undoManager?.beginUndoGrouping()
         for item in coordinator.items {
             // 아이템이 본래 있던 자리(드래그가 시작된 자리)
             if let sourceIndexPath = item.sourceIndexPath {
@@ -148,15 +198,35 @@ extension LyricsView : UICollectionViewDropDelegate {
                 guard let chordItem = item.dragItem.localObject as? String else { break }//, let imageAR = item.dragItem.localObject as? Double{
                 print(chordItem)
                     // performBatchUpdates의 효과는 모델과 뷰를 동시에 수정함으로써 싱크 유지
-                collectionView.performBatchUpdates({
-                    // 모델 편집 - 본래 위치에서 삭제 후 새로운 위치에 추가
-                    lyrics[sourceIndexPath.section].remove(at: sourceIndexPath.item)
-                    lyrics[destinationIndexPath.section].insert(chordItem, at: destinationIndexPath.item)
-                    // 뷰 편집 - 전체 뷰를 업데이트할 경우 애니메이션 실행되지 않으므로 부자연스러움
-                    // 따라서 아이템을 하나씩 지우고 더하는 메소드를 사용
-                    collectionView.deleteItems(at: [sourceIndexPath])
-                    collectionView.insertItems(at: [destinationIndexPath])
-                })
+                if editMode == EditMode.copy {
+                    collectionView.performBatchUpdates({
+                        // 모델 편집 - 본래 위치에서 삭제 후 새로운 위치에 추가
+                        lyrics[sourceIndexPath.section].removeObject(at: sourceIndexPath.item)
+                        lyrics[destinationIndexPath.section].insert(chordItem, at: destinationIndexPath.item)
+                        // 뷰 편집 - 전체 뷰를 업데이트할 경우 애니메이션 실행되지 않으므로 부자연스러움
+                        // 따라서 아이템을 하나씩 지우고 더하는 메소드를 사용
+                        collectionView.deleteItems(at: [sourceIndexPath])
+                        collectionView.insertItems(at: [destinationIndexPath])
+                    })
+                    undoManager?.registerUndo(withTarget: lyrics[sourceIndexPath.section] , handler: {
+                        $0.insert(chordItem, at: sourceIndexPath.item)
+                    })
+                    undoManager?.registerUndo(withTarget: lyrics[destinationIndexPath.section] , handler: {
+                        $0.removeObject(at: destinationIndexPath.item)
+                    })
+                } else if editMode == EditMode.move {
+                    collectionView.performBatchUpdates({
+                        // 모델 편집 - 새로운 위치에 추가
+                        lyrics[destinationIndexPath.section].insert(chordItem, at: destinationIndexPath.item)
+                        // 뷰 편집 - 전체 뷰를 업데이트할 경우 애니메이션 실행되지 않으므로 부자연스러움
+                        // 따라서 아이템을 하나씩 지우고 더하는 메소드를 사용
+                        collectionView.insertItems(at: [destinationIndexPath])
+                    })
+                    undoManager?.registerUndo(withTarget: lyrics[destinationIndexPath.section] , handler: {
+                        $0.removeObject(at: destinationIndexPath.item)
+                    })
+
+                }
                     // 애니메이션 실행
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
             } else { // 아이템이 외부에서 왔을 경우
@@ -168,11 +238,18 @@ extension LyricsView : UICollectionViewDropDelegate {
                                 collectionView.insertItems(at: [destinationIndexPath])
                                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
                             })
+                            if self != nil {
+                                self?.undoManager?.registerUndo(withTarget: (self?.lyrics[destinationIndexPath.section])!, handler: {
+                                    $0.removeObject(at: destinationIndexPath.item)
+                                })
+                            }
                         }
+
                     }
                 }
             }
         }
+        undoManager?.endUndoGrouping()
     }
     
     
@@ -187,10 +264,10 @@ extension LyricsView: UICollectionViewDragDelegate {
         return dragItems(at: indexPath)
     }
     
-    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-        session.localContext = collectionView
-        return dragItems(at: indexPath)
-    }
+//    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+//        session.localContext = collectionView
+//        return dragItems(at: indexPath)
+//    }
     
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
         // cellForItem: Returns the visible cell object at the specified index path.
@@ -225,7 +302,7 @@ class MyCell: UICollectionViewCell{
     let myCharacter: UILabel = {
         let img = UILabel()
         img.textAlignment = .center
-        img.font = UIFont.monospacedSystemFont(ofSize: 32, weight: .regular)
+        img.font = UIFont.monospacedSystemFont(ofSize: CGFloat.fontHeight, weight: .regular)
         img.numberOfLines = 2
         img.adjustsFontSizeToFitWidth = true
         //자동으로 위치 정렬 금지
@@ -236,7 +313,6 @@ class MyCell: UICollectionViewCell{
     func setupView(){
         //셀에 위에서 만든 이미지 뷰 객체를 넣어준다.
         addSubview(myCharacter)
-        layer.backgroundColor = UIColor.white.cgColor
         
         //제약조건 설정하기
         myCharacter.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -244,4 +320,6 @@ class MyCell: UICollectionViewCell{
         myCharacter.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         myCharacter.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
+    
+
 }

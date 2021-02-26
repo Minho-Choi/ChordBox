@@ -41,8 +41,8 @@
 		B4CB97C125E29290007F4B36 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97C025E29290007F4B36 /* MenuViewController.swift */; };
 		B4CB97C325E34E42007F4B36 /* MenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97C225E34E42007F4B36 /* MenuButtonView.swift */; };
 		B4CB97C525E4C9F4007F4B36 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97C425E4C9F4007F4B36 /* LyricsView.swift */; };
-		B4CB97C725E50395007F4B36 /* ExerciseCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97C625E50395007F4B36 /* ExerciseCollectionViewController.swift */; };
 		B4CB97CE25E60F21007F4B36 /* ChordNoteSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97CD25E60F21007F4B36 /* ChordNoteSelectView.swift */; };
+		B4CB97D025E8DD71007F4B36 /* CGFloat+FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97CF25E8DD71007F4B36 /* CGFloat+FontSize.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -96,8 +96,8 @@
 		B4CB97C025E29290007F4B36 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		B4CB97C225E34E42007F4B36 /* MenuButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtonView.swift; sourceTree = "<group>"; };
 		B4CB97C425E4C9F4007F4B36 /* LyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsView.swift; sourceTree = "<group>"; };
-		B4CB97C625E50395007F4B36 /* ExerciseCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCollectionViewController.swift; sourceTree = "<group>"; };
 		B4CB97CD25E60F21007F4B36 /* ChordNoteSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChordNoteSelectView.swift; sourceTree = "<group>"; };
+		B4CB97CF25E8DD71007F4B36 /* CGFloat+FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+FontSize.swift"; sourceTree = "<group>"; };
 		B8722843E352B923F8FA6B82 /* Pods-ChordBox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.debug.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.debug.xcconfig"; sourceTree = "<group>"; };
 		EB8B2A202AD259CC772930A6 /* Pods-ChordBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChordBox.release.xcconfig"; path = "Target Support Files/Pods-ChordBox/Pods-ChordBox.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,13 +154,13 @@
 				B44107B625DBDB8A004FF208 /* ChordDictViewController.swift */,
 				B44107B025D5388D004FF208 /* EnterSongNameViewController.swift */,
 				B4CB97BE25E00007007F4B36 /* ShowLyricsViewController.swift */,
-				B4CB97C625E50395007F4B36 /* ExerciseCollectionViewController.swift */,
 				B47D8DD425D235B6009FB15C /* CoreDataManager.swift */,
 				B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */,
 				B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */,
 				B44107B825DBEF9C004FF208 /* ChordButtonsView.swift */,
 				B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */,
 				B4CB97C425E4C9F4007F4B36 /* LyricsView.swift */,
+				B4CB97CF25E8DD71007F4B36 /* CGFloat+FontSize.swift */,
 				B4CB97CD25E60F21007F4B36 /* ChordNoteSelectView.swift */,
 				B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */,
 				B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */,
@@ -308,11 +308,11 @@
 				B44107B525DB6C67004FF208 /* UIColor+CustomPalette.swift in Sources */,
 				B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */,
 				B47D8DD025D22D38009FB15C /* ChordForm+CoreDataClass.swift in Sources */,
-				B4CB97C725E50395007F4B36 /* ExerciseCollectionViewController.swift in Sources */,
 				B44107B925DBEF9C004FF208 /* ChordButtonsView.swift in Sources */,
 				B4CB97BB25DF9D32007F4B36 /* CustomRightSegue.swift in Sources */,
 				B4CB97CE25E60F21007F4B36 /* ChordNoteSelectView.swift in Sources */,
 				B44107B725DBDB8A004FF208 /* ChordDictViewController.swift in Sources */,
+				B4CB97D025E8DD71007F4B36 /* CGFloat+FontSize.swift in Sources */,
 				B46F67B525CAA0F60097CFA2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

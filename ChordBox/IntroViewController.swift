@@ -45,7 +45,7 @@ class IntroViewController: UIViewController {
             }
         } else {
             print(clock() - clk)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.async {
                 self.loadingView.stopAnimating()
                 self.performSegue(withIdentifier: "LoadingEndedSegue", sender: nil)
             }
