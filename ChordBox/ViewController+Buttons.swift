@@ -8,7 +8,7 @@
 import UIKit
 
 extension ViewController {
-    
+
     func makeBtn() {
         let buttonHeight = buttonView.frame.height/7.2
         for index: Int in 0..<ChordButtonData.chordKeys1.count {
@@ -50,7 +50,7 @@ extension ViewController {
             btn.addTarget(self, action: #selector(ViewController.buttonTouched), for: .touchUpInside)
             btnArr.append(btn)
         }
-        
+
         for (index, array) in ChordButtonData.chordTypes.enumerated() {
             for chordNameIndex in 0..<array.count {
                 let buttonWidth = buttonView.frame.width/CGFloat(array.count)
@@ -75,7 +75,7 @@ extension ViewController {
             }
         }
     }
-    
+
     @objc func buttonTouched(_ sender: UIButton) {
         print(sender.titleLabel?.text ?? "nil")
         if sender.tag == 0 {

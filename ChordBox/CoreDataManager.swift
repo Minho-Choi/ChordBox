@@ -9,28 +9,28 @@ import UIKit
 import CoreData
 
 class CoreDataManager {
-    static let shared : CoreDataManager = CoreDataManager()
-    
-    let appDelegate : AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    static let shared: CoreDataManager = CoreDataManager()
+
+    weak var appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
     lazy var context = appDelegate?.persistentContainer.viewContext
     lazy var cacheContext = appDelegate?.persistentContainer.newBackgroundContext()
-    lazy var updateContext : NSManagedObjectContext = {
+    lazy var updateContext: NSManagedObjectContext = {
         let _updateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         _updateContext.parent = self.context
         return _updateContext
     }()
-    
+
     let modelName: String = "ChordForm"
-    
+
     func getChords(base: String, type: String, ascending: Bool = false) -> [ChordForm] {
         var models = [ChordForm]()
-        
+
         let context = updateContext
         let idSort: NSSortDescriptor = NSSortDescriptor(key: "root", ascending: ascending)
         let fetchRequest: NSFetchRequest<NSManagedObject> = NSFetchRequest<NSManagedObject>(entityName: modelName)
         fetchRequest.sortDescriptors = [idSort]
         fetchRequest.predicate = NSPredicate(format: "root == %@ AND type == %@", base, type)
-        
+
         do {
             if let fetchResult: [ChordForm] = try context.fetch(fetchRequest) as? [ChordForm] {
                 models = fetchResult
@@ -38,10 +38,10 @@ class CoreDataManager {
         } catch let error as NSError {
             print("Fetch error: \(error.userInfo)")
         }
-        
+
         return models
     }
-    
+
     func saveChord(id: UUID, root: String, type: String, structure: String, fingerPositions: String, noteNames: String, onSuccess: @escaping((Bool) -> Void)) {
         if let context = context {
             if let entity: NSEntityDescription = NSEntityDescription.entity(forEntityName: modelName, in: context) {
@@ -52,7 +52,7 @@ class CoreDataManager {
                     chordform.structure = structure
                     chordform.fingerPositions = fingerPositions
                     chordform.noteNames = noteNames
-                    
+
                     contextSave { success in
                         onSuccess(success)
                     }
@@ -63,7 +63,7 @@ class CoreDataManager {
 }
 
 extension CoreDataManager {
-    fileprivate func contextSave(onSuccess: ((Bool)-> Void)) {
+    fileprivate func contextSave(onSuccess: ((Bool) -> Void)) {
         do {
             try context?.save()
             onSuccess(true)

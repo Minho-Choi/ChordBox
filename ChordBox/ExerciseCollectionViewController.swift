@@ -8,7 +8,7 @@
 import UIKit
 
 class ExerciseCollectionViewController: UIViewController {
-    
+
     var lyrics =
         """
 So are you happy now?
@@ -80,13 +80,13 @@ Forever, we young
     let lyricsView = LyricsView(frame: .zero)
     let noteView = ChordNoteSelectView(frame: .zero)
     let chordButtonView = ChordButtonsView(frame: .zero)
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(lyricsView)
         self.view.addSubview(noteView)
         self.view.addSubview(chordButtonView)
-        
+
         noteView.isUserInteractionEnabled = true
         lyricsView.isUserInteractionEnabled = true
         lyricsView.collectionView?.isUserInteractionEnabled = true
@@ -98,44 +98,44 @@ Forever, we young
         view.isUserInteractionEnabled = true
         viewWillLayoutSubviews()
     }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         NSLayoutConstraint.activate([
-            
+
             lyricsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             lyricsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             lyricsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             lyricsView.bottomAnchor.constraint(equalTo: noteView.topAnchor, constant: -20),
-            
+
             noteView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             noteView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             noteView.topAnchor.constraint(equalTo: lyricsView.bottomAnchor),
             noteView.bottomAnchor.constraint(equalTo: chordButtonView.topAnchor),
             noteView.heightAnchor.constraint(equalToConstant: 60),
-            
+
             chordButtonView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             chordButtonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             chordButtonView.topAnchor.constraint(equalTo: noteView.bottomAnchor),
             chordButtonView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             chordButtonView.heightAnchor.constraint(equalToConstant: 300)
-            
+
         ])
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         lyricsView.updateLayout()
         chordButtonView.updateButtonLayout()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.layoutSubviews()
         lyricsView.setLayout(lyrics: lyrics)
         noteView.createView()
         chordButtonView.makeBtn(frame: chordButtonView.bounds)
-        
+
         for btnRow in chordButtonView.btnArr {
             for btn in btnRow {
                 btn.addTarget(self, action: #selector(chordButtonTouched), for: .touchUpInside)
@@ -147,17 +147,16 @@ Forever, we young
         noteView.eighthNoteButton.addTarget(self, action: #selector(noteButtonTouched), for: .touchUpInside)
         noteView.wholeNoteButton.isSelected = true
     }
-    
-    
+
     @objc func chordButtonTouched(_ sender: UIButton) {
         print(sender.titleLabel?.text ?? "nil")
-        if sender.tag == 0  || sender.tag == 1{
+        if sender.tag == 0  || sender.tag == 1 {
             chordKey = sender.titleLabel?.text ?? ""
         } else {
             chordIdentifier = sender.titleLabel?.text ?? ""
         }
     }
-    
+
     @objc func noteButtonTouched(_ sender: UIButton) {
         print(sender.titleLabel?.text ?? "nil")
         switch sender.tag {
@@ -187,5 +186,3 @@ Forever, we young
         }
     }
 }
-
-

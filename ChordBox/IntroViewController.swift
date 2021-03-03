@@ -8,7 +8,7 @@
 import UIKit
 
 class IntroViewController: UIViewController {
-    
+
     var loadingView = LoadingView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,17 +23,17 @@ class IntroViewController: UIViewController {
             loadingView.topAnchor.constraint(equalTo: view.topAnchor),
             loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         loadingView.addViews(frame: view.bounds, title: "Updating Database")
         loadingView.startAnimating()
         loadingView.setNeedsDisplay()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        
+
 //        DispatchQueue.global(qos: .userInitiated).async {
         let clk = clock()
         if !self.getChords() {
@@ -52,17 +52,17 @@ class IntroViewController: UIViewController {
         }
 //        }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-    
+
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
+
     fileprivate func getChords() -> Bool {
         let chords: [ChordForm] = CoreDataManager.shared.getChords(base: "A", type: "7", ascending: true)
         let chordNames: [String] = chords.map({$0.root! + $0.type!})
@@ -72,7 +72,7 @@ class IntroViewController: UIViewController {
         }
         return true
     }
-    
+
     // 새로운 유저 등록
     fileprivate func saveChord(id: UUID, root: String, type: String, structure: String, fingerPositions: String, noteNames: String) {
         CoreDataManager.shared
@@ -80,7 +80,7 @@ class IntroViewController: UIViewController {
                 print("saved: \(onSuccess)")
             }
     }
-    
+
     fileprivate func fetchChordsFromJSON() {
         struct Chord: Decodable {
             var CHORD_ROOT: String
@@ -114,5 +114,3 @@ class IntroViewController: UIViewController {
     }
 
 }
-
-

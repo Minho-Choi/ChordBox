@@ -10,7 +10,7 @@ import Vision
 import VisionKit
 
 class TextRecognitionViewController: UIViewController {
-    
+
     private var scanButton = ScanButton(frame: .zero)
     private var scanImageView = ScanImageView(frame: .zero)
     private var ocrTextView = OcrTextView(frame: .zero, textContainer: nil)
@@ -18,17 +18,17 @@ class TextRecognitionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         configure()
         configureOCR()
         // Do any additional setup after loading the view.
     }
-    
+
     private func configure() {
         view.addSubview(scanImageView)
         view.addSubview(ocrTextView)
         view.addSubview(scanButton)
-        
+
         let padding: CGFloat = 16
         NSLayoutConstraint.activate([
             scanButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
@@ -44,19 +44,19 @@ class TextRecognitionViewController: UIViewController {
             scanImageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
             scanImageView.bottomAnchor.constraint(equalTo: ocrTextView.topAnchor, constant: -padding)
         ])
-        
+
         scanButton.addTarget(self, action: #selector(scanDocument), for: .touchUpInside)
     }
-    
+
     @objc private func scanDocument() {
         let scanVC = VNDocumentCameraViewController()
         scanVC.delegate = self
         present(scanVC, animated: true)
     }
-    
+
     private func processImage(_ image: UIImage) {
         guard let cgImage = image.cgImage else { return }
-        
+
         ocrTextView.text = ""
         scanButton.isEnabled = false
         let requestHander = VNImageRequestHandler(cgImage: cgImage, options: [:])
@@ -66,23 +66,23 @@ class TextRecognitionViewController: UIViewController {
             print(error)
         }
     }
-    
+
     private func configureOCR() {
-        ocrRequest = VNRecognizeTextRequest { (request, error) in
+        ocrRequest = VNRecognizeTextRequest { (request, _) in
             guard let observations = request.results as? [VNRecognizedTextObservation] else { return }
             var ocrText = ""
             for observation in observations {
                 guard let topCandidate = observation.topCandidates(1).first else { return }
-                
+
                 ocrText += topCandidate.string + "\n"
             }
-            
+
             DispatchQueue.main.async {
                 self.ocrTextView.text = ocrText
                 self.scanButton.isEnabled = true
             }
         }
-        
+
         ocrRequest.recognitionLevel = .accurate
         ocrRequest.recognitionLanguages = ["en-US"]
         ocrRequest.usesLanguageCorrection = false
@@ -125,7 +125,6 @@ class TextRecognitionViewController: UIViewController {
 
 }
 
-
 extension TextRecognitionViewController: VNDocumentCameraViewControllerDelegate {
     func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
         guard scan.pageCount >= 1 else {
@@ -133,19 +132,19 @@ extension TextRecognitionViewController: VNDocumentCameraViewControllerDelegate 
             return
         }
         // code for text recognition
-        
+
         scanImageView.image = scan.imageOfPage(at: 0)
         processImage(scan.imageOfPage(at: 0))
         controller.dismiss(animated: true)
 
         controller.dismiss(animated: true)
     }
-    
+
     func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
         // handle property error
         controller.dismiss(animated: true)
     }
-    
+
     func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
         controller.dismiss(animated: true)
     }

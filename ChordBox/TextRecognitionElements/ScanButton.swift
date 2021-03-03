@@ -8,16 +8,16 @@
 import UIKit
 
 class ScanButton: UIButton {
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemeneted")
     }
-    
+
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         setTitle("Scan document", for: .normal)

@@ -19,10 +19,10 @@ class GuitarChordView: UIView {
         super.init(coder: coder)
 //        fatalError("init(coder:) has not been implemented")
     }
-    
+
     var openChord: [Pitch] = []
     var chord: Chord = Chord(pitches: [], structure: "", chordRoot: "", chordType: "")
-    
+
     override func draw(_ rect: CGRect) {
         let chordWidth = rect.width * GuitarChordViewConstants.widthPropotion
         let fretWidth = chordWidth / 4
@@ -46,22 +46,22 @@ class GuitarChordView: UIView {
         path.addLine(to: CGPoint(x: startPoint.x + chordWidth, y: startPoint.y + chordHeight))
         path.addLine(to: CGPoint(x: startPoint.x + chordWidth, y: startPoint.y))
         path.close()
-        
+
         // inner line
         for idx in 1..<4 {
             let linePositionX = startPoint.x + fretWidth*CGFloat(idx)
             path.move(to: CGPoint(x: linePositionX, y: startPoint.y))
             path.addLine(to: CGPoint(x: linePositionX, y: startPoint.y + chordHeight))
         }
-        
+
         for idx in 1..<5 {
             let linePositionY = startPoint.y + stringWidth * CGFloat(idx)
-            path.move(to: CGPoint(x: startPoint.x ,y: linePositionY))
+            path.move(to: CGPoint(x: startPoint.x, y: linePositionY))
             path.addLine(to: CGPoint(x: startPoint.x + chordWidth, y: linePositionY))
         }
         path.lineWidth = chordWidth * GuitarChordViewConstants.thinThicknessProportion
         path.stroke()
-        
+
         // finger positions and numbers
         var openChordCounter = openChord.map { $0.lineNumber }
         for tone in chord.pitches {
@@ -102,7 +102,7 @@ class GuitarChordView: UIView {
             attributedFretNum.draw(in: rectToDraw)
         }
     }
-    
+
     private func createDot(_ rect: CGRect, isBase: Bool) -> UIBezierPath {
         let path = UIBezierPath()
         UIColor.CustomPalette.chordColor.setFill()
@@ -113,7 +113,7 @@ class GuitarChordView: UIView {
         path.fill()
         return path
     }
-    
+
     private func createCircle(_ rect: CGRect, isBase: Bool) -> UIBezierPath {
         let path = UIBezierPath()
         UIColor.CustomPalette.chordColor.setStroke()
@@ -125,7 +125,7 @@ class GuitarChordView: UIView {
         path.stroke()
         return path
     }
-    
+
     private func createX(_ rect: CGRect) -> UIBezierPath {
         let path = UIBezierPath()
         UIColor.CustomPalette.chordColor.setStroke()
@@ -142,21 +142,21 @@ class GuitarChordView: UIView {
 
 extension GuitarChordView {
     struct GuitarChordViewConstants {
-        
+
         static let widthPropotion: CGFloat = 0.8
-        
+
         static let heightProportion: CGFloat = 0.7
-        
+
         static let thickThicknessProportion: CGFloat = 0.02
-        
+
         static let thinThicknessProportion: CGFloat = 0.005
-        
+
         static let dotRadiusProportion: CGFloat = 0.4
-        
+
         static let smallDotRadiusProportion: CGFloat = 0.3
-        
+
         static let smallDotLineWidthProportion: CGFloat = 0.1
-        
+
         static let fontSizeProportion: CGFloat = 0.07
     }
 }

@@ -9,11 +9,11 @@ import UIKit
 import AudioKit
 
 class ChordDictViewController: UIViewController {
-    
+
     var chordView = GuitarChordView(frame: .zero)
     var buttonView = ChordButtonsView(frame: .zero)
     var chordName = UILabel(frame: .zero)
-    
+
     private var chordAnalyzer = ChordAnalyzer()
     private var chordTones = [Pitch]()
     var chordKey: String = "" {
@@ -28,22 +28,21 @@ class ChordDictViewController: UIViewController {
     }
     var chordArrayIndex = 0
     var searchedChordCount = 0
-    
+
     // chord sound player
     private let bank = AKPWMOscillatorBank()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         chordName.font = .systemFont(ofSize: 32)
         chordName.textAlignment = .center
         chordName.translatesAutoresizingMaskIntoConstraints = false
-        
-        
+
         view.addSubview(chordName)
         view.addSubview(chordView)
         view.addSubview(buttonView)
-        
+
         viewWillLayoutSubviews()
 
         bank.pulseWidth = 0.2
@@ -60,13 +59,13 @@ class ChordDictViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.layoutSubviews()
         buttonView.makeBtn(frame: buttonView.bounds)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let chordSoundPlay = UITapGestureRecognizer(target: self, action: #selector(chordTouched))
@@ -77,7 +76,7 @@ class ChordDictViewController: UIViewController {
         chordView.addGestureRecognizer(chordSoundPlay)
         chordView.addGestureRecognizer(chordChangeBack)
         chordView.addGestureRecognizer(chordChangeForward)
-        
+
         // bounds를 참조해야 함(frame은 global property이므로)
         for btnRow in buttonView.btnArr {
             for btn in btnRow {
@@ -87,7 +86,7 @@ class ChordDictViewController: UIViewController {
         }
 //        buttonView.setNeedsDisplay()
     }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         let padding: CGFloat = 8
@@ -97,7 +96,7 @@ class ChordDictViewController: UIViewController {
             chordName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
             chordName.bottomAnchor.constraint(equalTo: chordView.topAnchor, constant: -padding),
             chordName.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: 70),
-            
+
             buttonView.safeAreaLayoutGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             buttonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
             buttonView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
@@ -109,17 +108,17 @@ class ChordDictViewController: UIViewController {
             chordView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -padding)
         ])
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         buttonView.updateButtonLayout()
         addIndexView()
         chordView.setNeedsDisplay()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
         do {
             try AKManager.stop()
         } catch {
@@ -127,7 +126,7 @@ class ChordDictViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
-    
+
     func addIndexView() {
         if chordView.subviews.isEmpty || chordView.subviews.count != searchedChordCount {
             for childView in chordView.subviews {
@@ -153,7 +152,7 @@ class ChordDictViewController: UIViewController {
                 )
                 chordView.addSubview(indexer)
             }
-            
+
         } else {
             for (index, view) in chordView.subviews.enumerated() {
                 view.tintColor = UIColor.CustomPalette.shadeColor2
@@ -173,7 +172,7 @@ class ChordDictViewController: UIViewController {
             self.chordView.setNeedsDisplay()
         }
     }
-    
+
     @objc func setIndexer(_ sender: UIButton) {
         chordArrayIndex = sender.tag
         if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
@@ -182,8 +181,7 @@ class ChordDictViewController: UIViewController {
         }
         addIndexView()
     }
-    
-    
+
     func searchChord() {
         print("search chord \(chordName.text!)")
         chordArrayIndex = 0
@@ -205,7 +203,7 @@ class ChordDictViewController: UIViewController {
 }
 
 extension ChordDictViewController {
-    
+
     @objc func chordTouched() {
         for (idx, tone) in chordTones.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1*Double(idx)) {
@@ -213,7 +211,7 @@ extension ChordDictViewController {
             }
         }
     }
-    
+
     @objc func chordSwipedLeft() {
         print("swipe left")
         if self.chordArrayIndex == 0 {
@@ -227,7 +225,7 @@ extension ChordDictViewController {
         }
         addIndexView()
     }
-    
+
     @objc func chordSwipedRight() {
         print("swipe right")
         if self.chordArrayIndex == searchedChordCount - 1 {
@@ -241,7 +239,7 @@ extension ChordDictViewController {
         }
         addIndexView()
     }
-    
+
     @objc func buttonTouched(_ sender: UIButton) {
         print(sender.titleLabel?.text ?? "nil")
         if sender.tag == 0 || sender.tag == 1 {
@@ -254,7 +252,7 @@ extension ChordDictViewController {
 }
 
 extension ChordDictViewController {
-    
+
     private func playTone(tone: Pitch) {
         let midinoteNumber = (tone.toneHeight+1) * 12 + ChordAnalyzer.analyzeToneName(toneName: tone.toneName)
         self.bank.play(noteNumber: MIDINoteNumber(midinoteNumber), velocity: 127)
@@ -262,5 +260,5 @@ extension ChordDictViewController {
             self.bank.stop(noteNumber: MIDINoteNumber(midinoteNumber))
         }
     }
-    
+
 }

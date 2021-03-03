@@ -12,11 +12,11 @@ class ScanImageView: UIImageView {
         super.init(frame: frame)
         configure()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not beeon implemented")
     }
-    
+
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         layer.cornerRadius = 7.0

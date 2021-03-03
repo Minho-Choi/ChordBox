@@ -8,9 +8,9 @@
 import UIKit
 
 class ChordButtonsView: UIView {
-    
+
     var btnArr = [[UIButton]]()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
@@ -21,7 +21,7 @@ class ChordButtonsView: UIView {
         super.init(coder: coder)
 //        fatalError("init(coder:) has not been implemented")
     }
-    
+
     func makeBtn(frame: CGRect) {
         let buttonHeight = frame.height/7.1
         var firstRowButtons = [UIButton]()
@@ -90,7 +90,7 @@ class ChordButtonsView: UIView {
             btnArr.append(rowButtons)
         }
     }
-    
+
     func updateButtonLayout() {
         for (row, btnRow) in btnArr.enumerated() {
             for (index, btn) in btnRow.enumerated() {

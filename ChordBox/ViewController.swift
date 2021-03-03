@@ -18,13 +18,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var bpmLabel: UILabel!
     @IBOutlet weak var chordName: UILabel!
     @IBOutlet weak var containerView: UIView!
-    
+
     var chordView = GuitarChordView(frame: .zero)
     var buttonView = UIView(frame: .zero)
-    
+
     // Button Array
     var btnArr: [UIButton] = []
-    
+
     // Chord Data
     private var chordAnalyzer = ChordAnalyzer()
     private var chordTones = [Pitch]()
@@ -38,30 +38,29 @@ class ViewController: UIViewController {
             chordName.text = chordKey + chordIdentifier
         }
     }
-    
+
     // Metronome vars
     private var metronome: AVAudioPlayer?
-    private var mTimer : Timer?
+    private var mTimer: Timer?
     private var highSound = AVAudioPlayer()
     private var lowSound = AVAudioPlayer()
     private var counter: Int = 0
     private var isMetronomeOn = false
     private var bpm: Int = 120
-    private var interval : TimeInterval {
+    private var interval: TimeInterval {
         return TimeInterval(60/Float(bpm))
     }
-    
+
     // Chord player vars
     private let bank = AKPWMOscillatorBank()
 
-    
     // Metronome File URLs
     private let highTickURL = Bundle.main.url(forResource: "high tick", withExtension: "mp3")
     private let lowTickURL = Bundle.main.url(forResource: "low tick", withExtension: "mp3")
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         containerView.addSubview(chordView)
         containerView.addSubview(buttonView)
         // Do any additional setup after loading the view.
@@ -78,14 +77,14 @@ class ViewController: UIViewController {
         ])
         // set up audio
         setupAudio()
-        
+
         // Metronome setup
         playButton.sizeToFit()
         bpmLabel.text = "\(bpm)"
         bpmSlider.minimumValue = 20
         bpmSlider.maximumValue = 240
         bpmSlider.value = Float(bpm)
-        
+
         if let highTickurl = highTickURL, let lowTickurl = lowTickURL {
             do {
                 highSound = try AVAudioPlayer(contentsOf: highTickurl)
@@ -96,7 +95,7 @@ class ViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }
-    
+
         // Chord player setup
         bank.pulseWidth = 0.4
         bank.attackDuration = 0
@@ -110,11 +109,11 @@ class ViewController: UIViewController {
         } catch {
             print("AKManager starting error occured")
         }
-        
+
         makeBtn()
-        
+
     }
-    
+
     @IBAction func isChordPlayButtonPressed(_ sender: Any) {
         for (idx, tone) in chordTones.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1*Double(idx)) {
@@ -122,7 +121,7 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+
     // MARK: - Playing certain pitch
     private func playTone(tone: Pitch) {
         let midinoteNumber = (tone.toneHeight+1) * 12 + ChordAnalyzer.analyzeToneName(toneName: tone.toneName)
@@ -131,22 +130,21 @@ class ViewController: UIViewController {
             self.bank.stop(noteNumber: MIDINoteNumber(midinoteNumber))
         }
     }
-    
+
     @IBAction func isPlayButtonTapped(_ sender: Any) {
         if isMetronomeOn {
             isMetronomeOn = false
             onTimerEnd()
             playButton.tintColor = UIColor.CustomPalette.shadeColor2
-        }
-        else {
+        } else {
             isMetronomeOn = true
             onTimerStart()
 //            playButton.tintColor = .green
         }
     }
-    
+
     // MARK: - BPM Slider work
-    
+
     @IBAction func bpmSliderSlided(_ sender: UISlider) {
         bpm = Int(bpmSlider.value)
         bpmLabel.text = "\(bpm)"
@@ -155,48 +153,47 @@ class ViewController: UIViewController {
             onTimerStart()
         }
     }
-    
+
     // MARK: - Timer initialization
     private func onTimerStart() {
         if let timer = mTimer {
-            //timer 객체가 nil 이 아닌경우에는 invalid 상태에만 시작한다
+            // timer 객체가 nil 이 아닌경우에는 invalid 상태에만 시작한다
             if !timer.isValid {
                 /** 1초마다 timerCallback함수를 호출하는 타이머 */
                 mTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
                 mTimer?.tolerance = 0.0001
             }
         } else {
-            //timer 객체가 nil 인 경우에 객체를 생성하고 타이머를 시작한다
+            // timer 객체가 nil 인 경우에 객체를 생성하고 타이머를 시작한다
             /** 1초마다 timerCallback함수를 호출하는 타이머 */
             mTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
             mTimer?.tolerance = 0.0001
         }
     }
-    
+
     // MARK: - Timer invalidation
     private func onTimerEnd() {
         if let timer = mTimer {
-            if(timer.isValid){
+            if timer.isValid {
                 timer.invalidate()
             }
         }
         counter = 0
     }
-    
+
     // MARK: - Callback function of timer initializer
-    @objc private func timerCallback(){
+    @objc private func timerCallback() {
         playTick(isHighTick: counter%4 == 0 ? true : false)
         counter += 1
         UIView.animate(withDuration: self.interval/4, delay: 0, options: [.allowUserInteraction, .transitionCrossDissolve], animations: {
             self.playButton.tintColor = UIColor.CustomPalette.pointColor
-        }, completion:
-            { complete in
+        }, completion: { _ in
                 self.playButton.tintColor = UIColor.CustomPalette.shadeColor2
             }
         )
     }
-    
-    private func playTick(isHighTick : Bool) {
+
+    private func playTick(isHighTick: Bool) {
         DispatchQueue.global(qos: .userInteractive).async {
             if isHighTick {
                 self.highSound.play()
@@ -205,13 +202,13 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+
     private func setupAudio() {
       let audioSession = AVAudioSession.sharedInstance()
         _ = try? audioSession.setCategory(AVAudioSession.Category.playback, options: .duckOthers)
       _ = try? audioSession.setActive(true)
     }
-    
+
 //    func searchChord() {
 //        print("search chord")
 //        var string = ""

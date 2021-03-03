@@ -8,11 +8,11 @@
 import UIKit
 
 class right: UIStoryboardSegue {
-    
+
     override init(identifier: String?, source: UIViewController, destination: UIViewController) {
         super.init(identifier: identifier, source: source, destination: destination)
     }
-    
+
     override func perform() {
         let src = self.source as UIViewController
         let dst = self.destination as UIViewController
@@ -26,18 +26,18 @@ class right: UIStoryboardSegue {
                 dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
                 src.view.transform = CGAffineTransform(translationX: -src.view.frame.size.width/3, y: 0)
             },
-            completion: { finished in
+            completion: { _ in
                 src.present(dst, animated: false, completion: nil)
             })
     }
 }
 
 class unwind_right: UIStoryboardSegue {
-    
+
     override init(identifier: String?, source: UIViewController, destination: UIViewController) {
         super.init(identifier: identifier, source: source, destination: destination)
     }
-    
+
     override func perform() {
         let src = self.source as UIViewController
         let dst = self.destination as UIViewController
@@ -52,7 +52,7 @@ class unwind_right: UIStoryboardSegue {
                 src.view.transform = CGAffineTransform(translationX: src.view.frame.size.width, y: 0)
                 dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
             },
-            completion: { finished in
+            completion: { _ in
                 src.dismiss(animated: false, completion: nil)
             })
     }

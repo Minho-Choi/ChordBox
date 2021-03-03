@@ -19,7 +19,7 @@ class LoadingView: UIView {
     var spinner = UIActivityIndicatorView()
     let infoTextLabel = UILabel()
     let outerVisualEffectView = UIVisualEffectView()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
@@ -31,10 +31,10 @@ class LoadingView: UIView {
         super.init(coder: coder)
 //        fatalError("init(coder:) has not been implemented")
     }
-    
+
     func addViews(frame: CGRect, title: String) {
         let spinnerSize = frame.width/4
-        
+
         spinner.style = .large
         spinner.color = UIColor.CustomPalette.pointColor
 
@@ -42,7 +42,7 @@ class LoadingView: UIView {
         outerVisualEffectView.effect = blurEffect
         addSubview(outerVisualEffectView)
         outerVisualEffectView.frame = frame
-        
+
 //        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
 //        let innerVisualEffectView = UIVisualEffectView(effect: vibrancyEffect)
 //        innerVisualEffectView.frame = frame
@@ -51,7 +51,7 @@ class LoadingView: UIView {
 //
 //
 //        innerVisualEffectView.contentView.addSubview(spinner)
-        
+
         infoTextLabel.text = title
         infoTextLabel.textAlignment = .center
         infoTextLabel.numberOfLines = 2
@@ -61,29 +61,29 @@ class LoadingView: UIView {
         infoTextLabel.font = .preferredFont(forTextStyle: .headline)
 //        infoTextLabel.layer.borderWidth = 10
 //        infoTextLabel.layer.borderColor = UIColor.white.cgColor
-        
+
         outerVisualEffectView.contentView.addSubview(spinner)
         outerVisualEffectView.contentView.addSubview(infoTextLabel)
-        
+
         NSLayoutConstraint.activate([
             spinner.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
             spinner.widthAnchor.constraint(equalToConstant: spinnerSize),
             spinner.heightAnchor.constraint(equalToConstant: spinnerSize),
-            
+
             infoTextLabel.bottomAnchor.constraint(equalTo: spinner.topAnchor),
             infoTextLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             infoTextLabel.heightAnchor.constraint(equalToConstant: 80)
         ])
         // view를 addSubView 한 뒤 constraint를 설정해야 함(view hierarchy 때문)
     }
-    
+
     func startAnimating() {
         spinner.startAnimating()
         self.alpha = 1
         self.isHidden = false
     }
-    
+
     func stopAnimating() {
         spinner.stopAnimating()
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {

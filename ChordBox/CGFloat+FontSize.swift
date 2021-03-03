@@ -15,7 +15,7 @@ extension CGFloat {
             return 30
         }
     }
-    
+
     static var fontWidth: CGFloat {
         if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone {
             return 10

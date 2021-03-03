@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension ChordForm {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ChordForm> {
@@ -25,6 +24,6 @@ extension ChordForm {
 
 }
 
-extension ChordForm : Identifiable {
+extension ChordForm: Identifiable {
 
 }

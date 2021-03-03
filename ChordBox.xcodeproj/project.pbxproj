@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B44107A325D40C2A004FF208 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B44107A625D40CCE004FF208 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B44107AA25D41077004FF208 /* AudioKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44107A925D41077004FF208 /* AudioKit.xcframework */; };
 		B44107AB25D41077004FF208 /* AudioKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B44107A925D41077004FF208 /* AudioKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B44107AD25D41093004FF208 /* AudioKitUI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44107AC25D41093004FF208 /* AudioKitUI.xcframework */; };
@@ -34,6 +32,7 @@
 		B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DD425D235B6009FB15C /* CoreDataManager.swift */; };
 		B47D8DDC25D23C9B009FB15C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */; };
 		B47D8DEA25D28C75009FB15C /* chord_fingers.json in Resources */ = {isa = PBXBuildFile; fileRef = B47D8DE925D28C75009FB15C /* chord_fingers.json */; };
+		B485D97725EF9FE100824019 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B485D97625EF9FE100824019 /* .swiftlint.yml */; };
 		B4955E8E25DE3E7D00F9E4D9 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */; };
 		B4CB97B925DF7A33007F4B36 /* UIButton+CustomButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97B825DF7A33007F4B36 /* UIButton+CustomButtonShape.swift */; };
 		B4CB97BB25DF9D32007F4B36 /* CustomRightSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */; };
@@ -54,8 +53,6 @@
 			files = (
 				B44107AE25D41093004FF208 /* AudioKitUI.xcframework in Embed Frameworks */,
 				B44107AB25D41077004FF208 /* AudioKit.xcframework in Embed Frameworks */,
-				B44107A325D40C2A004FF208 /* (null) in Embed Frameworks */,
-				B44107A625D40CCE004FF208 /* (null) in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,6 +86,7 @@
 		B47D8DD425D235B6009FB15C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		B47D8DE925D28C75009FB15C /* chord_fingers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chord_fingers.json; sourceTree = "<group>"; };
+		B485D97625EF9FE100824019 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		B4CB97B825DF7A33007F4B36 /* UIButton+CustomButtonShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+CustomButtonShape.swift"; sourceTree = "<group>"; };
 		B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRightSegue.swift; sourceTree = "<group>"; };
@@ -127,6 +125,7 @@
 		B46F67A625CAA0F60097CFA2 = {
 			isa = PBXGroup;
 			children = (
+				B485D97625EF9FE100824019 /* .swiftlint.yml */,
 				B46F67B125CAA0F60097CFA2 /* ChordBox */,
 				B46F67B025CAA0F60097CFA2 /* Products */,
 				4DE3E0F75F4C475BC6641ED2 /* Pods */,
@@ -160,11 +159,11 @@
 				B44107B825DBEF9C004FF208 /* ChordButtonsView.swift */,
 				B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */,
 				B4CB97C425E4C9F4007F4B36 /* LyricsView.swift */,
-				B4CB97CF25E8DD71007F4B36 /* CGFloat+FontSize.swift */,
 				B4CB97CD25E60F21007F4B36 /* ChordNoteSelectView.swift */,
 				B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */,
 				B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */,
 				B4CB97B825DF7A33007F4B36 /* UIButton+CustomButtonShape.swift */,
+				B4CB97CF25E8DD71007F4B36 /* CGFloat+FontSize.swift */,
 				B4CB97C225E34E42007F4B36 /* MenuButtonView.swift */,
 				B47D8DCA25D163E7009FB15C /* ChordForm.xcdatamodeld */,
 				B47D8DCE25D22D38009FB15C /* ChordForm+CoreDataClass.swift */,
@@ -202,6 +201,7 @@
 				B46F67AC25CAA0F60097CFA2 /* Frameworks */,
 				B46F67AD25CAA0F60097CFA2 /* Resources */,
 				B44107A425D40C2A004FF208 /* Embed Frameworks */,
+				B485D97525EF9EC600824019 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -252,6 +252,7 @@
 				B46F67BF25CAA0F90097CFA2 /* LaunchScreen.storyboard in Resources */,
 				B46F67BC25CAA0F90097CFA2 /* Assets.xcassets in Resources */,
 				B4427EA025CE91AC0056BAE9 /* high tick.mp3 in Resources */,
+				B485D97725EF9FE100824019 /* .swiftlint.yml in Resources */,
 				B46F67BA25CAA0F60097CFA2 /* Main.storyboard in Resources */,
 				B4427E9F25CE91AC0056BAE9 /* low tick.mp3 in Resources */,
 				B47D8DEA25D28C75009FB15C /* chord_fingers.json in Resources */,
@@ -282,6 +283,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B485D97525EF9EC600824019 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/SwiftLint/swiftlint\n\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

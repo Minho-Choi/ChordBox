@@ -1,0 +1,9 @@
+
+disabled_rules:
+- trailing_whitespace
+
+force_cast: warning
+line_length: 250
+included:
+excluded:
+    - Pods
