@@ -164,25 +164,20 @@ Forever, we young
             chordLength = "1"
             noteView.disselectAllButtons()
             sender.isSelected = true
-            break
         case 4:
             chordLength = "1/2"
             noteView.disselectAllButtons()
             sender.isSelected = true
-            break
         case 2:
             chordLength = "1/4"
             noteView.disselectAllButtons()
             sender.isSelected = true
-            break
         case 1:
             chordLength = "1/8"
             noteView.disselectAllButtons()
             sender.isSelected = true
-            break
         default:
             chordLength = ""
-            break
         }
     }
 }

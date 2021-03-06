@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6KB-xP-Qat">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MrL-t7-cYi">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -65,10 +65,10 @@
             </objects>
             <point key="canvasLocation" x="1712.3076923076922" y="-22.037914691943126"/>
         </scene>
-        <!--View Controller-->
+        <!--Exercise View Controller-->
         <scene sceneID="QKz-AV-LAW">
             <objects>
-                <viewController id="MrL-t7-cYi" sceneMemberID="viewController">
+                <viewController id="MrL-t7-cYi" customClass="ExerciseViewController" customModule="ChordBox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rwQ-Nf-nAI">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -91,10 +91,29 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="VwC-TO-zZh"/>
+                    <connections>
+                        <segue destination="7Jh-H6-XvY" kind="show" identifier="SaveSheetSegue" id="vTR-6i-j6S"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nqj-th-rak" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2523.0769230769229" y="-22.037914691943126"/>
+        </scene>
+        <!--Play Song View Controller-->
+        <scene sceneID="9RH-sN-ODW">
+            <objects>
+                <viewController id="7Jh-H6-XvY" customClass="PlaySongViewController" customModule="ChordBox" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8k5-if-VE3">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="9v8-Lk-vyt"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="5zf-Ib-PPs"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wih-0q-aF5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3291" y="-22"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="izu-Hu-wwB">
@@ -301,6 +320,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="GOM-Eu-aUL"/>
+                    <connections>
+                        <segue destination="7Jh-H6-XvY" kind="show" identifier="SaveSheetSegue" id="Z42-Vk-iI2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gWP-Kk-lsm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -325,6 +347,9 @@
             <point key="canvasLocation" x="524.61538461538464" y="634.83412322274876"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Z42-Vk-iI2"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="metronome" catalog="system" width="128" height="121"/>
         <image name="music.note.list" catalog="system" width="128" height="115"/>

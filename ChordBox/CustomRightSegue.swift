@@ -7,7 +7,7 @@
 
 import UIKit
 
-class right: UIStoryboardSegue {
+class Right: UIStoryboardSegue {
 
     override init(identifier: String?, source: UIViewController, destination: UIViewController) {
         super.init(identifier: identifier, source: source, destination: destination)
@@ -32,7 +32,7 @@ class right: UIStoryboardSegue {
     }
 }
 
-class unwind_right: UIStoryboardSegue {
+class UnwindRight: UIStoryboardSegue {
 
     override init(identifier: String?, source: UIViewController, destination: UIViewController) {
         super.init(identifier: identifier, source: source, destination: destination)

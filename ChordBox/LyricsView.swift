@@ -204,8 +204,8 @@ extension LyricsView: UICollectionViewDropDelegate {
                     collectionView.performBatchUpdates({
                         // 모델 편집 - 본래 위치에서 삭제 후 새로운 위치에 추가
                         if destinationIndexPath > sourceIndexPath {
-                            lyrics[destinationIndexPath.section].insert(chordItem, at: destinationIndexPath.item)
                             lyrics[sourceIndexPath.section].removeObject(at: sourceIndexPath.item)
+                            lyrics[destinationIndexPath.section].insert(chordItem, at: destinationIndexPath.item)
 
                             collectionView.deleteItems(at: [IndexPath(item: sourceIndexPath.item, section: sourceIndexPath.section)])
                             collectionView.insertItems(at: [IndexPath(item: destinationIndexPath.item, section: destinationIndexPath.section)])

@@ -33,6 +33,10 @@
 		B47D8DDC25D23C9B009FB15C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */; };
 		B47D8DEA25D28C75009FB15C /* chord_fingers.json in Resources */ = {isa = PBXBuildFile; fileRef = B47D8DE925D28C75009FB15C /* chord_fingers.json */; };
 		B485D97725EF9FE100824019 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B485D97625EF9FE100824019 /* .swiftlint.yml */; };
+		B485D97925F3A30F00824019 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B485D97825F3A30F00824019 /* Sheet.swift */; };
+		B485D97B25F3B00800824019 /* PlaySongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B485D97A25F3B00800824019 /* PlaySongViewController.swift */; };
+		B485D97D25F3BBB600824019 /* MetronomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B485D97C25F3BBB600824019 /* MetronomeView.swift */; };
+		B485D97F25F3BF6800824019 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B485D97E25F3BF6800824019 /* ExerciseViewController.swift */; };
 		B4955E8E25DE3E7D00F9E4D9 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */; };
 		B4CB97B925DF7A33007F4B36 /* UIButton+CustomButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97B825DF7A33007F4B36 /* UIButton+CustomButtonShape.swift */; };
 		B4CB97BB25DF9D32007F4B36 /* CustomRightSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */; };
@@ -87,6 +91,10 @@
 		B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		B47D8DE925D28C75009FB15C /* chord_fingers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chord_fingers.json; sourceTree = "<group>"; };
 		B485D97625EF9FE100824019 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		B485D97825F3A30F00824019 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
+		B485D97A25F3B00800824019 /* PlaySongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySongViewController.swift; sourceTree = "<group>"; };
+		B485D97C25F3BBB600824019 /* MetronomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeView.swift; sourceTree = "<group>"; };
+		B485D97E25F3BF6800824019 /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
 		B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		B4CB97B825DF7A33007F4B36 /* UIButton+CustomButtonShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+CustomButtonShape.swift"; sourceTree = "<group>"; };
 		B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRightSegue.swift; sourceTree = "<group>"; };
@@ -147,25 +155,29 @@
 				B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */,
 				B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */,
 				B46F67B625CAA0F60097CFA2 /* ViewController.swift */,
+				B485D97E25F3BF6800824019 /* ExerciseViewController.swift */,
 				B44107B225DB4A36004FF208 /* ViewController+Buttons.swift */,
 				B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */,
 				B4CB97C025E29290007F4B36 /* MenuViewController.swift */,
 				B44107B625DBDB8A004FF208 /* ChordDictViewController.swift */,
 				B44107B025D5388D004FF208 /* EnterSongNameViewController.swift */,
 				B4CB97BE25E00007007F4B36 /* ShowLyricsViewController.swift */,
+				B485D97A25F3B00800824019 /* PlaySongViewController.swift */,
+				B485D97C25F3BBB600824019 /* MetronomeView.swift */,
 				B47D8DD425D235B6009FB15C /* CoreDataManager.swift */,
 				B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */,
 				B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */,
 				B44107B825DBEF9C004FF208 /* ChordButtonsView.swift */,
 				B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */,
 				B4CB97C425E4C9F4007F4B36 /* LyricsView.swift */,
+				B4CB97C225E34E42007F4B36 /* MenuButtonView.swift */,
 				B4CB97CD25E60F21007F4B36 /* ChordNoteSelectView.swift */,
 				B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */,
 				B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */,
 				B4CB97B825DF7A33007F4B36 /* UIButton+CustomButtonShape.swift */,
 				B4CB97CF25E8DD71007F4B36 /* CGFloat+FontSize.swift */,
-				B4CB97C225E34E42007F4B36 /* MenuButtonView.swift */,
 				B47D8DCA25D163E7009FB15C /* ChordForm.xcdatamodeld */,
+				B485D97825F3A30F00824019 /* Sheet.swift */,
 				B47D8DCE25D22D38009FB15C /* ChordForm+CoreDataClass.swift */,
 				B47D8DCF25D22D38009FB15C /* ChordForm+CoreDataProperties.swift */,
 				B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */,
@@ -323,15 +335,19 @@
 				B4CB97BF25E00007007F4B36 /* ShowLyricsViewController.swift in Sources */,
 				B4CB97C125E29290007F4B36 /* MenuViewController.swift in Sources */,
 				B4955E8E25DE3E7D00F9E4D9 /* LoadingView.swift in Sources */,
+				B485D97925F3A30F00824019 /* Sheet.swift in Sources */,
 				B44107B525DB6C67004FF208 /* UIColor+CustomPalette.swift in Sources */,
 				B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */,
+				B485D97D25F3BBB600824019 /* MetronomeView.swift in Sources */,
 				B47D8DD025D22D38009FB15C /* ChordForm+CoreDataClass.swift in Sources */,
 				B44107B925DBEF9C004FF208 /* ChordButtonsView.swift in Sources */,
 				B4CB97BB25DF9D32007F4B36 /* CustomRightSegue.swift in Sources */,
+				B485D97F25F3BF6800824019 /* ExerciseViewController.swift in Sources */,
 				B4CB97CE25E60F21007F4B36 /* ChordNoteSelectView.swift in Sources */,
 				B44107B725DBDB8A004FF208 /* ChordDictViewController.swift in Sources */,
 				B4CB97D025E8DD71007F4B36 /* CGFloat+FontSize.swift in Sources */,
 				B46F67B525CAA0F60097CFA2 /* SceneDelegate.swift in Sources */,
+				B485D97B25F3B00800824019 /* PlaySongViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

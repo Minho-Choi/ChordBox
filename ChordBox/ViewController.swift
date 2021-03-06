@@ -159,13 +159,13 @@ class ViewController: UIViewController {
         if let timer = mTimer {
             // timer 객체가 nil 이 아닌경우에는 invalid 상태에만 시작한다
             if !timer.isValid {
-                /** 1초마다 timerCallback함수를 호출하는 타이머 */
+                // 1초마다 timerCallback함수를 호출하는 타이머
                 mTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
                 mTimer?.tolerance = 0.0001
             }
         } else {
             // timer 객체가 nil 인 경우에 객체를 생성하고 타이머를 시작한다
-            /** 1초마다 timerCallback함수를 호출하는 타이머 */
+            // 1초마다 timerCallback함수를 호출하는 타이머 
             mTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
             mTimer?.tolerance = 0.0001
         }

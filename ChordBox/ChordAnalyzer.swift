@@ -62,18 +62,16 @@ struct ChordAnalyzer {
             if let fingerPositions = chordInfo.fingerPositions?.split(separator: ","),
                let noteNames = chordInfo.noteNames?.split(separator: ",") {
                 var stringIndex = 0
-                for (index, finger) in fingerPositions.enumerated() {
-                    if finger != "x" {
-                        let fretNumber = calculateFretNumber(lineNumber: 6-index, toneName: String(noteNames[stringIndex]))
-                        chord.pitches.append(Pitch(
-                                                toneName: String(noteNames[stringIndex]),
-                                                lineNumber: 6-index,
-                                                fingerNumber: Int(finger)!,
-                                                fretNumber: fretNumber)
-                        )
-                        stringIndex += 1
-                    }
-
+                for (index, finger) in fingerPositions.enumerated() where finger != "x" {
+                    
+                    let fretNumber = calculateFretNumber(lineNumber: 6-index, toneName: String(noteNames[stringIndex]))
+                    chord.pitches.append(Pitch(
+                                            toneName: String(noteNames[stringIndex]),
+                                            lineNumber: 6-index,
+                                            fingerNumber: Int(finger)!,
+                                            fretNumber: fretNumber)
+                    )
+                    stringIndex += 1
                 }
             }
             availableChords.append(chord)
@@ -225,10 +223,8 @@ struct Pitch: Comparable, CustomStringConvertible, Hashable {
 
 extension String {
     func getFirstIndex(of char: Character) -> String.Index? {
-        for (idx, character) in self.enumerated() {
-            if character == char {
-                return self.index(self.startIndex, offsetBy: idx)
-            }
+        for (idx, character) in self.enumerated() where character == char {
+            return self.index(self.startIndex, offsetBy: idx)
         }
         return nil
     }
@@ -236,19 +232,15 @@ extension String {
 
 extension Array {
     func firstIndex(matching: Element) -> Int? where Element: Equatable {
-        for (idx, elem) in self.enumerated() {
-            if elem == matching {
-                return idx
-            }
+        for (idx, elem) in self.enumerated() where elem == matching {
+            return idx
         }
         return nil
     }
     func howManyItContains(matching: Element) -> Int where Element: Equatable {
         var count = 0
-        for elem in self {
-            if elem == matching {
-                count += 1
-            }
+        for elem in self where elem == matching {
+            count += 1
         }
         return count
     }

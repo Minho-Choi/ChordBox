@@ -10,7 +10,7 @@ import UIKit
 class ShowLyricsViewController: UIViewController {
 
     // lyrics and chord names
-    var lyrics = "abcdefghijk"
+    var songInfo: Sheet = Sheet(title: "TEST TITLE", singer: "TEST SINGER", lyricsString: "TEST LYRICS TEST LYRICS")
     var chordKey: String = "" {
         didSet {
             if chordKey.isNotEmpty {
@@ -39,9 +39,11 @@ class ShowLyricsViewController: UIViewController {
     let chordButtonView = ChordButtonsView(frame: .zero)
 
     // nav bar buttons
+    
     lazy var undoBarButton = UIBarButtonItem(image: UIImage(systemName: "arrow.uturn.backward"), style: .plain, target: self, action: #selector(undoButtonTouched))
     lazy var redoBarButton = UIBarButtonItem(image: UIImage(systemName: "arrow.uturn.forward"), style: .plain, target: self, action: #selector(redoButtonTouched))
     lazy var multiSelectBarButton = UIBarButtonItem(image: UIImage(systemName: "checkmark.circle"), style: .plain, target: self, action: #selector(multiSelectButtonTouched(_:)))
+    lazy var doneBarButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTouched))
     var editModePicker = UISegmentedControl(items: ["Copy", "Move", "Delete"])
     lazy var editModeBarItem = UIBarButtonItem(customView: editModePicker)
 
@@ -54,13 +56,13 @@ class ShowLyricsViewController: UIViewController {
         self.view.addSubview(lyricsView)
         self.view.addSubview(noteView)
         self.view.addSubview(chordButtonView)
-
+        
+        self.navigationItem.setHidesBackButton(false, animated: false)
         self.navigationItem.leftBarButtonItems = [undoBarButton, redoBarButton, multiSelectBarButton]
         self.navigationItem.setHidesBackButton(false, animated: true)
         editModePicker.selectedSegmentIndex = 0
         editModePicker.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
-        self.navigationItem.rightBarButtonItem = editModeBarItem
-        self.navigationItem.rightBarButtonItems?.removeAll()
+        self.navigationItem.setRightBarButton(doneBarButton, animated: true)
 
         noteView.isUserInteractionEnabled = true
         lyricsView.isUserInteractionEnabled = true
@@ -107,7 +109,7 @@ class ShowLyricsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.layoutSubviews()
-        lyricsView.setLayout(lyrics: lyrics)
+        lyricsView.setLayout(lyrics: songInfo.lyricsString)
         noteView.createView()
         chordButtonView.makeBtn(frame: chordButtonView.bounds)
 
@@ -139,25 +141,20 @@ class ShowLyricsViewController: UIViewController {
             chordLength = "1"
             noteView.disselectAllButtons()
             sender.isSelected = true
-            break
         case 4:
             chordLength = "1/2"
             noteView.disselectAllButtons()
             sender.isSelected = true
-            break
         case 2:
             chordLength = "1/4"
             noteView.disselectAllButtons()
             sender.isSelected = true
-            break
         case 1:
             chordLength = "1/8"
             noteView.disselectAllButtons()
             sender.isSelected = true
-            break
         default:
             chordLength = ""
-            break
         }
     }
 
@@ -174,14 +171,12 @@ class ShowLyricsViewController: UIViewController {
         lyricsView.isMultiSelectEnabled = isMultiSelectEnabled
         multiSelectBarButton.style =  isMultiSelectEnabled ? UIBarButtonItem.Style.done : UIBarButtonItem.Style.plain
         if isMultiSelectEnabled {
-            self.navigationItem.rightBarButtonItems?.append(editModeBarItem)
+            self.navigationItem.setRightBarButtonItems([editModeBarItem], animated: true)
         } else {
-            UIView.animate(withDuration: 0.6, animations: {
-                self.editModePicker.selectedSegmentIndex = 0
-                self.editModePicker.selectedSegmentTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.navigationItem.rightBarButtonItems?.removeAll()
-                self.lyricsView.updateEditMode(mode: self.editModePicker.selectedSegmentIndex)
-            })
+            self.editModePicker.selectedSegmentIndex = 0
+            self.editModePicker.selectedSegmentTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            self.navigationItem.setRightBarButton(self.doneBarButton, animated: true)
+            self.lyricsView.updateEditMode(mode: self.editModePicker.selectedSegmentIndex)
         }
     }
 
@@ -197,6 +192,18 @@ class ShowLyricsViewController: UIViewController {
             })
         }
         lyricsView.updateEditMode(mode: editMode!.rawValue)
+    }
+
+    @objc func doneButtonTouched() {
+        performSegue(withIdentifier: "SaveSheetSegue", sender: self)
+    }
+//
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SaveSheetSegue" {
+            let vc = segue.destination as! PlaySongViewController
+            songInfo.chordLyricsData = self.lyricsView.lyrics
+            vc.songData = songInfo
+        }
     }
 
 }
