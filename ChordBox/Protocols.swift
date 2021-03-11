@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol AnimateButtonDelegate: class {
+protocol AnimateViewControllerFromViewDelegate: class {
     func animateView()
 }

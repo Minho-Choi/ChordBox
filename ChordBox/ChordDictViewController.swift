@@ -9,104 +9,82 @@ import UIKit
 import AudioKit
 
 class ChordDictViewController: UIViewController {
-
+    
+    // Custom Views
     var chordView = GuitarChordView(frame: .zero)
     var buttonView = ChordButtonsView(frame: .zero)
-    var chordName = UILabel(frame: .zero)
-    lazy var playButton = UIBarButtonItem(image: UIImage(systemName: "play.circle"), style: .plain, target: self, action: #selector(playButtonTouched))
-    lazy var metronomeSetButton = UIBarButtonItem(image: UIImage(systemName: "metronome"), style: .plain, target: self, action: #selector(metronomeButtonTouched))
     var metronomeView = MetronomeView()
-    let beatHighlightView = BeatHighlightView()
+    let backgroundHighlightView = BeatHighlightView()
     
+    // Labels and Buttons
+    var chordNameLabel = UILabel(frame: .zero)
+    lazy var metronomePlayBarButton = UIBarButtonItem(image: UIImage(systemName: "play.circle"), style: .plain, target: self, action: #selector(playButtonTouched))
+    lazy var metronomeSetBarButton = UIBarButtonItem(image: UIImage(systemName: "metronome"), style: .plain, target: self, action: #selector(metronomeButtonTouched))
+    
+    // Analyzer Model
     private var chordAnalyzer = ChordAnalyzer()
+    
+    // Sound Player
+    weak var chordSoundPlayer: AKPWMOscillatorBank?
+    
+    // vars
     private var chordTones = [Pitch]()
+    var currentChordIndex = 0
+    var numberOfChordsSearched = 0
+    
     var chordKey: String = "" {
         didSet {
-            chordName.text = chordKey
+            chordNameLabel.text = chordKey
         }
     }
     var chordIdentifier: String = "" {
         didSet {
-            chordName.text = chordKey + chordIdentifier
+            chordNameLabel.text = chordKey + chordIdentifier
         }
     }
-    var chordArrayIndex = 0
-    var searchedChordCount = 0
-
-    // chord sound player
-    private let bank = AKPWMOscillatorBank()
+    
+    // MARK: - View Controller Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        chordName.font = .systemFont(ofSize: 32)
-        chordName.textAlignment = .center
-        chordName.translatesAutoresizingMaskIntoConstraints = false
         
-        navigationItem.rightBarButtonItems = [metronomeSetButton, playButton]
+        navigationItem.rightBarButtonItems = [metronomeSetBarButton, metronomePlayBarButton]
         metronomeView.delegate = self
 
-        view.addSubview(chordName)
+        view.addSubview(chordNameLabel)
         view.addSubview(chordView)
         view.addSubview(buttonView)
+        view.insertSubview(backgroundHighlightView, at: 0)
         
-        beatHighlightView.frame = self.view.frame
-        view.insertSubview(beatHighlightView, at: 0)
-        beatHighlightView.fill(frame: self.view.frame)
-        beatHighlightView.alpha = 0
-        viewWillLayoutSubviews()
-
-        bank.pulseWidth = 0.2
-        bank.attackDuration = 0
-        bank.decayDuration = 0
-        bank.sustainLevel = 1
-        bank.releaseDuration = 0.5
-        let reverb = AKChowningReverb(bank)
-        AKManager.output = reverb
-        do {
-            try AKManager.start()
-        } catch {
-            print("AKManager starting error occured")
-            print(error.localizedDescription)
-        }
+        setChordNameLabel()
+        setBackgroundHighlightView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         view.layoutSubviews()
         buttonView.makeBtn(frame: buttonView.bounds)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let chordSoundPlay = UITapGestureRecognizer(target: self, action: #selector(chordTouched))
-        let chordChangeBack = UISwipeGestureRecognizer(target: self, action: #selector(chordSwipedLeft))
-        chordChangeBack.direction = .left
-        let chordChangeForward = UISwipeGestureRecognizer(target: self, action: #selector(chordSwipedRight))
-        chordChangeForward.direction = .right
-        chordView.addGestureRecognizer(chordSoundPlay)
-        chordView.addGestureRecognizer(chordChangeBack)
-        chordView.addGestureRecognizer(chordChangeForward)
-
-        // bounds를 참조해야 함(frame은 global property이므로)
-        for btnRow in buttonView.btnArr {
-            for btn in btnRow {
-                btn.addTarget(self, action: #selector(ChordDictViewController.buttonTouched), for: .touchUpInside)
-
-            }
-        }
-//        buttonView.setNeedsDisplay()
+        
+        addGestureToChordView()
+        addTargetToEachButtons()
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+
         let padding: CGFloat = 8
+        
         NSLayoutConstraint.activate([
-            chordName.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
-            chordName.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-            chordName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
-            chordName.bottomAnchor.constraint(equalTo: chordView.topAnchor, constant: -padding),
-            chordName.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: 70),
+            chordNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
+            chordNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
+            chordNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
+            chordNameLabel.bottomAnchor.constraint(equalTo: chordView.topAnchor, constant: -padding),
+            chordNameLabel.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: 70),
 
             buttonView.safeAreaLayoutGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             buttonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
@@ -115,7 +93,7 @@ class ChordDictViewController: UIViewController {
 
             chordView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
             chordView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-            chordView.topAnchor.constraint(equalTo: chordName.bottomAnchor, constant: padding),
+            chordView.topAnchor.constraint(equalTo: chordNameLabel.bottomAnchor, constant: padding),
             chordView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -padding)
             
         ])
@@ -124,38 +102,61 @@ class ChordDictViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         buttonView.updateButtonLayout()
-        addIndexView()
-        beatHighlightView.frame = view.frame
-        beatHighlightView.fill(frame: self.view.frame)
-        beatHighlightView.alpha = 0
+        updateIndexView()
         chordView.setNeedsDisplay()
         
     }
+    
+}
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        metronomeView.onTimerEnd()
-        do {
-            try AKManager.stop()
-        } catch {
-            print("AKManager Stopping Error Occured")
-            print(error.localizedDescription)
+// MARK: - Function Implementations
+
+extension ChordDictViewController {
+    
+    func setChordNameLabel() {
+        chordNameLabel.font = .systemFont(ofSize: 32)
+        chordNameLabel.textAlignment = .center
+        chordNameLabel.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func setBackgroundHighlightView() {
+        backgroundHighlightView.frame = self.view.frame
+        backgroundHighlightView.fill(frame: self.view.frame)
+        backgroundHighlightView.alpha = 0
+    }
+    
+    func addGestureToChordView() {
+        let chordSoundPlay = UITapGestureRecognizer(target: self, action: #selector(chordTouched))
+        let chordChangeBack = UISwipeGestureRecognizer(target: self, action: #selector(chordSwipedLeft))
+        chordChangeBack.direction = .left
+        let chordChangeForward = UISwipeGestureRecognizer(target: self, action: #selector(chordSwipedRight))
+        chordChangeForward.direction = .right
+        chordView.addGestureRecognizer(chordSoundPlay)
+        chordView.addGestureRecognizer(chordChangeBack)
+        chordView.addGestureRecognizer(chordChangeForward)
+    }
+    
+    func addTargetToEachButtons() {
+        for btnRow in buttonView.btnArr {
+            for btn in btnRow {
+                btn.addTarget(self, action: #selector(ChordDictViewController.buttonTouched), for: .touchUpInside)
+            }
         }
-        metronomeView.removeFromSuperview()
     }
 
-    func addIndexView() {
-        if chordView.subviews.isEmpty || chordView.subviews.count != searchedChordCount {
+    func updateIndexView() {
+        if chordView.subviews.isEmpty || chordView.subviews.count != numberOfChordsSearched {
             for childView in chordView.subviews {
                 childView.removeFromSuperview()
             }
             let imageWidth = chordView.bounds.width/15
-            for index in 0..<searchedChordCount {
+            for index in 0..<numberOfChordsSearched {
                 let image = UIImage(systemName: "circle.fill")
                 let indexer = UIButton()
                 indexer.setImage(image, for: .normal)
-                if index == chordArrayIndex {
+                if index == currentChordIndex {
                     indexer.tintColor = UIColor.CustomPalette.pointColor
                 } else {
                     indexer.tintColor = UIColor.CustomPalette.shadeColor2
@@ -174,7 +175,7 @@ class ChordDictViewController: UIViewController {
         } else {
             for (index, view) in chordView.subviews.enumerated() {
                 view.tintColor = UIColor.CustomPalette.shadeColor2
-                if view.tag == chordArrayIndex {
+                if view.tag == currentChordIndex {
                     view.tintColor = UIColor.CustomPalette.pointColor
                 }
                 let imageWidth = chordView.bounds.width/15
@@ -191,66 +192,68 @@ class ChordDictViewController: UIViewController {
         }
     }
 
-    @objc func setIndexer(_ sender: UIButton) {
-        chordArrayIndex = sender.tag
-        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
-            chordView.chord = tones[chordArrayIndex]
-            chordTones = tones[chordArrayIndex].pitches
-        }
-        addIndexView()
-    }
-
     func searchChord() {
-        print("search chord \(chordName.text!)")
-        chordArrayIndex = 0
-        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3), tones.isNotEmpty {
-            chordTones = tones[chordArrayIndex].pitches
-            searchedChordCount = tones.count
-            print("found: \(searchedChordCount) chords")
-            chordView.chord = tones[chordArrayIndex]
+        print("search chord \(chordNameLabel.text!)")
+        currentChordIndex = 0
+        if let chordText = chordNameLabel.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3), tones.isNotEmpty {
+            chordTones = tones[currentChordIndex].pitches
+            numberOfChordsSearched = tones.count
+            print("found: \(numberOfChordsSearched) chords")
+            chordView.chord = tones[currentChordIndex]
             chordView.openChord = chordAnalyzer.currentTuning
         }
-        addIndexView()
+        updateIndexView()
     }
 
 }
 
+// MARK: - Selector Functions
+
 extension ChordDictViewController {
+    
+    @objc func setIndexer(_ sender: UIButton) {
+        currentChordIndex = sender.tag
+        if let chordText = chordNameLabel.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
+            chordView.chord = tones[currentChordIndex]
+            chordTones = tones[currentChordIndex].pitches
+        }
+        updateIndexView()
+    }
 
     @objc func chordTouched() {
         for (idx, tone) in chordTones.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1*Double(idx)) { [weak self] in
-                self?.playTone(tone: tone)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1*Double(idx)) {
+                ChordSoundPlayer.shared.playTone(tone: tone)
             }
         }
     }
 
     @objc func chordSwipedLeft() {
         print("swipe left")
-        if chordArrayIndex == 0 {
-            chordArrayIndex = searchedChordCount-1
+        if currentChordIndex == 0 {
+            currentChordIndex = numberOfChordsSearched-1
         } else {
-            chordArrayIndex -= 1
+            currentChordIndex -= 1
         }
-        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
-            chordView.chord = tones[chordArrayIndex]
-            chordTones = tones[chordArrayIndex].pitches
+        if let chordText = chordNameLabel.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
+            chordView.chord = tones[currentChordIndex]
+            chordTones = tones[currentChordIndex].pitches
         }
-        addIndexView()
+        updateIndexView()
     }
 
     @objc func chordSwipedRight() {
         print("swipe right")
-        if chordArrayIndex == searchedChordCount - 1 {
-            chordArrayIndex = 0
+        if currentChordIndex == numberOfChordsSearched - 1 {
+            currentChordIndex = 0
         } else {
-            chordArrayIndex += 1
+            currentChordIndex += 1
         }
-        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
-            chordView.chord = tones[chordArrayIndex]
-            chordTones = tones[chordArrayIndex].pitches
+        if let chordText = chordNameLabel.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
+            chordView.chord = tones[currentChordIndex]
+            chordTones = tones[currentChordIndex].pitches
         }
-        addIndexView()
+        updateIndexView()
     }
 
     @objc func buttonTouched(_ sender: UIButton) {
@@ -268,28 +271,18 @@ extension ChordDictViewController {
     }
     
     @objc func metronomeButtonTouched() {
+        // Needs to be implemented
     }
 }
 
-extension ChordDictViewController {
-
-    private func playTone(tone: Pitch) {
-        let midinoteNumber = (tone.toneHeight+1) * 12 + ChordAnalyzer.analyzeToneName(toneName: tone.toneName)
-        bank.play(noteNumber: MIDINoteNumber(midinoteNumber), velocity: 127)
-        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            self?.bank.stop(noteNumber: MIDINoteNumber(midinoteNumber))
-        }
-    }
-
-}
-
-extension ChordDictViewController: AnimateButtonDelegate {
+extension ChordDictViewController: AnimateViewControllerFromViewDelegate {
+    
     func animateView() {
-        UIView.animate(withDuration: 0.1, delay: 0, options: [.autoreverse, .curveEaseOut], animations: {
-            self.beatHighlightView.alpha = 1
+        UIView.animate(withDuration: 0.1, delay: 0, options: [.autoreverse, .curveEaseOut], animations: { [weak self] in
+            self?.backgroundHighlightView.alpha = 1
         }, completion: { done in
             if done {
-                self.beatHighlightView.alpha = 0
+                self.backgroundHighlightView.alpha = 0
             }
         }
         )

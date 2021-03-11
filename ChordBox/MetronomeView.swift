@@ -47,9 +47,8 @@ class MetronomeView: UIView {
     
     let highTickURL = Bundle.main.url(forResource: "high tick", withExtension: "mp3")
     let lowTickURL = Bundle.main.url(forResource: "low tick", withExtension: "mp3")
-    var lastTick = CFAbsoluteTimeGetCurrent()
     
-    weak var delegate: AnimateButtonDelegate?
+    weak var delegate: AnimateViewControllerFromViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -155,8 +154,6 @@ class MetronomeWeight: UIView {
         path.addLine(to: CGPoint(x: rect.minX + rect.width * 0.2, y: rect.maxY))
         path.close()
         shapeMask.path = path.cgPath
-//        #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).setFill()
-//        path.fill()
     }
     
     func addGradient() {

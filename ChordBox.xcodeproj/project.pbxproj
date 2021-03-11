@@ -40,6 +40,7 @@
 		B485D98125F6683500824019 /* MetronomeView+Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = B485D98025F6683500824019 /* MetronomeView+Audio.swift */; };
 		B491EF3925FA3D4900BD6B7A /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = B491EF3825FA3D4900BD6B7A /* Protocols.swift */; };
 		B491EF3B25FA40AC00BD6B7A /* BeatHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B491EF3A25FA40AC00BD6B7A /* BeatHighlightView.swift */; };
+		B491EF3D25FA6A4000BD6B7A /* ChordSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B491EF3C25FA6A4000BD6B7A /* ChordSoundPlayer.swift */; };
 		B4955E8E25DE3E7D00F9E4D9 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */; };
 		B4CB97B925DF7A33007F4B36 /* UIButton+CustomButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97B825DF7A33007F4B36 /* UIButton+CustomButtonShape.swift */; };
 		B4CB97BB25DF9D32007F4B36 /* CustomRightSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */; };
@@ -101,6 +102,7 @@
 		B485D98025F6683500824019 /* MetronomeView+Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MetronomeView+Audio.swift"; sourceTree = "<group>"; };
 		B491EF3825FA3D4900BD6B7A /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		B491EF3A25FA40AC00BD6B7A /* BeatHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatHighlightView.swift; sourceTree = "<group>"; };
+		B491EF3C25FA6A4000BD6B7A /* ChordSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChordSoundPlayer.swift; sourceTree = "<group>"; };
 		B4955E8D25DE3E7D00F9E4D9 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		B4CB97B825DF7A33007F4B36 /* UIButton+CustomButtonShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+CustomButtonShape.swift"; sourceTree = "<group>"; };
 		B4CB97BA25DF9D32007F4B36 /* CustomRightSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRightSegue.swift; sourceTree = "<group>"; };
@@ -166,14 +168,15 @@
 				B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */,
 				B4CB97C025E29290007F4B36 /* MenuViewController.swift */,
 				B44107B625DBDB8A004FF208 /* ChordDictViewController.swift */,
-				B491EF3A25FA40AC00BD6B7A /* BeatHighlightView.swift */,
 				B44107B025D5388D004FF208 /* EnterSongNameViewController.swift */,
 				B4CB97BE25E00007007F4B36 /* ShowLyricsViewController.swift */,
 				B485D97A25F3B00800824019 /* PlaySongViewController.swift */,
+				B491EF3A25FA40AC00BD6B7A /* BeatHighlightView.swift */,
 				B485D97C25F3BBB600824019 /* MetronomeView.swift */,
 				B485D98025F6683500824019 /* MetronomeView+Audio.swift */,
 				B491EF3825FA3D4900BD6B7A /* Protocols.swift */,
 				B47D8DD425D235B6009FB15C /* CoreDataManager.swift */,
+				B491EF3C25FA6A4000BD6B7A /* ChordSoundPlayer.swift */,
 				B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */,
 				B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */,
 				B44107B825DBEF9C004FF208 /* ChordButtonsView.swift */,
@@ -352,6 +355,7 @@
 				B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */,
 				B485D97D25F3BBB600824019 /* MetronomeView.swift in Sources */,
 				B47D8DD025D22D38009FB15C /* ChordForm+CoreDataClass.swift in Sources */,
+				B491EF3D25FA6A4000BD6B7A /* ChordSoundPlayer.swift in Sources */,
 				B44107B925DBEF9C004FF208 /* ChordButtonsView.swift in Sources */,
 				B4CB97BB25DF9D32007F4B36 /* CustomRightSegue.swift in Sources */,
 				B485D97F25F3BF6800824019 /* ExerciseViewController.swift in Sources */,

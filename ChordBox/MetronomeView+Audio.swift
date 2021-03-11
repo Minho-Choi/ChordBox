@@ -47,6 +47,8 @@ extension MetronomeView {
             }
         }
         counter = 0
+        highSound.stop()
+        lowSound.stop()
     }
 
     // MARK: - Callback function of timer initializer
@@ -57,11 +59,11 @@ extension MetronomeView {
     }
     
     private func playTick(isHighTick: Bool) {
-        DispatchQueue.global(qos: .userInteractive).async {
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             if isHighTick {
-                self.highSound.play()
+                self?.highSound.play()
             } else {
-                self.lowSound.play()
+                self?.lowSound.play()
             }
         }
     }
