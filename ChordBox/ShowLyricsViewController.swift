@@ -57,7 +57,6 @@ class ShowLyricsViewController: UIViewController {
         self.view.addSubview(noteView)
         self.view.addSubview(chordButtonView)
         
-        self.navigationItem.setHidesBackButton(false, animated: false)
         self.navigationItem.leftBarButtonItems = [undoBarButton, redoBarButton, multiSelectBarButton]
         self.navigationItem.setHidesBackButton(false, animated: true)
         editModePicker.selectedSegmentIndex = 0

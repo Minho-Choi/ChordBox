@@ -64,6 +64,9 @@ class GuitarChordView: UIView {
 
         // finger positions and numbers
         var openChordCounter = openChord.map { $0.lineNumber }
+        if chord.pitches.isEmpty {
+            return
+        }
         for tone in chord.pitches {
             let line = tone.lineNumber-1
 //            print(chord.nonZeroMinFret, chord.minFret)

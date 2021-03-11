@@ -10,13 +10,15 @@ import UIKit
 class ExerciseViewController: UIViewController {
 
     let metronomeView = MetronomeView(frame: CGRect(x: 30, y: 60, width: 70, height: 300))
-//    let metronomeView = MetronomeWeight(frame: CGRect(x: 30, y: 60, width: 200, height: 140))
+    let beatHighlightView = BeatHighlightView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        beatHighlightView.frame = self.view.frame
+        view.insertSubview(beatHighlightView, at: 0)
+        beatHighlightView.fill(frame: self.view.frame)
         view.addSubview(metronomeView)
         view.layer.borderWidth = 2.0
         view.layer.borderColor = UIColor.red.cgColor
-//        metronomeView.addGestureRecognizer(slideGesture)
         // Do any additional setup after loading the view.
     }
     

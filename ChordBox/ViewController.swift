@@ -40,7 +40,6 @@ class ViewController: UIViewController {
     }
 
     // Metronome vars
-    private var metronome: AVAudioPlayer?
     private var mTimer: Timer?
     private var highSound = AVAudioPlayer()
     private var lowSound = AVAudioPlayer()
@@ -208,22 +207,5 @@ class ViewController: UIViewController {
         _ = try? audioSession.setCategory(AVAudioSession.Category.playback, options: .duckOthers)
       _ = try? audioSession.setActive(true)
     }
-
-//    func searchChord() {
-//        print("search chord")
-//        var string = ""
-//        if let chordText = chordName.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
-//            chordTones = tones.pitches
-//            for tone in tones.pitches {
-//                string.append(tone.toneName + " ")
-//            }
-//            self.chordView.chord = tones
-//            self.chordView.openChord = chordAnalyzer.currentTuning
-//        }
-//        self.chordLabel.text = string
-//        DispatchQueue.main.async {
-//            self.chordView.setNeedsDisplay()
-//        }
-//    }
 
 }

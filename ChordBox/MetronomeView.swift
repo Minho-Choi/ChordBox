@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MetronomeView: UIView {
     
-    var bpm: Int = 40 {
+    var bpm: Int = 120 {
         didSet {
             bpmLabel.text = "\(bpm)"
             weightLocationRatio = CGFloat(bpm - 40)/200
@@ -19,17 +20,43 @@ class MetronomeView: UIView {
     var metronomeWeight = MetronomeWeight()
     var metronomeRod = MetronomeRod()
     var bpmLabel = UILabel()
+    weak var mTimer: Timer?
     
     var metronomeRodHeight: CGFloat = 0
     var rodAspectRatio: CGFloat = 0.05
     var metronomeWeightHeight: CGFloat = 0
     var weightLocationRatio: CGFloat = 0
     
+    // Metronome sound related vars
+    
+    var highSound = AVAudioPlayer()
+    var lowSound = AVAudioPlayer()
+    var counter: Int = 0
+    var isMetronomeOn = false {
+        didSet {
+            if isMetronomeOn {
+                self.onTimerStart()
+            } else {
+                self.onTimerEnd()
+            }
+        }
+    }
+    var interval: TimeInterval {
+        return TimeInterval(60/Float(bpm))
+    }
+    
+    let highTickURL = Bundle.main.url(forResource: "high tick", withExtension: "mp3")
+    let lowTickURL = Bundle.main.url(forResource: "low tick", withExtension: "mp3")
+    var lastTick = CFAbsoluteTimeGetCurrent()
+    
+    weak var delegate: AnimateButtonDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .clear
         layer.borderWidth = 1.0
+        prepareSound()
     }
 
     required init?(coder: NSCoder) {
