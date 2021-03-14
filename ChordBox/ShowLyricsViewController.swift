@@ -39,10 +39,12 @@ class ShowLyricsViewController: UIViewController {
     let chordButtonView = ChordButtonsView(frame: .zero)
 
     // nav bar buttons
-    
-    lazy var undoBarButton = UIBarButtonItem(image: UIImage(systemName: "arrow.uturn.backward"), style: .plain, target: self, action: #selector(undoButtonTouched))
-    lazy var redoBarButton = UIBarButtonItem(image: UIImage(systemName: "arrow.uturn.forward"), style: .plain, target: self, action: #selector(redoButtonTouched))
-    lazy var multiSelectBarButton = UIBarButtonItem(image: UIImage(systemName: "checkmark.circle"), style: .plain, target: self, action: #selector(multiSelectButtonTouched(_:)))
+//    lazy var undoBarButton = UIBarButtonItem(image: UIImage(systemName: "arrow.uturn.backward"), style: .plain, target: self, action: #selector(undoButtonTouched))
+//    lazy var redoBarButton = UIBarButtonItem(image: UIImage(systemName: "arrow.uturn.forward"), style: .plain, target: self, action: #selector(redoButtonTouched))
+//    lazy var multiSelectBarButton = UIBarButtonItem(image: UIImage(systemName: "checkmark.circle"), style: .plain, target: self, action: #selector(multiSelectButtonTouched(_:)))
+    lazy var undoBarButton = UIBarButtonItem(title: "Undo", style: .plain, target: self, action: #selector(undoButtonTouched(_:)))
+    lazy var redoBarButton = UIBarButtonItem(title: "Redo", style: .plain, target: self, action: #selector(redoButtonTouched))
+    lazy var multiSelectBarButton = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(multiSelectButtonTouched(_:)))
     lazy var doneBarButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTouched))
     var editModePicker = UISegmentedControl(items: ["Copy", "Move", "Delete"])
     lazy var editModeBarItem = UIBarButtonItem(customView: editModePicker)
@@ -62,17 +64,17 @@ class ShowLyricsViewController: UIViewController {
         editModePicker.selectedSegmentIndex = 0
         editModePicker.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
         self.navigationItem.setRightBarButton(doneBarButton, animated: true)
-
+        
+        view.isUserInteractionEnabled = true
         noteView.isUserInteractionEnabled = true
+        self.noteView.chordNameLabel.isUserInteractionEnabled = true
         lyricsView.isUserInteractionEnabled = true
         lyricsView.collectionView?.isUserInteractionEnabled = true
         lyricsView.collectionView?.dragInteractionEnabled = true
         let drag = UIDragInteraction(delegate: noteView)
         self.noteView.chordNameLabel.addInteraction(drag)
         drag.isEnabled = true
-        self.noteView.chordNameLabel.isUserInteractionEnabled = true
-        view.isUserInteractionEnabled = true
-        viewWillLayoutSubviews()
+        
     }
 
     override func viewWillLayoutSubviews() {
@@ -173,7 +175,7 @@ class ShowLyricsViewController: UIViewController {
             self.navigationItem.setRightBarButtonItems([editModeBarItem], animated: true)
         } else {
             self.editModePicker.selectedSegmentIndex = 0
-            self.editModePicker.selectedSegmentTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+//            self.editModePicker.selectedSegmentTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             self.navigationItem.setRightBarButton(self.doneBarButton, animated: true)
             self.lyricsView.updateEditMode(mode: self.editModePicker.selectedSegmentIndex)
         }
@@ -183,11 +185,13 @@ class ShowLyricsViewController: UIViewController {
         editMode = EditMode(rawValue: editModePicker.selectedSegmentIndex)
         if editMode?.rawValue == 2 {
             UIView.animate(withDuration: 1, animations: {
-                self.editModePicker.selectedSegmentTintColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+                self.editModePicker.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
+//                self.editModePicker.selectedSegmentTintColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
             })
         } else {
             UIView.animate(withDuration: 1, animations: {
-                self.editModePicker.selectedSegmentTintColor = UIColor.white
+//                self.editModePicker.selectedSegmentTintColor = UIColor.white
+                self.editModePicker.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             })
         }
         lyricsView.updateEditMode(mode: editMode!.rawValue)

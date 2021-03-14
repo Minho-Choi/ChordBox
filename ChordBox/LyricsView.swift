@@ -311,7 +311,8 @@ class MyCell: UICollectionViewCell {
     let myCharacter: UILabel = {
         let img = UILabel()
         img.textAlignment = .center
-        img.font = UIFont.monospacedSystemFont(ofSize: CGFloat.fontHeight, weight: .regular)
+//        img.font = UIFont.monospacedSystemFont(ofSize: CGFloat.fontHeight, weight: .regular)
+        img.font = UIFont.monospacedDigitSystemFont(ofSize: CGFloat.fontHeight, weight: .regular)
         img.numberOfLines = 2
         img.adjustsFontSizeToFitWidth = true
         // 자동으로 위치 정렬 금지

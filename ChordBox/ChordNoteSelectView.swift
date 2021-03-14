@@ -85,19 +85,16 @@ class ChordNoteSelectView: UIView, UIDragInteractionDelegate {
         chordNameLabel.layer.borderWidth = 2.0
         chordNameLabel.layer.cornerRadius = 10
 
-        let wholeImage = UIImage(named: "whole")
-        let halfImage = UIImage(named: "half")
-        let quarterImage = UIImage(named: "quarter")
-        let eighthImage = UIImage(named: "eight")
+        let wholeImage = UIImage(named: "whole")?.withRenderingMode(.alwaysTemplate)
+        let halfImage = UIImage(named: "half")?.withRenderingMode(.alwaysTemplate)
+        let quarterImage = UIImage(named: "quarter")?.withRenderingMode(.alwaysTemplate)
+        let eighthImage = UIImage(named: "eight")?.withRenderingMode(.alwaysTemplate)
 
         wholeNoteButton.setImage(wholeImage, for: .normal)
         halfNoteButton.setImage(halfImage, for: .normal)
         quarterNoteButton.setImage(quarterImage, for: .normal)
         eighthNoteButton.setImage(eighthImage, for: .normal)
-        wholeNoteButton.setImage(wholeImage?.withTintColor(UIColor.CustomPalette.pointColor), for: .selected)
-        halfNoteButton.setImage(halfImage?.withTintColor(UIColor.CustomPalette.pointColor), for: .selected)
-        quarterNoteButton.setImage(quarterImage?.withTintColor(UIColor.CustomPalette.pointColor), for: .selected)
-        eighthNoteButton.setImage(eighthImage?.withTintColor(UIColor.CustomPalette.pointColor), for: .selected)
+        
         wholeNoteButton.tag = 8
         halfNoteButton.tag = 4
         quarterNoteButton.tag = 2
@@ -105,6 +102,8 @@ class ChordNoteSelectView: UIView, UIDragInteractionDelegate {
 
         for btn in buttons {
             btn.backgroundColor = UIColor.CustomPalette.shadeColor1
+            btn.setTitleColor(UIColor.CustomPalette.pointColor, for: .selected)
+            btn.setTitleColor(UIColor.CustomPalette.textColor, for: .normal)
             btn.layer.cornerRadius = 10
             btn.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
             btn.imageView?.contentMode = .scaleAspectFit

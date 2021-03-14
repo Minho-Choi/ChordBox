@@ -26,8 +26,8 @@ class MenuViewController: UIViewController {
         super.viewDidLoad()
 
         self.navigationController?.navigationBar.topItem?.title = ""
-        self.navigationController?.navigationBar.backIndicatorImage = UIImage(systemName: "square.grid.2x2")
-        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(systemName: "square.grid.2x2")
+//        self.navigationController?.navigationBar.backIndicatorImage = UIImage(systemName: "square.grid.2x2")
+//        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(systemName: "square.grid.2x2")
 
 //        chordDictButton.translatesAutoresizingMaskIntoConstraints = false
 //        addSongButton.translatesAutoresizingMaskIntoConstraints = false
@@ -73,7 +73,7 @@ class MenuViewController: UIViewController {
 //        addSongButton.customizeMyButton(title: "Add Song")
 //        playSongButton.customizeMyButton(title: "Play Song")
 //        settingButton.customizeMyButton(title: "Settings")
-        chordDictButton.updateView(title: "Chord Dictionary", imageName: "character.book.closed")
+        chordDictButton.updateView(title: "Search Chord", imageName: "character.book.closed")
         addSongButton.updateView(title: "Add Song", imageName: "note.text.badge.plus")
         playSongButton.updateView(title: "Play Song", imageName: "ipad.landscape.badge.play")
         settingButton.updateView(title: "Settings", imageName: "gearshape")

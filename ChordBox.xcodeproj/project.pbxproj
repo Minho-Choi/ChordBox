@@ -19,7 +19,6 @@
 		B4427E9F25CE91AC0056BAE9 /* low tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9D25CE91AC0056BAE9 /* low tick.mp3 */; };
 		B4427EA025CE91AC0056BAE9 /* high tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */; };
 		B46F67B325CAA0F60097CFA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */; };
-		B46F67B525CAA0F60097CFA2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */; };
 		B46F67B725CAA0F60097CFA2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F67B625CAA0F60097CFA2 /* ViewController.swift */; };
 		B46F67BA25CAA0F60097CFA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B46F67B825CAA0F60097CFA2 /* Main.storyboard */; };
 		B46F67BC25CAA0F90097CFA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B46F67BB25CAA0F90097CFA2 /* Assets.xcassets */; };
@@ -80,7 +79,6 @@
 		B4427E9E25CE91AC0056BAE9 /* high tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "high tick.mp3"; path = "../../../Desktop/high tick.mp3"; sourceTree = "<group>"; };
 		B46F67AF25CAA0F60097CFA2 /* ChordBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChordBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B46F67B625CAA0F60097CFA2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B46F67B925CAA0F60097CFA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B46F67BB25CAA0F90097CFA2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				B46F67B225CAA0F60097CFA2 /* AppDelegate.swift */,
-				B46F67B425CAA0F60097CFA2 /* SceneDelegate.swift */,
 				B46F67B625CAA0F60097CFA2 /* ViewController.swift */,
 				B485D97E25F3BF6800824019 /* ExerciseViewController.swift */,
 				B44107B225DB4A36004FF208 /* ViewController+Buttons.swift */,
@@ -362,7 +359,6 @@
 				B4CB97CE25E60F21007F4B36 /* ChordNoteSelectView.swift in Sources */,
 				B44107B725DBDB8A004FF208 /* ChordDictViewController.swift in Sources */,
 				B4CB97D025E8DD71007F4B36 /* CGFloat+FontSize.swift in Sources */,
-				B46F67B525CAA0F60097CFA2 /* SceneDelegate.swift in Sources */,
 				B485D97B25F3B00800824019 /* PlaySongViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -514,7 +510,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6VJYHQVG2L;
 				INFOPLIST_FILE = ChordBox/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -536,7 +532,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6VJYHQVG2L;
 				INFOPLIST_FILE = ChordBox/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

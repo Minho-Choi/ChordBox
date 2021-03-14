@@ -53,7 +53,8 @@ class MenuButtonView: UIView {
             height: self.bounds.height * 0.2)
         addSubview(textLabel)
 
-        let iconImage = UIImage(systemName: imageName)
+        let iconImage = UIImage(named: imageName)
+        
         let imageView = UIImageView(image: iconImage)
         imageView.contentMode = .scaleAspectFit
         let imageViewSize = min(self.bounds.height * 0.5, self.bounds.width * 0.8)

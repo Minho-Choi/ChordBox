@@ -35,8 +35,8 @@ class LoadingView: UIView {
     func addViews(frame: CGRect, title: String) {
         let spinnerSize = frame.width/4
 
-        spinner.style = .large
         spinner.color = UIColor.CustomPalette.pointColor
+        spinner.contentScaleFactor = 2.0
 
         let blurEffect = UIBlurEffect(style: .regular)
         outerVisualEffectView.effect = blurEffect

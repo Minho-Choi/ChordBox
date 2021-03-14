@@ -18,11 +18,13 @@ class ChordDictViewController: UIViewController {
     
     // Labels and Buttons
     var chordNameLabel = UILabel(frame: .zero)
-    lazy var metronomePlayBarButton = UIBarButtonItem(image: UIImage(systemName: "play.circle"), style: .plain, target: self, action: #selector(playButtonTouched))
-    lazy var metronomeSetBarButton = UIBarButtonItem(image: UIImage(systemName: "metronome"), style: .plain, target: self, action: #selector(metronomeButtonTouched))
+//    lazy var metronomePlayBarButton = UIBarButtonItem(image: UIImage(systemName: "play.circle"), style: .plain, target: self, action: #selector(playButtonTouched))
+//    lazy var metronomeSetBarButton = UIBarButtonItem(image: UIImage(systemName: "metronome"), style: .plain, target: self, action: #selector(metronomeButtonTouched))
+    lazy var metronomePlayBarButton = UIBarButtonItem(title: "Play", style: .plain, target: self, action: #selector(playButtonTouched))
+    lazy var metronomeSetBarButton = UIBarButtonItem(title: "Set", style: .plain, target: self, action: #selector(metronomeButtonTouched))
     
     // Analyzer Model
-    private var chordAnalyzer = ChordAnalyzer()
+    private var chordAnalyzer: ChordAnalyzer?
     
     // Sound Player
     weak var chordSoundPlayer: AKPWMOscillatorBank?
@@ -47,6 +49,8 @@ class ChordDictViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        chordAnalyzer = ChordAnalyzer.shared
         
         navigationItem.rightBarButtonItems = [metronomeSetBarButton, metronomePlayBarButton]
         metronomeView.delegate = self
@@ -153,7 +157,7 @@ extension ChordDictViewController {
             }
             let imageWidth = chordView.bounds.width/15
             for index in 0..<numberOfChordsSearched {
-                let image = UIImage(systemName: "circle.fill")
+                let image = UIImage(named: "")
                 let indexer = UIButton()
                 indexer.setImage(image, for: .normal)
                 if index == currentChordIndex {
@@ -195,12 +199,12 @@ extension ChordDictViewController {
     func searchChord() {
         print("search chord \(chordNameLabel.text!)")
         currentChordIndex = 0
-        if let chordText = chordNameLabel.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3), tones.isNotEmpty {
+        if let chordText = chordNameLabel.text, let tones = chordAnalyzer?.analyze(chordString: chordText, toneHeight: 3), tones.isNotEmpty {
             chordTones = tones[currentChordIndex].pitches
             numberOfChordsSearched = tones.count
             print("found: \(numberOfChordsSearched) chords")
             chordView.chord = tones[currentChordIndex]
-            chordView.openChord = chordAnalyzer.currentTuning
+            chordView.openChord = chordAnalyzer!.currentTuning
         }
         updateIndexView()
     }
@@ -213,7 +217,7 @@ extension ChordDictViewController {
     
     @objc func setIndexer(_ sender: UIButton) {
         currentChordIndex = sender.tag
-        if let chordText = chordNameLabel.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
+        if let chordText = chordNameLabel.text, let tones = chordAnalyzer?.analyze(chordString: chordText, toneHeight: 3) {
             chordView.chord = tones[currentChordIndex]
             chordTones = tones[currentChordIndex].pitches
         }
@@ -235,7 +239,7 @@ extension ChordDictViewController {
         } else {
             currentChordIndex -= 1
         }
-        if let chordText = chordNameLabel.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
+        if let chordText = chordNameLabel.text, let tones = chordAnalyzer?.analyze(chordString: chordText, toneHeight: 3) {
             chordView.chord = tones[currentChordIndex]
             chordTones = tones[currentChordIndex].pitches
         }
@@ -249,7 +253,7 @@ extension ChordDictViewController {
         } else {
             currentChordIndex += 1
         }
-        if let chordText = chordNameLabel.text, let tones = chordAnalyzer.analyze(chordString: chordText, toneHeight: 3) {
+        if let chordText = chordNameLabel.text, let tones = chordAnalyzer?.analyze(chordString: chordText, toneHeight: 3) {
             chordView.chord = tones[currentChordIndex]
             chordTones = tones[currentChordIndex].pitches
         }

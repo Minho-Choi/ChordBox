@@ -7,20 +7,33 @@
 
 import UIKit
 
-class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
+class EnterSongNameViewController: UIViewController {
 
+    // TextFields (must be replaced by code definition)
     @IBOutlet weak var songTitleOutlet: UITextField!
     @IBOutlet weak var artistNameOutlet: UITextField!
+    
     var lyrics: String = ""
     let loadingView = LoadingView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         songTitleOutlet.autocorrectionType = .no
         artistNameOutlet.autocorrectionType = .no
-        // Do any additional setup after loading the view.
-    }
 
+    }
+    
+    @IBAction func nextButtonPressed(_ sender: UIButton) {
+        print("button pressed")
+        view.endEditing(true)
+        if let title = songTitleOutlet.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+           let artist = artistNameOutlet.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+            fetchLyricsDataFromFreeAPI(title: title, artist: artist, identifier: "FoundLyricsSegue", sender: sender)
+        }
+    }
+    
+    // fetches lyrics data from lyrics api by urlsession
     func fetchLyricsDataFromFreeAPI(title: String, artist: String, identifier: String, sender: UIButton) {
         self.view.addSubview(loadingView)
         NSLayoutConstraint.activate([
@@ -34,7 +47,7 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
 
         let url = URL(string: "https://api.lyrics.ovh/v1/\(artist)/\(title)")
         let session = URLSession.shared
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .utility).async {
             if let validURL = url {
                 let dataTask = session.dataTask(with: validURL) { (data, response, error) in
                     guard error == nil else {
@@ -65,17 +78,8 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
             }
             }
         }
-
-    @IBAction func nextButtonPressed(_ sender: UIButton) {
-        print("button pressed")
-        view.endEditing(true)
-        if let title = songTitleOutlet.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-           let artist = artistNameOutlet.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-            fetchLyricsDataFromFreeAPI(title: title, artist: artist, identifier: "FoundLyricsSegue", sender: sender)
-        }
-
-    }
-
+    
+    // segue data preparation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FoundLyricsSegue" {
             let vc = segue.destination as! ShowLyricsViewController
@@ -84,6 +88,7 @@ class EnterSongNameViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
+// JSON parser struct
 struct LyricsJSON: Codable {
     var lyrics: String
 }

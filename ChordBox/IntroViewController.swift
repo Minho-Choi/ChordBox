@@ -14,8 +14,8 @@ class IntroViewController: UIViewController {
         super.viewDidLoad()
 
         self.navigationController?.navigationBar.topItem?.title = ""
-        self.navigationController?.navigationBar.backIndicatorImage = UIImage(systemName: "square.grid.2x2")
-        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(systemName: "square.grid.2x2")
+//        self.navigationController?.navigationBar.backIndicatorImage = UIImage(systemName: "square.grid.2x2")
+//        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(systemName: "square.grid.2x2")
 
         // Do any additional setup after loading the view.
         view.addSubview(loadingView)

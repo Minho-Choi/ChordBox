@@ -7,6 +7,7 @@
 
 import Foundation
 
+// protocol used in calling view animation sync to metronome beat
 protocol AnimateViewControllerFromViewDelegate: class {
     func animateView()
 }
