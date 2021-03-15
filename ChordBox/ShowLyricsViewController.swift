@@ -62,6 +62,7 @@ class ShowLyricsViewController: UIViewController {
         self.navigationItem.leftBarButtonItems = [undoBarButton, redoBarButton, multiSelectBarButton]
         self.navigationItem.setHidesBackButton(false, animated: true)
         editModePicker.selectedSegmentIndex = 0
+        editModePicker.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
         editModePicker.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
         self.navigationItem.setRightBarButton(doneBarButton, animated: true)
         
@@ -175,7 +176,7 @@ class ShowLyricsViewController: UIViewController {
             self.navigationItem.setRightBarButtonItems([editModeBarItem], animated: true)
         } else {
             self.editModePicker.selectedSegmentIndex = 0
-//            self.editModePicker.selectedSegmentTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            self.editModePicker.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             self.navigationItem.setRightBarButton(self.doneBarButton, animated: true)
             self.lyricsView.updateEditMode(mode: self.editModePicker.selectedSegmentIndex)
         }
@@ -184,14 +185,12 @@ class ShowLyricsViewController: UIViewController {
     @objc func segmentControlChanged() {
         editMode = EditMode(rawValue: editModePicker.selectedSegmentIndex)
         if editMode?.rawValue == 2 {
-            UIView.animate(withDuration: 1, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.editModePicker.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
-//                self.editModePicker.selectedSegmentTintColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
             })
         } else {
-            UIView.animate(withDuration: 1, animations: {
-//                self.editModePicker.selectedSegmentTintColor = UIColor.white
-                self.editModePicker.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            UIView.animate(withDuration: 0.2, animations: {
+                self.editModePicker.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
             })
         }
         lyricsView.updateEditMode(mode: editMode!.rawValue)

@@ -42,7 +42,7 @@ class EnterSongNameViewController: UIViewController {
             loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        loadingView.addViews(frame: view.frame, title: "Searching Lyrics\r\n\(title.removingPercentEncoding!) by \(artist.removingPercentEncoding!)")
+        loadingView.addViews(frame: view.frame, title: "Searching Lyrics".localized + "\r\n\(artist.removingPercentEncoding!) -  \(title.removingPercentEncoding!)")
         loadingView.startAnimating()
 
         let url = URL(string: "https://api.lyrics.ovh/v1/\(artist)/\(title)")

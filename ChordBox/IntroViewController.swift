@@ -25,7 +25,7 @@ class IntroViewController: UIViewController {
             loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        loadingView.addViews(frame: view.bounds, title: "Updating Database")
+        loadingView.addViews(frame: view.bounds, title: "Updating Database".localized)
         loadingView.startAnimating()
         loadingView.setNeedsDisplay()
     }

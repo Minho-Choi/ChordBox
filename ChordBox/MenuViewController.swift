@@ -73,10 +73,10 @@ class MenuViewController: UIViewController {
 //        addSongButton.customizeMyButton(title: "Add Song")
 //        playSongButton.customizeMyButton(title: "Play Song")
 //        settingButton.customizeMyButton(title: "Settings")
-        chordDictButton.updateView(title: "Search Chord", imageName: "character.book.closed")
-        addSongButton.updateView(title: "Add Song", imageName: "note.text.badge.plus")
-        playSongButton.updateView(title: "Play Song", imageName: "ipad.landscape.badge.play")
-        settingButton.updateView(title: "Settings", imageName: "gearshape")
+        chordDictButton.updateView(title: "Search Chord".localized, imageName: "character.book.closed")
+        addSongButton.updateView(title: "Add Song".localized, imageName: "note.text.badge.plus")
+        playSongButton.updateView(title: "Play Song".localized, imageName: "ipad.landscape.badge.play")
+        settingButton.updateView(title: "Settings".localized, imageName: "gearshape")
     }
 
     override func viewWillLayoutSubviews() {

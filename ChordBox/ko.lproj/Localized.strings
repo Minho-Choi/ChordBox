@@ -1,0 +1,14 @@
+/* 
+  Localized.strings
+  ChordBox
+
+  Created by Minho Choi on 2021/03/15.
+  
+*/
+
+"Updating Database" = "업데이트 중입니다..";
+"Search Chord" = "코드 검색";
+"Add Song" = "노래 추가";
+"Play Song" = "연주 시작하기";
+"Settings" = "설정";
+"Searching Lyrics" = "가사 검색 중..";
