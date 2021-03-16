@@ -46,7 +46,7 @@ class ShowLyricsViewController: UIViewController {
     lazy var redoBarButton = UIBarButtonItem(title: "Redo", style: .plain, target: self, action: #selector(redoButtonTouched))
     lazy var multiSelectBarButton = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(multiSelectButtonTouched(_:)))
     lazy var doneBarButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTouched))
-    var editModePicker = UISegmentedControl(items: ["Copy", "Move", "Delete"])
+    var editModePicker = UISegmentedControl(items: ["Insert", "Move", "Delete"])
     lazy var editModeBarItem = UIBarButtonItem(customView: editModePicker)
 
     // multitouch boolean
@@ -55,6 +55,9 @@ class ShowLyricsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.subviews.forEach { view in
+            view.removeFromSuperview()
+        }
         self.view.addSubview(lyricsView)
         self.view.addSubview(noteView)
         self.view.addSubview(chordButtonView)
@@ -207,11 +210,10 @@ class ShowLyricsViewController: UIViewController {
             vc.songData = songInfo
         }
     }
-
 }
 
 enum EditMode: Int {
-    case copy = 0
+    case insert = 0
     case move = 1
     case delete = 2
 }

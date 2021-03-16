@@ -3,10 +3,10 @@
 "amv-Pe-cTF.text" = "Label";
 
 /* Class = "UITextField"; placeholder = "Artist"; ObjectID = "ibW-va-3Jb"; */
-"ibW-va-3Jb.placeholder" = "Artist";
+"ibW-va-3Jb.placeholder" = "가수";
 
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "svw-B7-0H5"; */
-"svw-B7-0H5.placeholder" = "Title";
+"svw-B7-0H5.placeholder" = "곡 제목";
 
 /* Class = "UIButton"; normalTitle = "Search"; ObjectID = "vMo-hA-GE3"; */
-"vMo-hA-GE3.normalTitle" = "Search";
+"vMo-hA-GE3.normalTitle" = "가사 검색";
