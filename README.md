@@ -31,9 +31,9 @@
 > ### 광고 삽입
 ---
 ## 앱에 사용된 기술
-### Layout -> 코드 기반 AutoLayout (NSLayoutConstraint 인스턴스)
-#### 다른 구현 방법 : Storyboard, Snapkit 등 
-### DB -> CoreData
-### 오디오 기능 -> AVFoundation, AudioKit
-### HTTP request: URLSession
-### SwiftLint
+> ### Layout -> 코드 기반 AutoLayout (NSLayoutConstraint 인스턴스)
+>> #### 다른 구현 방법 : Storyboard, Snapkit 등 
+> ### DB -> CoreData
+> ### 오디오 기능 -> AVFoundation, AudioKit
+> ### HTTP request: URLSession
+> ### SwiftLint
