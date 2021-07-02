@@ -9,9 +9,6 @@ import UIKit
 
 class MenuViewController: UIViewController {
 
-    @IBOutlet weak var chordDictButtonOutlet: UIButton!
-    @IBOutlet weak var addingSongButtonOutlet: UIButton!
-
 //    var chordDictButton = UIButton(frame: .zero)
 //    var addSongButton = UIButton(frame: .zero)
 //    var playSongButton = UIButton(frame: .zero)

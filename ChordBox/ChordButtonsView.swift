@@ -44,6 +44,7 @@ class ChordButtonsView: UIView {
             firstRowButtons.append(btn)
         }
         btnArr.append(firstRowButtons)
+        
         var secondRowButtons = [UIButton]()
         for index: Int in 0..<ChordButtonData.chordKeys2.count {
             let buttonWidth = frame.width/CGFloat(ChordButtonData.chordKeys2.count)
@@ -65,6 +66,7 @@ class ChordButtonsView: UIView {
             secondRowButtons.append(btn)
         }
         btnArr.append(secondRowButtons)
+        
         for (index, array) in ChordButtonData.chordTypes.enumerated() {
             var rowButtons = [UIButton]()
             for chordNameIndex in 0..<array.count {
@@ -77,6 +79,7 @@ class ChordButtonsView: UIView {
                 btn.layer.borderColor = UIColor.CustomPalette.backgroundColor.cgColor
                 btn.layer.borderWidth = 1
                 btn.layer.cornerRadius = 5
+                btn.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
                 btn.setTitle("\(ChordButtonData.chordTypes[index][chordNameIndex])", for: .normal)
                 btn.titleLabel?.adjustsFontSizeToFitWidth = true
                 btn.frame = CGRect(
@@ -96,10 +99,20 @@ class ChordButtonsView: UIView {
             for (index, btn) in btnRow.enumerated() {
                 btn.frame = CGRect(
                     x: bounds.minX + CGFloat(index)*frame.width/CGFloat(btnRow.count),
-                    y: bounds.minY + frame.height/7.1 * CGFloat((Double(row) + (row > 1 ? 0 : 0.1))),
+                    y: bounds.minY + frame.height/7.1 * CGFloat((Double(row) - (row > 1 ? 0 : 0.1))),
                     width: frame.width/CGFloat(btnRow.count),
                     height: frame.height/7.1)
             }
         }
     }
+}
+
+struct ChordButtonData {
+    static let chordKeys1 = ["C#", "D#", "F#", "G#", "A#"]
+    static let chordKeys2 = ["C", "D", "E", "F", "G", "A", "B"]
+    static let chordTypes = [["maj", "m", "7", "sus4", "dim", "aug", "sus2"],
+                             ["maj7", "m7", "7b5", "7sus4", "dim7", "13", "9"],
+                             ["maj9", "m7b5", "7(#11)", "7(b13)", "5", "13(#11)", "9(#11)"],
+                             ["maj13", "m9", "7(#5)", "7(b9)", "6", "13(#9)", "9b5"],
+                             ["m6", "m11", "7(#9)", "11", "6add9", "13(b9)", "add9"]]
 }

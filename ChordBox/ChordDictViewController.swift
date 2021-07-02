@@ -18,10 +18,10 @@ class ChordDictViewController: UIViewController {
     
     // Labels and Buttons
     var chordNameLabel = UILabel(frame: .zero)
-//    lazy var metronomePlayBarButton = UIBarButtonItem(image: UIImage(systemName: "play.circle"), style: .plain, target: self, action: #selector(playButtonTouched))
-//    lazy var metronomeSetBarButton = UIBarButtonItem(image: UIImage(systemName: "metronome"), style: .plain, target: self, action: #selector(metronomeButtonTouched))
-    lazy var metronomePlayBarButton = UIBarButtonItem(title: "Play", style: .plain, target: self, action: #selector(playButtonTouched))
-    lazy var metronomeSetBarButton = UIBarButtonItem(title: "Set", style: .plain, target: self, action: #selector(metronomeButtonTouched))
+    lazy var metronomePlayBarButton = UIBarButtonItem(image: UIImage(systemName: "play.circle"), style: .plain, target: self, action: #selector(playButtonTouched))
+    lazy var metronomeSetBarButton = UIBarButtonItem(image: UIImage(systemName: "metronome"), style: .plain, target: self, action: #selector(metronomeButtonTouched))
+//    lazy var metronomePlayBarButton = UIBarButtonItem(title: "Play", style: .plain, target: self, action: #selector(playButtonTouched))
+//    lazy var metronomeSetBarButton = UIBarButtonItem(title: "Set", style: .plain, target: self, action: #selector(metronomeButtonTouched))
     
     // Analyzer Model
     private var chordAnalyzer: ChordAnalyzer?
@@ -53,7 +53,7 @@ class ChordDictViewController: UIViewController {
         chordAnalyzer = ChordAnalyzer.shared
         
         navigationItem.rightBarButtonItems = [metronomeSetBarButton, metronomePlayBarButton]
-        metronomeView.delegate = self
+        MetronomeSoundPlayer.shared.delegate = self
 
         view.addSubview(chordNameLabel)
         view.addSubview(chordView)
@@ -113,6 +113,9 @@ class ChordDictViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        MetronomeSoundPlayer.shared.isMetronomeOn = false
+    }
 }
 
 // MARK: - Function Implementations
@@ -271,7 +274,7 @@ extension ChordDictViewController {
     }
     
     @objc func playButtonTouched() {
-        metronomeView.isMetronomeOn.toggle()
+        MetronomeSoundPlayer.shared.isMetronomeOn.toggle()
     }
     
     @objc func metronomeButtonTouched() {

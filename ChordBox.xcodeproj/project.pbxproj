@@ -31,12 +31,12 @@
 		B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DD425D235B6009FB15C /* CoreDataManager.swift */; };
 		B47D8DDC25D23C9B009FB15C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */; };
 		B47D8DEA25D28C75009FB15C /* chord_fingers.json in Resources */ = {isa = PBXBuildFile; fileRef = B47D8DE925D28C75009FB15C /* chord_fingers.json */; };
+		B47D9483268EFD3B00EB0B57 /* MetronomeSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D9482268EFD3B00EB0B57 /* MetronomeSoundPlayer.swift */; };
 		B485D97725EF9FE100824019 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B485D97625EF9FE100824019 /* .swiftlint.yml */; };
 		B485D97925F3A30F00824019 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B485D97825F3A30F00824019 /* Sheet.swift */; };
 		B485D97B25F3B00800824019 /* PlaySongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B485D97A25F3B00800824019 /* PlaySongViewController.swift */; };
 		B485D97D25F3BBB600824019 /* MetronomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B485D97C25F3BBB600824019 /* MetronomeView.swift */; };
 		B485D97F25F3BF6800824019 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B485D97E25F3BF6800824019 /* ExerciseViewController.swift */; };
-		B485D98125F6683500824019 /* MetronomeView+Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = B485D98025F6683500824019 /* MetronomeView+Audio.swift */; };
 		B491EF3925FA3D4900BD6B7A /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = B491EF3825FA3D4900BD6B7A /* Protocols.swift */; };
 		B491EF3B25FA40AC00BD6B7A /* BeatHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B491EF3A25FA40AC00BD6B7A /* BeatHighlightView.swift */; };
 		B491EF3D25FA6A4000BD6B7A /* ChordSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B491EF3C25FA6A4000BD6B7A /* ChordSoundPlayer.swift */; };
@@ -94,12 +94,12 @@
 		B47D8DD425D235B6009FB15C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		B47D8DDB25D23C9B009FB15C /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		B47D8DE925D28C75009FB15C /* chord_fingers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chord_fingers.json; sourceTree = "<group>"; };
+		B47D9482268EFD3B00EB0B57 /* MetronomeSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeSoundPlayer.swift; sourceTree = "<group>"; };
 		B485D97625EF9FE100824019 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		B485D97825F3A30F00824019 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		B485D97A25F3B00800824019 /* PlaySongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySongViewController.swift; sourceTree = "<group>"; };
 		B485D97C25F3BBB600824019 /* MetronomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeView.swift; sourceTree = "<group>"; };
 		B485D97E25F3BF6800824019 /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
-		B485D98025F6683500824019 /* MetronomeView+Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MetronomeView+Audio.swift"; sourceTree = "<group>"; };
 		B491EF3825FA3D4900BD6B7A /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		B491EF3A25FA40AC00BD6B7A /* BeatHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatHighlightView.swift; sourceTree = "<group>"; };
 		B491EF3C25FA6A4000BD6B7A /* ChordSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChordSoundPlayer.swift; sourceTree = "<group>"; };
@@ -176,10 +176,10 @@
 				B485D97A25F3B00800824019 /* PlaySongViewController.swift */,
 				B491EF3A25FA40AC00BD6B7A /* BeatHighlightView.swift */,
 				B485D97C25F3BBB600824019 /* MetronomeView.swift */,
-				B485D98025F6683500824019 /* MetronomeView+Audio.swift */,
 				B491EF3825FA3D4900BD6B7A /* Protocols.swift */,
 				B47D8DD425D235B6009FB15C /* CoreDataManager.swift */,
 				B491EF3C25FA6A4000BD6B7A /* ChordSoundPlayer.swift */,
+				B47D9482268EFD3B00EB0B57 /* MetronomeSoundPlayer.swift */,
 				B46F67C725CAA22F0097CFA2 /* ChordAnalyzer.swift */,
 				B46F67CB25CADC390097CFA2 /* GuitarChordView.swift */,
 				B44107B825DBEF9C004FF208 /* ChordButtonsView.swift */,
@@ -360,7 +360,6 @@
 				B4CB97C525E4C9F4007F4B36 /* LyricsView.swift in Sources */,
 				B4AD2AF825FFAAFA00CA3CB8 /* String+Localized.swift in Sources */,
 				B47D8DD125D22D38009FB15C /* ChordForm+CoreDataProperties.swift in Sources */,
-				B485D98125F6683500824019 /* MetronomeView+Audio.swift in Sources */,
 				B47D8DDC25D23C9B009FB15C /* IntroViewController.swift in Sources */,
 				B47D8DCC25D163E7009FB15C /* ChordForm.xcdatamodeld in Sources */,
 				B4CB97BF25E00007007F4B36 /* ShowLyricsViewController.swift in Sources */,
@@ -370,6 +369,7 @@
 				B485D97925F3A30F00824019 /* Sheet.swift in Sources */,
 				B44107B525DB6C67004FF208 /* UIColor+CustomPalette.swift in Sources */,
 				B47D8DD525D235B6009FB15C /* CoreDataManager.swift in Sources */,
+				B47D9483268EFD3B00EB0B57 /* MetronomeSoundPlayer.swift in Sources */,
 				B485D97D25F3BBB600824019 /* MetronomeView.swift in Sources */,
 				B47D8DD025D22D38009FB15C /* ChordForm+CoreDataClass.swift in Sources */,
 				B491EF3D25FA6A4000BD6B7A /* ChordSoundPlayer.swift in Sources */,
@@ -468,7 +468,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -524,7 +524,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -543,7 +543,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6VJYHQVG2L;
 				INFOPLIST_FILE = ChordBox/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -565,7 +565,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6VJYHQVG2L;
 				INFOPLIST_FILE = ChordBox/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

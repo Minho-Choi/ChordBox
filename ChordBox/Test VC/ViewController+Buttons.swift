@@ -88,13 +88,3 @@ extension ViewController {
 //        sender.layer.borderColor = UIColor.CustomPalette.pointColor.cgColor
     }
 }
-
-struct ChordButtonData {
-    static let chordKeys1 = ["C#", "D#", "F#", "G#", "A#"]
-    static let chordKeys2 = ["C", "D", "E", "F", "G", "A", "B"]
-    static let chordTypes = [["maj", "m", "7", "sus4", "dim", "aug", "sus2"],
-                             ["maj7", "m7", "7b5", "7sus4", "dim7", "13", "9"],
-                             ["maj9", "m7b5", "7(#11)", "7(b13)", "5", "13(#11)", "9(#11)"],
-                             ["maj13", "m9", "7(#5)", "7(b9)", "6", "13(#9)", "9b5"],
-                             ["m6", "m11", "7(#9)", "11", "6add9", "13(b9)", "add9"]]
-}
