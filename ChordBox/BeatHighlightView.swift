@@ -25,9 +25,9 @@ class BeatHighlightView: UIView {
         let gradient = CAGradientLayer()
         gradient.frame = self.bounds
         gradient.type = .axial
-        gradient.colors = [UIColor.systemTeal.cgColor, UIColor.clear.cgColor]
+        gradient.colors = [UIColor.CustomPalette.lightColor.cgColor, UIColor.clear.cgColor]
         gradient.startPoint = CGPoint(x: 0.5, y: 0)
-        gradient.endPoint = CGPoint(x: 0.5, y: 0.3)
+        gradient.endPoint = CGPoint(x: 0.5, y: 1)
         layer.addSublayer(gradient)
     }
 

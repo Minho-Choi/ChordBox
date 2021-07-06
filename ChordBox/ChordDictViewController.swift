@@ -13,15 +13,13 @@ class ChordDictViewController: UIViewController {
     // Custom Views
     var chordView = GuitarChordView(frame: .zero)
     var buttonView = ChordButtonsView(frame: .zero)
-    var metronomeView = MetronomeView()
+    var metronomeView = MetronomeView(frame: CGRect(x: 0, y: 100, width: 70, height: 300))
     let backgroundHighlightView = BeatHighlightView()
     
     // Labels and Buttons
     var chordNameLabel = UILabel(frame: .zero)
     lazy var metronomePlayBarButton = UIBarButtonItem(image: UIImage(systemName: "play.circle"), style: .plain, target: self, action: #selector(playButtonTouched))
     lazy var metronomeSetBarButton = UIBarButtonItem(image: UIImage(systemName: "metronome"), style: .plain, target: self, action: #selector(metronomeButtonTouched))
-//    lazy var metronomePlayBarButton = UIBarButtonItem(title: "Play", style: .plain, target: self, action: #selector(playButtonTouched))
-//    lazy var metronomeSetBarButton = UIBarButtonItem(title: "Set", style: .plain, target: self, action: #selector(metronomeButtonTouched))
     
     // Analyzer Model
     private var chordAnalyzer: ChordAnalyzer?
@@ -44,6 +42,23 @@ class ChordDictViewController: UIViewController {
             chordNameLabel.text = chordKey + chordIdentifier
         }
     }
+    var isMetronomeViewPopped = true {
+        didSet {
+            UIView.animate(
+                withDuration: 0.2,
+                delay: 0,
+                options: .curveEaseInOut,
+                animations: {
+                    if self.isMetronomeViewPopped {
+                        self.metronomeView.transform = CGAffineTransform(translationX: self.view.frame.maxX, y: 0)
+                    } else {
+                        self.metronomeView.transform = CGAffineTransform(translationX: self.view.frame.maxX - 80, y: 0)
+                    }
+                },
+                completion: nil
+            )
+        }
+    }
     
     // MARK: - View Controller Lifecycle
     
@@ -52,16 +67,23 @@ class ChordDictViewController: UIViewController {
         
         chordAnalyzer = ChordAnalyzer.shared
         
+        metronomeSetBarButton.tintColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+        metronomePlayBarButton.tintColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+        
         navigationItem.rightBarButtonItems = [metronomeSetBarButton, metronomePlayBarButton]
         MetronomeSoundPlayer.shared.delegate = self
+        backgroundHighlightView.isUserInteractionEnabled = false
 
         view.addSubview(chordNameLabel)
         view.addSubview(chordView)
         view.addSubview(buttonView)
-        view.insertSubview(backgroundHighlightView, at: 0)
+        view.addSubview(backgroundHighlightView)
+        view.addSubview(metronomeView)
+        metronomeView.transform = CGAffineTransform(translationX: self.view.frame.maxX, y: 0)
         
         setChordNameLabel()
         setBackgroundHighlightView()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +91,7 @@ class ChordDictViewController: UIViewController {
         
         view.layoutSubviews()
         buttonView.makeBtn(frame: buttonView.bounds)
+        metronomeView.setConstraints()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -98,7 +121,12 @@ class ChordDictViewController: UIViewController {
             chordView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
             chordView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
             chordView.topAnchor.constraint(equalTo: chordNameLabel.bottomAnchor, constant: padding),
-            chordView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -padding)
+            chordView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -padding),
+            
+//            metronomeView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+//            metronomeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            metronomeView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+//            metronomeView.widthAnchor.constraint(equalToConstant: 300)
             
         ])
         
@@ -114,7 +142,9 @@ class ChordDictViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        MetronomeSoundPlayer.shared.isMetronomeOn = false
+        if MetronomeSoundPlayer.shared.isMetronomeOn {
+            MetronomeSoundPlayer.shared.isMetronomeOn.toggle()
+        }
     }
 }
 
@@ -275,10 +305,21 @@ extension ChordDictViewController {
     
     @objc func playButtonTouched() {
         MetronomeSoundPlayer.shared.isMetronomeOn.toggle()
+        if MetronomeSoundPlayer.shared.isMetronomeOn {
+            metronomePlayBarButton.tintColor = UIColor.CustomPalette.pointColor
+        } else {
+            metronomePlayBarButton.tintColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+        }
     }
     
     @objc func metronomeButtonTouched() {
         // Needs to be implemented
+        isMetronomeViewPopped.toggle()
+        if !isMetronomeViewPopped {
+            metronomeSetBarButton.tintColor = UIColor.CustomPalette.pointColor
+        } else {
+            metronomeSetBarButton.tintColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+        }
     }
 }
 
@@ -286,7 +327,7 @@ extension ChordDictViewController: AnimateViewControllerFromViewDelegate {
     
     func animateView() {
         UIView.animate(withDuration: 0.1, delay: 0, options: [.autoreverse, .curveEaseOut], animations: { [weak self] in
-            self?.backgroundHighlightView.alpha = 1
+            self?.backgroundHighlightView.alpha = 0.5
         }, completion: { done in
             if done {
                 self.backgroundHighlightView.alpha = 0

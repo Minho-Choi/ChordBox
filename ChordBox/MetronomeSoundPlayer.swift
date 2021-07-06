@@ -18,6 +18,7 @@ class MetronomeSoundPlayer {
     var highSound = AVAudioPlayer()
     var lowSound = AVAudioPlayer()
     var counter: Int = 0
+    
     var isMetronomeOn = false {
         didSet {
             if isMetronomeOn {
@@ -38,6 +39,7 @@ class MetronomeSoundPlayer {
     init() {
         let queue = DispatchQueue(label: "com.domain.app.timer", qos: .userInteractive)
         mTimer = DispatchSource.makeTimerSource(flags: .strict, queue: queue)
+        
         mTimer.setEventHandler { [unowned self] in
             if self.counter != 0 {
                 DispatchQueue.main.async {

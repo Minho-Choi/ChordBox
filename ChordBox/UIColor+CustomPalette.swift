@@ -15,5 +15,6 @@ extension UIColor {
         static let pointColor = #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 1)
         static let shadeColor1 = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
         static let shadeColor2 = #colorLiteral(red: 0.5741485357, green: 0.5741624236, blue: 0.574154973, alpha: 1)
+        static let lightColor = #colorLiteral(red: 0.961720407, green: 0.9450817704, blue: 0.3789851069, alpha: 1)
     }
 }

@@ -15,6 +15,7 @@ class MetronomeView: UIView {
             bpmLabel.text = "\(bpm)"
             weightLocationRatio = CGFloat(bpm - 40)/200
             updateLocation()
+            MetronomeSoundPlayer.shared.setInterval(bpm: bpm)
         }
     }     // bpm range: 40 to 240
     var metronomeWeight = MetronomeWeight()
@@ -29,8 +30,11 @@ class MetronomeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .clear
-        layer.borderWidth = 1.0
+        backgroundColor = .white
+        layer.cornerRadius = 5
+        layer.shadowOpacity = 0.7
+        layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        layer.shadowOffset = CGSize(width: 5, height: 5)
         MetronomeSoundPlayer.shared.prepareSound()
         MetronomeSoundPlayer.shared.setInterval(bpm: bpm)
     }
@@ -137,7 +141,7 @@ class MetronomeWeight: UIView {
         let gradient = CAGradientLayer()
         
         gradient.frame = self.bounds
-        gradient.colors = [#colorLiteral(red: 0.8450841308, green: 0.8081151247, blue: 0.06854876131, alpha: 1).cgColor, UIColor.CustomPalette.textColor.cgColor]
+        gradient.colors = [#colorLiteral(red: 0.8450841308, green: 0.8081151247, blue: 0.06854876131, alpha: 1).cgColor, #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1).cgColor]
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 1, y: 1)
         gradient.mask = shapeMask

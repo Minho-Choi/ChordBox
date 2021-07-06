@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B44107AA25D41077004FF208 /* AudioKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44107A925D41077004FF208 /* AudioKit.xcframework */; };
-		B44107AB25D41077004FF208 /* AudioKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B44107A925D41077004FF208 /* AudioKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B44107AD25D41093004FF208 /* AudioKitUI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44107AC25D41093004FF208 /* AudioKitUI.xcframework */; };
-		B44107AE25D41093004FF208 /* AudioKitUI.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B44107AC25D41093004FF208 /* AudioKitUI.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B44107B125D5388D004FF208 /* EnterSongNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B025D5388D004FF208 /* EnterSongNameViewController.swift */; };
 		B44107B325DB4A36004FF208 /* ViewController+Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B225DB4A36004FF208 /* ViewController+Buttons.swift */; };
 		B44107B525DB6C67004FF208 /* UIColor+CustomPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44107B425DB6C67004FF208 /* UIColor+CustomPalette.swift */; };
@@ -52,21 +50,6 @@
 		B4CB97CE25E60F21007F4B36 /* ChordNoteSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97CD25E60F21007F4B36 /* ChordNoteSelectView.swift */; };
 		B4CB97D025E8DD71007F4B36 /* CGFloat+FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CB97CF25E8DD71007F4B36 /* CGFloat+FontSize.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B44107A425D40C2A004FF208 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B44107AE25D41093004FF208 /* AudioKitUI.xcframework in Embed Frameworks */,
-				B44107AB25D41077004FF208 /* AudioKit.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B44107A925D41077004FF208 /* AudioKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AudioKit.xcframework; path = Pods/AudioKit/AudioKit.xcframework; sourceTree = "<group>"; };
@@ -238,7 +221,6 @@
 				B46F67AB25CAA0F60097CFA2 /* Sources */,
 				B46F67AC25CAA0F60097CFA2 /* Frameworks */,
 				B46F67AD25CAA0F60097CFA2 /* Resources */,
-				B44107A425D40C2A004FF208 /* Embed Frameworks */,
 				B485D97525EF9EC600824019 /* ShellScript */,
 			);
 			buildRules = (
