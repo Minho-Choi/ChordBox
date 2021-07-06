@@ -123,11 +123,6 @@ class ChordDictViewController: UIViewController {
             chordView.topAnchor.constraint(equalTo: chordNameLabel.bottomAnchor, constant: padding),
             chordView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -padding),
             
-//            metronomeView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-//            metronomeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            metronomeView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-//            metronomeView.widthAnchor.constraint(equalToConstant: 300)
-            
         ])
         
     }
@@ -313,7 +308,6 @@ extension ChordDictViewController {
     }
     
     @objc func metronomeButtonTouched() {
-        // Needs to be implemented
         isMetronomeViewPopped.toggle()
         if !isMetronomeViewPopped {
             metronomeSetBarButton.tintColor = UIColor.CustomPalette.pointColor
@@ -323,16 +317,22 @@ extension ChordDictViewController {
     }
 }
 
+// MARK: - View highlight delegate implementation
+
 extension ChordDictViewController: AnimateViewControllerFromViewDelegate {
     
     func animateView() {
-        UIView.animate(withDuration: 0.1, delay: 0, options: [.autoreverse, .curveEaseOut], animations: { [weak self] in
-            self?.backgroundHighlightView.alpha = 0.5
-        }, completion: { done in
-            if done {
-                self.backgroundHighlightView.alpha = 0
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                self?.backgroundHighlightView.alpha = 0.5
+            }, completion: { done in
+                if done {
+                    UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
+                        self.backgroundHighlightView.alpha = 0
+                    })
+                }
             }
+            )
         }
-        )
     }
 }

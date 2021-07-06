@@ -31,7 +31,7 @@ class MetronomeView: UIView {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .white
-        layer.cornerRadius = 5
+        layer.cornerRadius = 10
         layer.shadowOpacity = 0.7
         layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         layer.shadowOffset = CGSize(width: 5, height: 5)
@@ -60,11 +60,12 @@ class MetronomeView: UIView {
         bpmLabel.text = "\(bpm)"
         bpmLabel.adjustsFontSizeToFitWidth = true
         bpmLabel.textAlignment = .center
+        bpmLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         
         metronomeWeight.frame = CGRect(
-            x: bounds.midX - metronomeWeightHeight * 0.8,
+            x: bounds.midX - metronomeWeightHeight * 0.7,
             y: (0.2 + weightLocationRatio * 0.6) * bounds.height,
-            width: 1.6 * metronomeWeightHeight,
+            width: 1.4 * metronomeWeightHeight,
             height: metronomeWeightHeight)
         metronomeWeight.addGradient()
         
@@ -78,9 +79,9 @@ class MetronomeView: UIView {
     
     func updateLocation() {
         metronomeWeight.frame = CGRect(
-            x: bounds.midX - metronomeWeightHeight * 0.8,
+            x: bounds.midX - metronomeWeightHeight * 0.7,
             y: (0.2 + weightLocationRatio * 0.6) * bounds.height,
-            width: 1.6 * metronomeWeightHeight,
+            width: 1.4 * metronomeWeightHeight,
             height: metronomeWeightHeight)
         setNeedsLayout()
         setNeedsDisplay()
@@ -127,12 +128,12 @@ class MetronomeWeight: UIView {
     }
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath()
-        path.move(to: rect.origin)
-        path.addLine(to: CGPoint(x: rect.minX + rect.width * 0.35, y: rect.minY))
-        path.addQuadCurve(to: CGPoint(x: rect.minX + rect.width * 0.65, y: rect.minY), controlPoint: CGPoint(x: rect.midX, y: rect.minY + rect.height/5))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.minX + rect.width * 0.8, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.minX + rect.width * 0.2, y: rect.maxY))
+        path.move(to: CGPoint(x: rect.minX + rect.width * 0.05, y: rect.minY + rect.height * 0.1))
+        path.addLine(to: CGPoint(x: rect.minX + rect.width * 0.35, y: rect.minY + rect.height * 0.1))
+        path.addQuadCurve(to: CGPoint(x: rect.minX + rect.width * 0.65, y: rect.minY + rect.height * 0.1), controlPoint: CGPoint(x: rect.midX, y: rect.minY + rect.height/4))
+        path.addLine(to: CGPoint(x: rect.minX + rect.width * 0.95, y: rect.minY + rect.height * 0.1))
+        path.addLine(to: CGPoint(x: rect.minX + rect.width * 0.8, y: rect.minY + rect.height * 0.9))
+        path.addLine(to: CGPoint(x: rect.minX + rect.width * 0.2, y: rect.minY + rect.height * 0.9))
         path.close()
         shapeMask.path = path.cgPath
     }
@@ -141,9 +142,9 @@ class MetronomeWeight: UIView {
         let gradient = CAGradientLayer()
         
         gradient.frame = self.bounds
-        gradient.colors = [#colorLiteral(red: 0.8450841308, green: 0.8081151247, blue: 0.06854876131, alpha: 1).cgColor, #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1).cgColor]
+        gradient.colors = [#colorLiteral(red: 0.8931563497, green: 0.7706534266, blue: 0.4693405628, alpha: 1).cgColor, #colorLiteral(red: 0.7288641334, green: 0.6141987443, blue: 0.2094997764, alpha: 1).cgColor]
         gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 1, y: 1)
+        gradient.endPoint = CGPoint(x: 0, y: 1)
         gradient.mask = shapeMask
         self.layer.addSublayer(gradient)
     }

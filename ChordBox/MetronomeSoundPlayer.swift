@@ -24,8 +24,8 @@ class MetronomeSoundPlayer {
             if isMetronomeOn {
                 mTimer.resume()
             } else {
-                mTimer.suspend()
                 counter = 0
+                mTimer.suspend()
             }
         }
     }
@@ -42,9 +42,7 @@ class MetronomeSoundPlayer {
         
         mTimer.setEventHandler { [unowned self] in
             if self.counter != 0 {
-                DispatchQueue.main.async {
-                    self.delegate?.animateView()
-                }
+                self.delegate?.animateView()
                 self.playTick(counter: self.counter)
             }
             self.counter += 1
@@ -66,7 +64,7 @@ class MetronomeSoundPlayer {
     
     func setInterval(bpm: Int) {
         let interval = TimeInterval(60/Float(bpm))
-        mTimer.schedule(deadline: .now(), repeating: interval, leeway: .nanoseconds(0))
+        mTimer.schedule(deadline: .now() + 0.2, repeating: interval, leeway: .microseconds(1))
     }
     
     private func playTick(counter: Int) {
